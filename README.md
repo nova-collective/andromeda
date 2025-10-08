@@ -11,5 +11,6 @@ Hollywood is a web platform with which is possible to publish any kind of fictio
 
 ## Tech stack
 
-* Node.js [v22.20.0](https://nodejs.org/en)
-* [Hardhat](https://hardhat.org/docs/getting-started)
+* Node.js [v22.20.0](https://nodejs.org/en);
+* [Hardhat](https://hardhat.org/docs/getting-started);
+* [Next](https://nextjs.org/docs/app/getting-started/installation);
