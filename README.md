@@ -1,4 +1,4 @@
-# Hollywood
+# Andromeda
 
 *just writing stuff. Tokenized.*
 
@@ -6,7 +6,7 @@
 
 ## About
 
-Hollywood is a web platform with which is possible to publish any kind of fiction work as NFT 
+Andromeda is a web platform with which is possible to publish any kind of fiction work as NFT 
 (and the reader can buy and download it to a screen reader when such screen readers will be available, in case).
 
 ## Tech stack
