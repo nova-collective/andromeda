@@ -12,7 +12,8 @@ Andromeda is a web platform that makes it possible:
 * For readers to buy these NFTs and read the authors' works in different formats.
 
 The mission of this platform is to allow authors to directly mint and tokenize their work, and to enable readers to access books simply.
-The web platform is open source, and the writer pays only the gas fees required by the blockchain network to mint the text into an NFT. The reader pays the price set by the author.
+The web platform is open source. To mint their text as an NFT, the author covers the blockchain gas fees and pays a commission for platform maintenance. This commission can be a subscription fee or a percentage of copy sales. This model allows the platform to cover its costs without resorting to sponsorships, ensuring it remains free and independent.
+The reader pays the price set by the author.
 
 If and when screen readers become available that can browse the web and log in to a platform using a blockchain wallet, users will be able to buy the book directly from the author and read it on their preferred device. In this way:
 
