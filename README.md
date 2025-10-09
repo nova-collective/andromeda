@@ -6,7 +6,10 @@
 
 ## About
 
-Andromeda is a web platform with which is possible to publish any kind of fiction work as NFT.
+Andromeda is a web platform with which is possible:
+
+* for a writer to publish any kind of fiction work as NFT.
+* for a reader to buy the NFT and read the fiction in different formats.
 
 The mission of this platform is to allow writers to directly mint and tokenize their work.
 The web platform is open source, and the writer will pay only the gas fees required by the blockchain network in order to mint the text into an NFT.
