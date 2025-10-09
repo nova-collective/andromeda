@@ -20,6 +20,8 @@ If and when will be available screen readers that browse the internet and can lo
 * The writer can mint a certain quantity of copies, certified by the blockchain network;
 * The reader can buy a certified copy from the writer, and this is equivalent to having a copy autographed by the writer; 
 
+The philosophy behind Andromeda is to directly connect writers to people that buy a fiction in the form of NFTs because they want to read the fiction, not to create a market platform with which people invest money in NFTs artworks without even read the fiction (but this is also possible, of course). 
+
 
 ## Tech stack
 
