@@ -6,21 +6,21 @@
 
 ## About
 
-Andromeda is a web platform with which is possible:
+Andromeda is a web platform that makes it possible:
 
-* for an author to publish any kind of fiction, essay work as NFT.
-* for a reader to buy the NFT and read the author's work in different formats.
+* For authors to publish any kind of fictional or non-fictional work as an NFT.
+* For readers to buy these NFTs and read the authors' works in different formats.
 
-The mission of this platform is to allow authors to directly mint and tokenize their work and readers to read books, simply.
-The web platform is open source, and the writer will pay only the gas fees required by the blockchain network in order to mint the text into an NFT. The reader will pay the book price established by the author.
+The mission of this platform is to allow authors to directly mint and tokenize their work, and to enable readers to access books simply.
+The web platform is open source, and the writer pays only the gas fees required by the blockchain network to mint the text into an NFT. The reader pays the price set by the author.
 
-If and when will be available screen readers that browse the internet and can login to a platform using a blockchain wallet, the reader will be able to buy the book directly from the author and to read the fiction on her/his reading device. In this way:
+If and when screen readers become available that can browse the web and log in to a platform using a blockchain wallet, users will be able to buy the book directly from the author and read it on their preferred device. In this way:
 
-* intermediary costs are reduced, with benefits for both the author and the reader;
-* The author can mint a certain quantity of copies, certified by the blockchain network and establish the price;
-* The reader can buy a certified copy (the NFT) from the author, and this is equivalent to having a copy autographed by the writer; 
+* Intermediary costs are reduced, benefiting both the author and the reader.
+* The author can mint a limited quantity of copies, certified by the blockchain network, and set the price.
+* The reader can buy a certified copy (the NFT) directly from the author, which is the digital equivalent of owning a signed copy.
 
-The philosophy behind Andromeda is to directly connect authors to people that buy a fiction in the form of NFTs because they want to read the author's work, not to create a market platform with which people invest money in NFTs artworks without even read the work (but this is also possible, of course). 
+The philosophy behind Andromeda is to directly connect authors with people who buy an NFT because they want to read the work, not just to speculate. The primary goal is to create a direct author-reader relationship, rather than a marketplace for financial investment in unread artworks (though this is also possible). 
 
 
 ## Tech stack
