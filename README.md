@@ -1,6 +1,6 @@
 # Andromeda
 
-*just writing stuff. Tokenized.*
+*your key, your book*
 
 ------
 
