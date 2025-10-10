@@ -23,9 +23,12 @@ If and when screen readers become available that can browse the web and log in t
 
 The philosophy behind Andromeda is to directly connect authors with people who buy an NFT because they want to read the work, not just to speculate. The primary goal is to create a direct author-reader relationship, rather than a marketplace for financial investment in unread artworks (though this is also possible). 
 
+The Andromeda project is committed to using technologies that are sustainable from technological, environmental, economic, and social perspectives.
+
 
 ## Tech stack
 
 * Node.js [v22.20.0](https://nodejs.org/en);
 * [Hardhat](https://hardhat.org/docs/getting-started);
 * [Next.js](https://nextjs.org/docs/app/getting-started/installation);
+* [Polygon](https://polygon.technology/)
