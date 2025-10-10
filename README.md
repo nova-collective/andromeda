@@ -28,7 +28,7 @@ The Andromeda project is committed to using technologies that are sustainable fr
 
 ## Tech stack
 
-* Node.js [v22.20.0](https://nodejs.org/en);
-* [Hardhat](https://hardhat.org/docs/getting-started);
-* [Next.js](https://nextjs.org/docs/app/getting-started/installation);
+* [Node.js](https://nodejs.org/en)
+* [Hardhat](https://hardhat.org/docs/getting-started)
+* [Next.js](https://nextjs.org/docs/app/getting-started/installation)
 * [Polygon](https://polygon.technology/)
