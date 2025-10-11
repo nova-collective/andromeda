@@ -25,6 +25,11 @@ The philosophy behind Andromeda is to directly connect authors with people who b
 
 The Andromeda project is committed to using technologies that are sustainable from environmental, economic, and social perspectives.
 
+## Technical documentation
+
+ * [Functional anaysis](https://github.com/nova-collective/andromeda/wiki/Functional-analysis)
+ * [Technical analysis](https://github.com/nova-collective/andromeda/wiki/Technical-analysis)
+
 
 ## Tech stack
 
