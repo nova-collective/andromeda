@@ -2,7 +2,9 @@
 <img src="./asset/andromeda-logo.png" alt="Andromeda" style="display: block; margin: 0 auto;" />
 </p>
 
-*your key, your book*
+<p align="center">
+<img src="./asset/subtitle.png" alt="Your key, your book" style="display: block; margin: 0 auto;" />
+</p>
 
 ------
 
