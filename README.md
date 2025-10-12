@@ -1,4 +1,6 @@
-# Andromeda
+<p align="center">
+<img src="./asset/andromeda-logo.png" alt="Andromeda" style="display: block; margin: 0 auto;" />
+</p>
 
 *your key, your book*
 
