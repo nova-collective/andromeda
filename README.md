@@ -68,7 +68,7 @@ The application is deployed and hosted on [Vercel Platform](https://vercel.com/n
 Each environment is mapped to a branch:
 
 * Production: main branch (protected)
-* Preview: develop branch
+* Preview: develop branch (protected)
 * Feature instances: feature branches (not active at the moment)
 
 ## CI/CD
@@ -79,3 +79,8 @@ Each environment is mapped to a branch:
 
 ### linting
 It is a good practice to run the linter before to commit: `pnpm run lint`.
+
+## How to contribute
+1. clone the repository
+2. checkout to develop branch
+3. start a feature branch with the following syntax `feature/<feature-branch-name>` (consider using [git-flow next](https://git-flow.sh/))
