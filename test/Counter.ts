@@ -1,7 +1,12 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-
 import { network } from "hardhat";
+
+interface IncrementEvent {
+  args: {
+    by: bigint;
+  };
+}
 
 describe("Counter", async function () {
   const { viem } = await network.connect();
@@ -35,9 +40,12 @@ describe("Counter", async function () {
       strict: true,
     });
 
+    // Type assertion per risolvere l'errore
+    const incrementEvents = events as IncrementEvent[];
+
     // check that the aggregated events match the current value
     let total = 0n;
-    for (const event of events) {
+    for (const event of incrementEvents) {
       total += event.args.by;
     }
 
