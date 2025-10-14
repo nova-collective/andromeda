@@ -1,7 +1,14 @@
 {
-  "name": "hollywood",
+  "name": "andromeda",
+  "description": "A web3 platform to mint, sell and buy books as NFT",
   "version": "0.2.0",
-  "private": true,
+  "private": false,
+  "license": "GNU General Public License v3.0",
+  "author": "Christian Palazzo",
+  "repository": { 
+    "type": "git", 
+    "url": "https://github.com/nova-collective/andromeda" 
+  }, 
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
@@ -28,5 +35,9 @@
     "hardhat": "^3.0.7",
     "typescript": "~5.8.3",
     "viem": "^2.38.0"
-  }
+  },
+  "engines": {
+  "node": ">=22.20.0",
+  "pnpm": ">=10.16.1"
+}
 }

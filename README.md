@@ -76,3 +76,6 @@ Each environment is mapped to a branch:
 
 ## Testing 
 [TO DO]
+
+### linting
+It is a good practice to run the linter before to commit: `pnpm run lint`.
