@@ -1,7 +1,7 @@
 {
   "name": "andromeda",
   "description": "A web3 platform to mint, sell and buy books as NFT",
-  "version": "0.2.0",
+  "version": "1.3.0",
   "private": false,
   "license": "GNU General Public License v3.0",
   "author": "Christian Palazzo",
