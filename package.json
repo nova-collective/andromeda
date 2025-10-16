@@ -1,14 +1,14 @@
 {
   "name": "andromeda",
   "description": "A web3 platform to mint, sell and buy books as NFT",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "private": false,
   "license": "GNU General Public License v3.0",
   "author": "Christian Palazzo",
-  "repository": { 
-    "type": "git", 
-    "url": "https://github.com/nova-collective/andromeda" 
-  }, 
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nova-collective/andromeda"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
@@ -16,28 +16,29 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@vercel/analytics": "^1.5.0",
+    "next": "15.5.4",
     "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "next": "15.5.4"
+    "react-dom": "19.1.0"
   },
   "devDependencies": {
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
-    "eslint": "^9",
-    "eslint-config-next": "15.5.4",
     "@eslint/eslintrc": "^3",
     "@nomicfoundation/hardhat-ignition": "^3.0.3",
     "@nomicfoundation/hardhat-toolbox-viem": "^5.0.0",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^22.18.8",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.4",
     "forge-std": "github:foundry-rs/forge-std#v1.9.4",
     "hardhat": "^3.0.7",
+    "tailwindcss": "^4",
     "typescript": "~5.8.3",
     "viem": "^2.38.0"
   },
   "engines": {
-  "node": ">=22.20.0",
-  "pnpm": ">=10.16.1"
-}
+    "node": ">=22.20.0",
+    "pnpm": ">=10.16.1"
+  }
 }
