@@ -80,6 +80,9 @@ Each environment is mapped to a branch:
 ### linting
 It is a good practice to run the linter before to commit: `pnpm run lint`.
 
+## Analytics
+Andromeda uses [Vercel Web Analytics](https://vercel.com/docs/analytics/quickstart#add-the-analytics-component-to-your-app).
+
 ## How to contribute
 1. clone the repository
 2. checkout to develop branch
