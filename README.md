@@ -42,6 +42,7 @@ Andromeda is an application based on [Next.js](https://nextjs.org/docs/app/getti
 
 * [Node.js](https://nodejs.org/en)
 * [Polygon](https://polygon.technology/)
+* [MongoDB](https://www.mongodb.com/)
 
 ## Getting started
 
@@ -49,6 +50,7 @@ Andromeda is an application based on [Next.js](https://nextjs.org/docs/app/getti
 The following software should be installed on your machine in order to run this application:
 
 * [Node.js](https://nodejs.org/en) v22.20.0 with pnpm v10.16.1 (consider using [nvm](https://github.com/nvm-sh/nvm) to manage node.js);
+* [Vercel CLI](https://vercel.com/docs/cli)
 
 ### How to run
 
