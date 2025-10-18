@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { IUser } from '../lib/types/mongoose';
+import { IUser } from '../lib/types/database';
 
 interface UserProfileProps {
   walletAddress: string;

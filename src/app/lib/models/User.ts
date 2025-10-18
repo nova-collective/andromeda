@@ -1,5 +1,5 @@
 import mongoose, { Schema, Model } from 'mongoose';
-import { IUser } from '../types/mongoose';
+import { IUser } from '../types/database';
 
 const userSchema: Schema<IUser> = new Schema({
   walletAddress: {

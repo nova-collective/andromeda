@@ -1,217 +1,116 @@
+// app/api/users/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import getClient from '@/app/lib/config/mongodb';
-import { ObjectId } from 'mongodb';
+import { UserService } from '@/app/lib/services/userService';
 
-function isMongoError(error: unknown): error is { code: number; message: string } {
-  if (typeof error !== 'object' || error === null) return false;
-  const obj = error as Record<string, unknown>;
-  return 'code' in obj && typeof obj['code'] === 'number' && 'message' in obj && typeof obj['message'] === 'string';
+const userService = new UserService();
+
+/**
+ * Convert an unknown error into a JSON NextResponse with a 500 status.
+ * Centralized so handlers can call it in catch blocks.
+ * @param error - The thrown value
+ */
+function handleError(error: unknown): NextResponse {
+  const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+  return NextResponse.json({ error: errorMessage }, { status: 500 });
 }
 
+/**
+ * GET handler for `/api/users`.
+ * Query params:
+ * - `id`: return a single user by id
+ * - `walletAddress`: return a single user by wallet address
+ * Returns a single user or an array of users.
+ */
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
-    const client = await getClient();
-    const db = client.db('andromeda');
-    
     const { searchParams } = new URL(request.url);
-    const walletAddress = searchParams.get('walletAddress');
     const id = searchParams.get('id');
-    
+    const walletAddress = searchParams.get('walletAddress');
+
     if (id) {
-      const user = await db.collection('users').findOne({ 
-        _id: new ObjectId(id) 
-      });
-      if (!user) {
-        return NextResponse.json({ error: 'User not found' }, { status: 404 });
-      }
+      const user = await userService.getUserById(id);
+      if (!user) return NextResponse.json({ error: 'User not found' }, { status: 404 });
       return NextResponse.json(user);
-    }
-    
-    if (walletAddress) {
-      const user = await db.collection('users').findOne({ 
-        walletAddress: walletAddress
-      });
-      return NextResponse.json(user);
-    }
-    
-    const users = await db.collection('users').find({}).toArray();
-    return NextResponse.json(users);
-  } catch (error: unknown) {
-    if (isMongoError(error)) {
-      if (error.code === 11000) {
-        return NextResponse.json({ error: 'Duplicate wallet address' }, { status: 400 });
-      }
     }
 
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+    if (walletAddress) {
+      const user = await userService.getUserByWalletAddress(walletAddress);
+      return NextResponse.json(user);
+    }
+
+    const users = await userService.getAllUsers();
+    return NextResponse.json(users);
+  } catch (error) {
+    return handleError(error);
   }
 }
 
+/**
+ * POST handler to create or update a user by walletAddress.
+ * Expects a JSON body containing at minimum:
+ * - `walletAddress` (string)
+ * Additional user fields may be provided and will be stored/merged.
+ * Returns the created/updated user document.
+ */
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    const client = await getClient();
-    const db = client.db('andromeda');
-    
     const body = await request.json();
-    const walletAddress = body.walletAddress.toLowerCase();
-    
-    const user = await db.collection('users').findOneAndUpdate(
-      { walletAddress },
-      { 
-        $set: {
-          ...body,
-          walletAddress,
-          lastLogin: new Date(),
-          createdAt: body.createdAt || new Date(),
-        }
-      },
-      { 
-        upsert: true, 
-        returnDocument: 'after',
-      }
-    );
-    
+    // body should contain at least `walletAddress`. The service will
+    // lowercase it and perform an upsert (create or update).
+    const user = await userService.upsertUser(body.walletAddress, body);
     return NextResponse.json(user);
-  } catch (error: unknown) {
-    if (isMongoError(error)) {
-      if (error.code === 11000) {
-        return NextResponse.json({ error: 'Duplicate wallet address' }, { status: 400 });
-      }
-    }
-    
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+  } catch (error) {
+    return handleError(error);
   }
 }
 
+/**
+ * PUT handler to update a user by id.
+ * Expects a JSON body with:
+ * - `id` (string) - the document id to update
+ * - other fields to update
+ * Returns the updated user document or 404 if not found.
+ */
 export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
-    const client = await getClient();
-    const db = client.db('andromeda');
-    
     const body = await request.json();
-    const { id, walletAddress, ...updateData } = body;
-    
-    if (!id && !walletAddress) {
-      return NextResponse.json({ error: 'ID or walletAddress is required' }, { status: 400 });
+    const { id, ...updateData } = body;
+
+    if (!id) {
+      return NextResponse.json({ error: 'ID is required' }, { status: 400 });
     }
-    
-    let query = {};
-    if (id) {
-      query = { _id: new ObjectId(id) };
-    } else if (walletAddress) {
-      query = { walletAddress: walletAddress.toLowerCase() };
-    }
-    
-    const user = await db.collection('users').findOneAndUpdate(
-      query,
-      { 
-        $set: {
-          ...updateData,
-          updatedAt: new Date()
-        }
-      },
-      { 
-        returnDocument: 'after'
-      }
-    );
-    
+
+    const user = await userService.updateUser(id, updateData);
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
-    
+
     return NextResponse.json(user);
-  } catch (error: unknown) {
-    if (isMongoError(error)) {
-      if (error.code === 11000) {
-        return NextResponse.json({ error: 'Duplicate wallet address' }, { status: 400 });
-      }
-    }
-    
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+  } catch (error) {
+    return handleError(error);
   }
 }
 
+/**
+ * DELETE handler to remove a user by id via query parameter `id`.
+ * Returns 200 with success flag or 404 if not found.
+ */
 export async function DELETE(request: NextRequest): Promise<NextResponse> {
   try {
-    const client = await getClient();
-    const db = client.db('andromeda');
-    
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
-    const walletAddress = searchParams.get('walletAddress');
-    
-    if (!id && !walletAddress) {
-      return NextResponse.json({ error: 'ID or walletAddress is required' }, { status: 400 });
-    }
-    
-    let query = {};
-    if (id) {
-      query = { _id: new ObjectId(id) };
-    } else if (walletAddress) {
-      query = { walletAddress: walletAddress.toLowerCase() };
-    }
-    
-    const result = await db.collection('users').deleteOne(query);
-    
-    if (result.deletedCount === 0) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 });
-    }
-    
-    return NextResponse.json({ success: true, message: 'User deleted successfully' });
-  } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
-  }
-}
 
-export async function PATCH(request: NextRequest): Promise<NextResponse> {
-  try {
-    const client = await getClient();
-    const db = client.db('andromeda');
-    
-    const body = await request.json();
-    const { id, walletAddress, ...updateData } = body;
-    
-    if (!id && !walletAddress) {
-      return NextResponse.json({ error: 'ID or walletAddress is required' }, { status: 400 });
+    if (!id) {
+      return NextResponse.json({ error: 'ID is required' }, { status: 400 });
     }
-    
-    let query = {};
-    if (id) {
-      query = { _id: new ObjectId(id) };
-    } else if (walletAddress) {
-      query = { walletAddress: walletAddress.toLowerCase() };
-    }
-    
-    const user = await db.collection('users').findOneAndUpdate(
-      query,
-      { 
-        $set: {
-          ...updateData,
-          updatedAt: new Date()
-        }
-      },
-      { 
-        returnDocument: 'after'
-      }
-    );
-    
-    if (!user) {
+
+    const success = await userService.deleteUser(id);
+    if (!success) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
-    
-    return NextResponse.json(user);
-  } catch (error: unknown) {
-    if (isMongoError(error)) {
-      if (error.code === 11000) {
-        return NextResponse.json({ error: 'Duplicate wallet address' }, { status: 400 });
-      }
-    }
-    
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+
+    return NextResponse.json({ success: true, message: 'User deleted successfully' });
+  } catch (error) {
+    return handleError(error);
   }
 }

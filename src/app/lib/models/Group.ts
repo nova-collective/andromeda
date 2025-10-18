@@ -1,5 +1,5 @@
 import mongoose, { Schema, Model } from 'mongoose';
-import { IGroup } from '../types/mongoose';
+import { IGroup } from '../types/database';
 
 const groupSchema: Schema<IGroup> = new Schema({
   name: {
