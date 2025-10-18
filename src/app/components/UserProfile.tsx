@@ -59,7 +59,7 @@ export default function UserProfile({ walletAddress }: UserProfileProps) {
     <div>
       <h2>User Profile</h2>
       <p>Wallet: {user.walletAddress}</p>
-      <p>Theme: {user.settings.theme}</p>
+      <p>Theme: {user.settings?.theme}</p>
       <button onClick={() => updateUserSettings({ theme: 'dark', notifications: true })}>
         Switch to Dark Mode
       </button>
