@@ -16,7 +16,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@types/mongoose": "^5.11.97",
     "@vercel/analytics": "^1.5.0",
     "@vercel/functions": "^3.1.4",
     "mongodb": "^6.20.0",
@@ -42,7 +41,7 @@
     "viem": "^2.38.0"
   },
   "engines": {
-    "node": ">=22.20.0",
+    "node": "22.20.0",
     "pnpm": ">=10.16.1"
   }
 }
