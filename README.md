@@ -59,8 +59,12 @@ The following software should be installed on your machine in order to run this 
    1. the github user needs grants for the project: email to `nova.web3.collective@gmail.com`
 3. Link to the project: `vercel link`
 4. Pull the `.env.local` configuration file by running the command: `vercel env pull`
-5. Build the Next.js app with `pnpm build`
-6. Start the Next.js app with `pnpm start`
+5. Install and configure a MongoDB locally then:
+   1. install a MongoDB client ([MongoDB Compass](https://www.mongodb.com/products/tools/compass) is suggested)
+   2. connect the MongoDB client to the running `mongod` instance
+   3. create an `andromeda` database
+6. Build the Next.js app with `pnpm build`
+7. Start the Next.js app with `pnpm start`
    1. Alternatively you can start the app in dev mode (suggested way if you are a dev of this project): `pnpm dev`
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
