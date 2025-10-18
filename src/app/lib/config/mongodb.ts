@@ -9,7 +9,15 @@ attachDatabasePool(client);
 
 let isConnected = false;
 
-export default async function getClient() {
+/**
+ * Return a connected MongoClient singleton.
+ *
+ * This function ensures the client is connected once and reused across
+ * requests. We also attach the database pool for Vercel function environments.
+ *
+ * @returns Promise resolving to the configured MongoClient
+ */
+export default async function getClient(): Promise<MongoClient> {
   if (!isConnected) {
     await client.connect();
     isConnected = true;

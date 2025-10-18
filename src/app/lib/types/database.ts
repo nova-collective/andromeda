@@ -31,41 +31,65 @@ export interface IUser extends Document {
   lastLogin: Date;
 }
 
+export interface IGroupMember {
+  walletAddress: string;
+  role: 'admin' | 'member';
+  joinedAt: Date;
+}
+
 /**
- * IGroup describes the shape of a group document.
+ * Represents a member entry inside a group. Members are stored with their
+ * wallet address and optional role metadata.
  */
-export interface IGroup extends Document {
-  /** Group name (should be unique within owner scope) */
+export interface IGroupMember {
+  /** Member wallet address (unique identifier for the member) */
+  walletAddress: string;
+
+  /** Role of the member within the group */
+  role: 'admin' | 'member';
+
+  /** When the member joined the group */
+  joinedAt: Date;
+}
+
+/**
+ * IGroup describes the shape of a group document used by the app.
+ */
+export interface IGroup {
+  /** Optional string id (e.g. ObjectId.toString()) */
+  id?: string;
+
+  /** The display name of the group */
   name: string;
 
-  /** Optional description */
+  /** Optional longer description */
   description?: string;
 
-  /** Wallet address of the creator */
+  /** Wallet address of the user who created the group */
   createdBy: string;
 
-  /** Group members: can be stored as wallet addresses or objects with role metadata */
-  members: Array<{
-    walletAddress: string;
-    role: 'admin' | 'member';
-    joinedAt: Date;
-  }>;
+  /** Array of members (wallet addresses or member objects) */
+  members: IGroupMember[];
 
-  /** Fine-grained permissions for the group */
+  /** Permissions flags for the group */
   permissions: {
     canInvite: boolean;
     canPost: boolean;
   };
 
-  /** Group-specific settings */
+  /** Group-level settings */
   settings: {
     isPublic: boolean;
     requiresApproval: boolean;
   };
 
-  /** Creation timestamp */
-  createdAt: Date;
+  /** Creation timestamp (may be added by the DB) */
+  createdAt?: Date;
+
+  /** Last update timestamp (may be added/updated by the DB) */
+  updatedAt?: Date;
 }
+
 
 /**
  * A small repository interface used by data access layers.

@@ -1,6 +1,10 @@
 import mongoose, { Schema, Model } from 'mongoose';
 import { IGroup } from '../types/database';
 
+/**
+ * Mongoose schema for the Group collection.
+ * Fields align with the `IGroup` application interface.
+ */
 const groupSchema: Schema<IGroup> = new Schema({
   name: {
     type: String,
@@ -30,6 +34,10 @@ const groupSchema: Schema<IGroup> = new Schema({
   },
 });
 
+/**
+ * Mongoose model for groups. Exported as the default so application code
+ * can `import Group from '@/app/lib/models/Group'` and use Mongoose model methods.
+ */
 const Group: Model<IGroup> = mongoose.models.Group || mongoose.model<IGroup>('Group', groupSchema);
 
 export default Group;

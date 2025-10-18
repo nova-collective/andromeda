@@ -1,6 +1,15 @@
 import mongoose, { Schema, Model } from 'mongoose';
 import { IUser } from '../types/database';
 
+/**
+ * Mongoose schema for users. Mirrors the `IUser` application interface.
+ * Fields:
+ * - walletAddress: primary identifier for a user (unique, lowercased)
+ * - username, email: optional profile fields
+ * - settings: user preferences
+ * - groups: references to Group documents
+ * - createdAt, lastLogin: timestamps
+ */
 const userSchema: Schema<IUser> = new Schema({
   walletAddress: {
     type: String,
@@ -34,6 +43,10 @@ const userSchema: Schema<IUser> = new Schema({
   },
 });
 
+/**
+ * Mongoose Model for users. Import this default export to interact with the
+ * users collection via Mongoose (queries, updates, etc.).
+ */
 const User: Model<IUser> = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
 
 export default User;
