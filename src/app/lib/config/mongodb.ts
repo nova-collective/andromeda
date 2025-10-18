@@ -1,12 +1,8 @@
 import { MongoClient, MongoClientOptions } from 'mongodb';
 import { attachDatabasePool } from '@vercel/functions';
+import data from '../config/mainConfig.json';
 
-const options: MongoClientOptions = {
-  appName: "andromeda",
-  maxPoolSize: 10,
-  minPoolSize: 5,
-  maxIdleTimeMS: 5000
-};
+const options: MongoClientOptions = data.databases.mongodb || {};
 
 const client = new MongoClient(process.env.MONGODB_URI || '', options);
 attachDatabasePool(client);
