@@ -18,7 +18,7 @@ export default function UserProfile({ walletAddress }: UserProfileProps) {
   useEffect(() => {
     const fetchUser = async (): Promise<void> => {
       try {
-        const response = await fetch(`/api/users?address=${walletAddress}`);
+        const response = await fetch(`/api/users?walletAddress=${walletAddress}`);
         const userData: IUser = await response.json();
         setUser(userData);
       } catch (error) {
