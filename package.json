@@ -1,7 +1,7 @@
 {
   "name": "andromeda",
   "description": "A web3 platform to mint, sell and buy books as NFT",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "private": false,
   "license": "GNU General Public License v3.0",
   "author": "Christian Palazzo",
@@ -17,6 +17,9 @@
   },
   "dependencies": {
     "@vercel/analytics": "^1.5.0",
+    "@vercel/functions": "^3.1.4",
+    "mongodb": "^6.20.0",
+    "mongoose": "^8.19.1",
     "next": "15.5.4",
     "react": "19.1.0",
     "react-dom": "19.1.0"
@@ -38,7 +41,7 @@
     "viem": "^2.38.0"
   },
   "engines": {
-    "node": ">=22.20.0",
+    "node": "22.20.0",
     "pnpm": ">=10.16.1"
   }
 }
