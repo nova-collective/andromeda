@@ -1,0 +1,10 @@
+{
+    "databases": {
+        "mongodb": {
+            "appName": "andromeda",
+            "maxPoolSize": 10,
+            "minPoolSize": 5,
+            "maxIdleTimeMS": 5000
+        }
+    }
+}
