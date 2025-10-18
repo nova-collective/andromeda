@@ -14,7 +14,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const db = client.db('andromeda');
     
     const { searchParams } = new URL(request.url);
-    const walletAddress = searchParams.get('address');
+    const walletAddress = searchParams.get('walletAddress');
     const id = searchParams.get('id');
     
     if (id) {
