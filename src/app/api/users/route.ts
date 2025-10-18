@@ -29,7 +29,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     
     if (walletAddress) {
       const user = await db.collection('users').findOne({ 
-        walletAddress: walletAddress.toLowerCase() 
+        walletAddress: walletAddress
       });
       return NextResponse.json(user);
     }
