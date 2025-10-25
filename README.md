@@ -25,9 +25,7 @@ If and when screen readers become available that can browse the web and log in t
 * The author can mint a limited quantity of copies, certified by the blockchain network, and set the price.
 * The reader can buy a certified copy (the NFT) directly from the author, which is the digital equivalent of owning a signed copy.
 
-The philosophy behind Andromeda is to directly connect authors with people who buy an NFT because they want to read the work, not just to speculate. The primary goal is to create a direct author-reader relationship, rather than a marketplace for financial investment in unread artworks (though this is also possible). 
-
-The Andromeda project is committed to using technologies that are sustainable from environmental, economic, and social perspectives.
+The philosophy behind Andromeda is to directly connect authors with people who buy an NFT because they want to read the work, not just to speculate. The primary goal is to create a direct author-reader relationship, rather than a marketplace for financial investment in unread artworks (though this is also possible).
 
 ## Technical documentation
 
