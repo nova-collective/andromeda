@@ -35,7 +35,7 @@ interface WithAuthOptions {
  * @param WrappedComponent - Component to wrap. It will receive the injected `user` prop.
  * @param options - Optional behavior flags (e.g. requiredGroups).
  */
-export default function withAuth<P extends object>(
+export default function WithAuth<P extends object>(
   WrappedComponent: ComponentType<P & WithAuthProps>,
   options: WithAuthOptions = {}
 ) {
@@ -99,3 +99,28 @@ export default function withAuth<P extends object>(
     return <WrappedComponent {...props} user={user} />;
   };
 }
+
+/**
+ * 
+ * How to use: 
+ * 
+ * 1. pages under authentication: see admin page
+ * 
+ * 2. basic page protection:
+ * 
+ *  // pages/profile.tsx
+    import withAuth from '../components/withAuth';
+
+    function ProfilePage({ user }) {
+      // Qualsiasi utente autenticato può vedere questa pagina
+      return (
+        <div>
+          <h1>User Profile</h1>
+          <p>Welcome, {user.username}</p>
+        </div>
+      );
+    }
+
+    export default withAuth(ProfilePage);
+ * 
+ */
