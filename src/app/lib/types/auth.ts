@@ -11,8 +11,8 @@ export interface User {
   username: string;
   /** Contact email address */
   email: string;
-  /** Role name (for example: 'admin' | 'user') */
-  role: string;
+  /** User groups name (for example: 'admin' | 'user') */
+  groups?: string[];
   /** Hashed password (internal only) */
   password: string;
   /** Optional account creation timestamp */
@@ -30,8 +30,8 @@ export interface JWTPayload {
   userId: number;
   /** Username of the authenticated user */
   username: string;
-  /** User role attached to the token */
-  role: string;
+  /** User groups attached to the token */
+  groups: string[];
   /** Issued-at timestamp (optional) */
   iat?: number;
   /** Expiration timestamp (optional) */
