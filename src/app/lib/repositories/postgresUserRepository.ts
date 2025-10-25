@@ -1,6 +1,6 @@
 /*
 import { BaseRepository } from './baseRepository';
-import { IUser } from '@/app/lib/types/database';
+import { IUser } from '@/app/lib/types';
 
  export class PostgresUserRepository extends BaseRepository<IUser> {
   // PostgreSQL implementation

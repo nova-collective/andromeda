@@ -1,4 +1,4 @@
-import { IUser } from '@/app/lib/types/database';
+import { IUser } from '@/app/lib/types';
 import { MongoDBUserRepository } from '@/app/lib/repositories/mongodbUserRepository';
 
 /**

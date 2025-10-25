@@ -1,5 +1,5 @@
 import { BaseRepository } from './baseRepository';
-import { IUser } from '@/app/lib/types/database';
+import { IUser } from '@/app/lib/types';
 import getClient from '@/app/lib/config/mongodb';
 import { ObjectId, Document, Filter } from 'mongodb';
 

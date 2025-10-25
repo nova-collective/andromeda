@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { IUser } from '../lib/types/database';
+import { IUser } from '../lib/types';
 
 interface UserProfileProps {
   walletAddress: string;

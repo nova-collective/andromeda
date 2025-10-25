@@ -1,4 +1,4 @@
-import { IGroup, IGroupMember } from '@/app/lib/types/database';
+import { IGroup, IGroupMember } from '@/app/lib/types';
 import { MongoDBGroupRepository } from '@/app/lib/repositories/mongodbGroupRepository';
 
 /**

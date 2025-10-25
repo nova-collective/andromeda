@@ -31,12 +31,6 @@ export interface IUser extends Document {
   lastLogin: Date;
 }
 
-export interface IGroupMember {
-  walletAddress: string;
-  role: 'admin' | 'member';
-  joinedAt: Date;
-}
-
 /**
  * Represents a member entry inside a group. Members are stored with their
  * wallet address and optional role metadata.
