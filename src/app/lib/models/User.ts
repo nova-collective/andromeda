@@ -1,5 +1,5 @@
 import mongoose, { Schema, Model } from 'mongoose';
-import { IUser } from '../types/database';
+import { IUser } from '../types';
 
 /**
  * Mongoose schema for users. Mirrors the `IUser` application interface.
@@ -19,11 +19,17 @@ const userSchema: Schema<IUser> = new Schema({
   },
   username: {
     type: String,
-    required: false,
+    unique: true,
+    required: true,
   },
   email: {
     type: String,
-    required: false,
+    unique: true,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
   },
   settings: {
     theme: { type: String, default: 'light' },

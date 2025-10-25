@@ -1,5 +1,5 @@
 import mongoose, { Schema, Model } from 'mongoose';
-import { IGroup } from '../types/database';
+import { IGroup } from '../types';
 
 /**
  * Mongoose schema for the Group collection.

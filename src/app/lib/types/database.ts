@@ -10,10 +10,13 @@ export interface IUser extends Document {
   walletAddress: string;
 
   /** Optional display name */
-  username?: string;
+  username: string;
 
   /** Optional email */
-  email?: string;
+  email: string;
+
+  /** Optional password */
+  password: string;
 
   /** User-specific settings */
   settings: {
@@ -29,12 +32,6 @@ export interface IUser extends Document {
 
   /** Last login timestamp */
   lastLogin: Date;
-}
-
-export interface IGroupMember {
-  walletAddress: string;
-  role: 'admin' | 'member';
-  joinedAt: Date;
 }
 
 /**
