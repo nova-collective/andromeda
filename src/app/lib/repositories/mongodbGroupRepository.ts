@@ -1,5 +1,5 @@
 import { BaseRepository } from './baseRepository';
-import { IGroup, IGroupMember } from '@/app/lib/types/database';
+import { IGroup, IGroupMember } from '@/app/lib/types';
 import getClient from '@/app/lib/config/mongodb';
 import { ObjectId, Document, Filter, UpdateFilter } from 'mongodb';
 
