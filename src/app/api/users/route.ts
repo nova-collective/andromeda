@@ -1,6 +1,6 @@
 // app/api/users/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { UserService } from '@/app/lib/services/userService';
+import { UserService } from '@/app/lib/services';
 
 const userService = new UserService();
 
