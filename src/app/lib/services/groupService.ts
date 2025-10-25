@@ -1,5 +1,5 @@
 import { IGroup, IGroupMember } from '@/app/lib/types';
-import { MongoDBGroupRepository } from '@/app/lib/repositories/mongodbGroupRepository';
+import { MongoDBGroupRepository } from '@/app/lib/repositories';
 
 /**
  * GroupService wraps repository operations for group-related business logic.

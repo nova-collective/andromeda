@@ -1,5 +1,5 @@
 import { IUser } from '@/app/lib/types';
-import { MongoDBUserRepository } from '@/app/lib/repositories/mongodbUserRepository';
+import { MongoDBUserRepository } from '@/app/lib/repositories';
 
 /**
  * UserService is a small application-level service that wraps
