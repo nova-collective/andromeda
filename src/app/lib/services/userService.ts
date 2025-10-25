@@ -1,5 +1,6 @@
-import { IUser } from '@/app/lib/types';
+import { IUser, User } from '@/app/lib/types';
 import { MongoDBUserRepository } from '@/app/lib/repositories';
+import bcrypt from 'bcryptjs';
 
 /**
  * UserService is a small application-level service that wraps
@@ -66,5 +67,18 @@ export class UserService {
       { walletAddress: walletAddress.toLowerCase() }, 
       userData
     );
+  }
+
+  async validatePassword(user: User, password: string): Promise<boolean> {
+    try {
+      if (!user.password) {
+        return false;
+      }
+      
+      return await bcrypt.compare(password, user.password);
+    } catch (error) {
+      console.error('Error validating password:', error);
+      return false;
+    }
   }
 }

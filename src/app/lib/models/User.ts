@@ -19,11 +19,17 @@ const userSchema: Schema<IUser> = new Schema({
   },
   username: {
     type: String,
-    required: false,
+    unique: true,
+    required: true,
   },
   email: {
     type: String,
-    required: false,
+    unique: true,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
   },
   settings: {
     theme: { type: String, default: 'light' },
