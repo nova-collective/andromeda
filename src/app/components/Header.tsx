@@ -22,13 +22,11 @@ export default function Header() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Logica di login
     console.log('Login attempted');
     setIsLoginModalOpen(false);
   };
 
   const handleWalletConnect = () => {
-    // Logica connessione wallet
     console.log('Wallet connect attempted');
     setIsWalletModalOpen(false);
   };
@@ -38,9 +36,7 @@ export default function Header() {
       <header className="w-full bg-gray-900/80 backdrop-blur-md border-b border-gray-700 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            {/* Logo e Menu Items - Sinistra */}
             <div className="flex items-center">
-              {/* Logo */}
               <div className="flex-shrink-0">
                 <Image
                   src="/assets/andromeda-logo.png"
@@ -51,7 +47,6 @@ export default function Header() {
                 />
               </div>
 
-              {/* Menu Desktop */}
               <nav className="hidden md:ml-8 md:flex md:space-x-6">
                 {menuItems.map((item) => (
                   <a
@@ -65,9 +60,7 @@ export default function Header() {
               </nav>
             </div>
 
-            {/* Bottoni Destra */}
             <div className="hidden md:flex items-center space-x-4">
-              {/* Bottone Login */}
               <button
                 onClick={() => setIsLoginModalOpen(true)}
                 className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 border border-gray-600"
@@ -75,7 +68,6 @@ export default function Header() {
                 Login
               </button>
 
-              {/* Bottone Wallet */}
               <button
                 onClick={() => setIsWalletModalOpen(true)}
                 className="bg-yellow-500 hover:bg-yellow-400 text-yellow-900 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 font-semibold"
@@ -84,7 +76,6 @@ export default function Header() {
               </button>
             </div>
 
-            {/* Mobile menu button */}
             <div className="md:hidden flex items-center space-x-2">
               <button
                 onClick={() => setIsWalletModalOpen(true)}
@@ -107,7 +98,6 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Mobile Menu */}
           {isMobileMenuOpen && (
             <div className="md:hidden bg-gray-800/95 backdrop-blur-md border-t border-gray-700 animate-slideDown">
               <div className="px-2 pt-2 pb-3 space-y-1">
@@ -138,7 +128,6 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Login Modal */}
       {isLoginModalOpen && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fadeIn">
           <div className="bg-gray-800 rounded-2xl p-6 w-full max-w-md border border-gray-600">
@@ -185,7 +174,6 @@ export default function Header() {
         </div>
       )}
 
-      {/* Wallet Modal */}
       {isWalletModalOpen && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fadeIn">
           <div className="bg-gray-800 rounded-2xl p-6 w-full max-w-md border border-gray-600">
