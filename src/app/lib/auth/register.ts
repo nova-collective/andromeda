@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { generateToken, setTokenCookie } from './auth';
 import { MongoDBUserRepository } from '../repositories';
 import bcrypt from 'bcryptjs';
-import { AuthResponse, IUser, User } from '../types';
+import { AuthResponse, IUser } from '../types';
 
 /**
  * Payload expected by the registration endpoint.
@@ -42,7 +42,9 @@ export default async function handler(
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  const { username, email, password, confirmPassword }: RegisterRequest = req.body;
+  // Cast the incoming body to the expected DTO shape to avoid `any`.
+  const body = req.body as unknown as RegisterRequest;
+  const { username, email, password, confirmPassword } = body;
 
   try {
     if (!username || !email || !password || !confirmPassword) {
@@ -70,9 +72,9 @@ export default async function handler(
 
     const hashed = await bcrypt.hash(password, 10);
 
-    // The repository-backed IUser shape contains additional fields; cast
-    // to `any` here so we can provide a minimal new user object.
-    const newUser = await repo.create({
+    // Construct a minimal DB user payload. Cast via unknown to satisfy the
+    // repository signature without using `any`.
+    const created = await repo.create({
       username,
       email,
       password: hashed,
@@ -80,27 +82,53 @@ export default async function handler(
       settings: { theme: 'default', notifications: true },
       groups: [],
       lastLogin: new Date(),
-    } as any);
+    } as unknown as Omit<IUser, 'id' | 'createdAt'>);
 
-    const token = generateToken(({
-      userId: (newUser as any)._id ? String((newUser as any)._id) : (newUser as any).id,
+    /**
+     * Local DB user shape used for safe property access.
+     * @internal
+     */
+    type LocalDbUser = IUser & {
+      _id?: { toString(): string } | string;
+      id?: string | number;
+      username?: string;
+      email?: string;
+      groups?: unknown[];
+      lastLogin?: Date;
+    };
+
+    const newUser = created as unknown as LocalDbUser;
+
+    const userId = newUser._id
+      ? (typeof newUser._id === 'string' ? newUser._id : newUser._id.toString())
+      : String(newUser.id);
+
+    // Build JWT payload defensively and cast to the expected type.
+    const jwtPayload = ({
+      userId,
       username: newUser.username || '',
-      role: 'user'
-    } as unknown) as any);
+      // normalize groups to string[] for the token
+      groups: newUser.groups ? newUser.groups.map((g) => String(g)) : [],
+    } as unknown) as unknown as import('../types/auth').JWTPayload;
+
+    const token = generateToken(jwtPayload);
 
     setTokenCookie(res, token);
 
-    res.status(201).json({
+    const response = {
       message: 'Registration successful',
       user: {
-        id: (newUser as any)._id ? String((newUser as any)._id) : (newUser as any).id,
+        id: userId,
         username: newUser.username,
         email: newUser.email,
-        role: 'user'
-      }
-    } as unknown as AuthResponse);
-  } catch (error) {
-    console.error('Registration error:', error);
-    res.status(500).json({ message: 'Internal server error' });
+        role: 'user',
+      },
+    } as unknown as AuthResponse;
+
+    res.status(201).json(response);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error('Registration error:', message);
+    res.status(500).json({ message: 'Internal server error' } as AuthResponse);
   }
 }
