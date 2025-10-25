@@ -4,13 +4,36 @@ import { MongoDBUserRepository } from '../repositories';
 import bcrypt from 'bcryptjs';
 import { AuthResponse } from '../types';
 
+/**
+ * Payload expected by the registration endpoint.
+ *
+ * This mirrors the client-side form values for creating a new account.
+ */
 interface RegisterRequest {
+  /** Chosen display / login name */
   username: string;
+  /** Contact email address */
   email: string;
+  /** Plain-text password supplied by the client (must be sent over TLS) */
   password: string;
+  /** Password confirmation, must match `password` */
   confirmPassword: string;
 }
 
+/**
+ * Registration API route.
+ *
+ * Accepts a POST with a JSON body matching {@link RegisterRequest}. Validates
+ * inputs, rejects duplicate usernames/emails, hashes the password, creates the
+ * user via the repository, sets an authentication cookie, and returns an
+ * {@link AuthResponse} containing a simplified user object.
+ *
+ * Responses:
+ * - 201: Registration successful
+ * - 400: Validation error (missing fields, duplicates, weak password)
+ * - 405: Method not allowed
+ * - 500: Internal server error
+ */
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<AuthResponse>
