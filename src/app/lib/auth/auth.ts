@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import type { NextApiResponse } from 'next';
 import { JWTPayload } from '../types/auth';
 
 /**
@@ -43,7 +44,7 @@ export function verifyToken(token: string): JWTPayload | null {
  * @param res - Server response object (must implement setHeader)
  * @param token - Signed JWT string to set as cookie
  */
-export function setTokenCookie(res: any, token: string): void {
+export function setTokenCookie(res: NextApiResponse, token: string): void {
   res.setHeader('Set-Cookie', [
     `token=${token}; Path=/; HttpOnly; SameSite=Strict; Max-Age=604800; ${process.env.NODE_ENV === 'production' ? 'Secure;' : ''}`
   ]);
@@ -54,7 +55,7 @@ export function setTokenCookie(res: any, token: string): void {
  *
  * @param res - Server response object (must implement setHeader)
  */
-export function clearTokenCookie(res: any): void {
+export function clearTokenCookie(res: NextApiResponse): void {
   res.setHeader('Set-Cookie', [
     `token=; Path=/; HttpOnly; SameSite=Strict; Expires=Thu, 01 Jan 1970 00:00:00 GMT; ${process.env.NODE_ENV === 'production' ? 'Secure;' : ''}`
   ]);

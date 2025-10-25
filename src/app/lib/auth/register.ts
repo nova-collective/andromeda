@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { generateToken, setTokenCookie } from './auth';
 import { MongoDBUserRepository } from '../repositories';
 import bcrypt from 'bcryptjs';
-import { AuthResponse } from '../types';
+import { AuthResponse, IUser, User } from '../types';
 
 /**
  * Payload expected by the registration endpoint.

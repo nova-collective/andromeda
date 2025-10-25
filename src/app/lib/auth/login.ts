@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { generateToken, setTokenCookie } from './auth';
 import { MongoDBUserRepository } from '../repositories';
 import bcrypt from 'bcryptjs';
-import { LoginRequest, AuthResponse } from '../types';
+import { LoginRequest, AuthResponse, IUser, JWTPayload } from '../types';
 
 /**
  * POST /api/auth/login
@@ -28,39 +28,51 @@ export default async function handler(
 
     const repo = new MongoDBUserRepository();
     const user = await repo.findByUsername(username);
+    type LocalDbUser = IUser & {
+      _id?: { toString(): string } | string;
+      id?: string | number;
+      password?: string;
+      groups?: unknown[];
+      username?: string;
+      email?: string;
+      lastLogin?: Date;
+    };
+    const dbUser = user as unknown as LocalDbUser;
     if (!user) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
     // Validate password hash (user.password is expected to be a hash)
-    const isValidPassword = await bcrypt.compare(password, (user as any).password || '');
+    const isValidPassword = await bcrypt.compare(password, dbUser.password || '');
     if (!isValidPassword) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
     // Best-effort: update lastLogin timestamp (ignore failures)
     try {
-      await repo.update(String((user as any)._id || (user as any).id), { lastLogin: new Date() } as any);
+      await repo.update(String(dbUser._id ? (typeof dbUser._id === 'string' ? dbUser._id : dbUser._id.toString()) : dbUser.id), { lastLogin: new Date() } as Partial<IUser>);
     } catch (err) {
       console.error('Failed to update lastLogin:', err);
     }
 
-    const token = generateToken(({
-      userId: (user as any)._id ? String((user as any)._id) : (user as any).id,
-      username: user.username || '',
-      groups: (user as any).groups ? (user as any).groups.map((g: any) => String(g)) : []
-    } as unknown) as any);
+    const jwtPayload = {
+      userId: dbUser._id ? (typeof dbUser._id === 'string' ? dbUser._id : dbUser._id.toString()) : String(dbUser.id),
+      username: dbUser.username || '',
+      groups: dbUser.groups ? dbUser.groups.map((g) => String(g)) : [],
+    } as unknown as JWTPayload;
+
+    const token = generateToken(jwtPayload);
 
     setTokenCookie(res, token);
 
     res.status(200).json({
       message: 'Login successful',
       user: {
-        id: (user as any)._id ? String((user as any)._id) : (user as any).id,
-        username: user.username,
-        email: user.email,
-        groups: (user as any).groups ? (user as any).groups.map((g: any) => String(g)) : [],
-        lastLogin: (user as any).lastLogin
-      }
+        id: dbUser._id ? (typeof dbUser._id === 'string' ? dbUser._id : dbUser._id.toString()) : dbUser.id,
+        username: dbUser.username,
+        email: dbUser.email,
+        groups: dbUser.groups ? dbUser.groups.map((g) => String(g)) : [],
+        lastLogin: dbUser.lastLogin,
+      },
     } as unknown as AuthResponse);
   } catch (error) {
     console.error('Login error:', error);

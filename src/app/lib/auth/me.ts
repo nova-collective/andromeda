@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { verifyToken } from './auth';
 import { MongoDBUserRepository } from '../repositories';
-import { AuthResponse } from '../types';
+import { AuthResponse, IUser } from '../types';
 
 /**
  * GET /api/auth/me
@@ -38,11 +38,11 @@ export default async function handler(
     // Map DB user document to API-friendly shape. Handle ObjectId -> string
     // conversions and provide conservative defaults where appropriate.
     const apiUser = {
-      id: (user as any)._id ? String((user as any)._id) : (user as any).id,
+      id: (user as IUser)._id ? String((user as IUser)._id) : (user as IUser).id,
       username: user.username,
       email: user.email,
-      groups: (user as any).groups ? (user as any).groups.map((g: any) => String(g)) : ['user'],
-      lastLogin: (user as any).lastLogin
+      groups: (user as IUser).groups,
+      lastLogin: (user as IUser).lastLogin
     };
 
     res.status(200).json({ message: 'Authenticated', user: apiUser } as unknown as AuthResponse);
