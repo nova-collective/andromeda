@@ -1,9 +1,16 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { generateToken, setTokenCookie } from './auth';
-import { MongoDBUserRepository } from '@/app/lib/repositories';
+import { MongoDBUserRepository } from '../repositories';
 import bcrypt from 'bcryptjs';
-import { LoginRequest, AuthResponse } from '@/app/lib/types';
+import { LoginRequest, AuthResponse } from '../types';
 
+/**
+ * POST /api/auth/login
+ *
+ * Authenticate a user using username and password. Expects a JSON body
+ * matching {@link LoginRequest}. On success sets an auth cookie and returns
+ * a simplified user object inside {@link AuthResponse}.
+ */
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<AuthResponse>
@@ -24,40 +31,35 @@ export default async function handler(
     if (!user) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
-
-    // If your user model supports an `isActive` flag, check it here.
-    // The current `IUser` type used by the repository does not include `isActive`.
-
+    // Validate password hash (user.password is expected to be a hash)
     const isValidPassword = await bcrypt.compare(password, (user as any).password || '');
     if (!isValidPassword) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // Update lastLogin timestamp (best-effort)
+    // Best-effort: update lastLogin timestamp (ignore failures)
     try {
-      await repo.update(String((user as any)._id || user.id), { lastLogin: new Date() } as any);
+      await repo.update(String((user as any)._id || (user as any).id), { lastLogin: new Date() } as any);
     } catch (err) {
-      console.error('Failed to update last login:', err);
+      console.error('Failed to update lastLogin:', err);
     }
 
     const token = generateToken(({
       userId: (user as any)._id ? String((user as any)._id) : (user as any).id,
       username: user.username || '',
-      role: 'user'
+      groups: (user as any).groups ? (user as any).groups.map((g: any) => String(g)) : []
     } as unknown) as any);
 
     setTokenCookie(res, token);
 
-    // Return a simplified user object. Cast to AuthResponse to satisfy
-    // the declared response generic while keeping the repository-shaped
-    // user document separate from our API contract.
     res.status(200).json({
       message: 'Login successful',
       user: {
         id: (user as any)._id ? String((user as any)._id) : (user as any).id,
         username: user.username,
         email: user.email,
-        role: 'user'
+        groups: (user as any).groups ? (user as any).groups.map((g: any) => String(g)) : [],
+        lastLogin: (user as any).lastLogin
       }
     } as unknown as AuthResponse);
   } catch (error) {
