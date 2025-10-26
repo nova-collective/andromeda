@@ -1,4 +1,25 @@
-import { Document, Types } from 'mongoose';
+import { Document, ObjectId, Types } from 'mongoose';
+
+/**
+ * Permission entry used by users and groups.
+ *
+ * `name` identifies the permission (for example `posts.manage`) and the
+ * `crud` flags describe which operations are allowed for holders of this
+ * permission. `description` is optional human-readable context.
+ */
+export interface IPermission {
+  /** Short machine name for the permission */
+  name: string;
+  /** Optional human-friendly description */
+  description?: string;
+  /** CRUD capabilities associated with the permission */
+  crud: {
+    read: boolean;
+    create: boolean;
+    update: boolean;
+    delete: boolean;
+  };
+}
 
 /**
  * IUser describes the shape of a user document in the application.
@@ -20,9 +41,17 @@ export interface IUser extends Document {
 
   /** User-specific settings */
   settings: {
+    /** UI theme preference (e.g. 'default' | 'dark') */
     theme: string;
+    /** Whether the user receives notifications */
     notifications: boolean;
   };
+
+  /**
+   * Explicit permissions assigned to the user. These take precedence over
+   * permissions inherited from groups.
+   */
+  permissions: IPermission[];
 
   /** References to groups the user belongs to */
   groups: Types.ObjectId[];
@@ -32,21 +61,7 @@ export interface IUser extends Document {
 
   /** Last login timestamp */
   lastLogin: Date;
-}
 
-/**
- * Represents a member entry inside a group. Members are stored with their
- * wallet address and optional role metadata.
- */
-export interface IGroupMember {
-  /** Member wallet address (unique identifier for the member) */
-  walletAddress: string;
-
-  /** Role of the member within the group */
-  role: 'admin' | 'member';
-
-  /** When the member joined the group */
-  joinedAt: Date;
 }
 
 /**
@@ -65,18 +80,17 @@ export interface IGroup {
   /** Wallet address of the user who created the group */
   createdBy: string;
 
-  /** Array of members (wallet addresses or member objects) */
-  members: IGroupMember[];
+  /** Array of member user ids (ObjectId) referenced by this group */
+  members: Types.ObjectId[];
 
-  /** Permissions flags for the group */
-  permissions: {
-    canInvite: boolean;
-    canPost: boolean;
-  };
+  /** Permissions granted at the group level */
+  permissions: IPermission[];
 
   /** Group-level settings */
   settings: {
+    /** Whether the group is visible to non-members */
     isPublic: boolean;
+    /** Whether joining the group requires approval */
     requiresApproval: boolean;
   };
 

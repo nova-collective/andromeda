@@ -1,10 +1,10 @@
 import { User, JWTPayload, AuthResponse, LoginRequest } from './auth';
-import { IUser, IGroup, IGroupMember, Repository } from './database';
+import { IUser, IGroup, IPermission, Repository } from './database';
 
 export type {
     AuthResponse,
     IGroup,
-    IGroupMember,
+    IPermission,
     IUser,
     JWTPayload,
     LoginRequest,
