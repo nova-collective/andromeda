@@ -1,25 +1,5 @@
 import { Document, ObjectId } from 'mongoose';
-
-/**
- * Permission entry used by users and groups.
- *
- * `name` identifies the permission (for example `posts.manage`) and the
- * `crud` flags describe which operations are allowed for holders of this
- * permission. `description` is optional human-readable context.
- */
-export interface IPermission {
-  /** Short machine name for the permission */
-  name: string;
-  /** Optional human-friendly description */
-  description?: string;
-  /** CRUD capabilities associated with the permission */
-  crud: {
-    read: boolean;
-    create: boolean;
-    update: boolean;
-    delete: boolean;
-  };
-}
+import { Permission } from './auth';
 
 /**
  * IUser describes the shape of a user document in the application.
@@ -51,7 +31,7 @@ export interface IUser extends Document {
    * Explicit permissions assigned to the user. These take precedence over
    * permissions inherited from groups.
    */
-  permissions: IPermission[];
+  permissions: Permission[];
 
   /** References to groups the user belongs to */
   groups: ObjectId[];
@@ -84,7 +64,7 @@ export interface IGroup {
   members: ObjectId[];
 
   /** Permissions granted at the group level */
-  permissions: IPermission[];
+  permissions: Permission[];
 
   /** Group-level settings */
   settings: {

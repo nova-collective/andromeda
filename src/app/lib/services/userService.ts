@@ -1,4 +1,4 @@
-import { IUser, IPermission } from '@/app/lib/types';
+import { IUser, Permission } from '@/app/lib/types';
 import { MongoDBUserRepository, MongoDBGroupRepository } from '@/app/lib/repositories';
 import { ObjectId, Types } from 'mongoose';
 import bcrypt from 'bcryptjs';
@@ -65,7 +65,7 @@ export class UserService {
    */
   async upsertUser(walletAddress: string, userData: Partial<IUser>): Promise<IUser> {
     return this.repository.upsert(
-      { walletAddress: walletAddress.toLowerCase() }, 
+      { walletAddress: walletAddress }, 
       userData
     );
   }
@@ -153,11 +153,11 @@ export class UserService {
    * @param userId - string id of the user (ObjectId.toString())
    * @returns Array of permission objects (may be empty)
    */
-  async getUserPermissions(userId: string): Promise<IPermission[]> {
+  async getUserPermissions(userId: string): Promise<Permission[]> {
     const user = await this.repository.findById(userId);
     if (!user) return [];
 
-    const permsMap = new Map<string, IPermission>();
+    const permsMap = new Map<string, Permission>();
 
     // Add explicit user permissions first (they take precedence)
     const userPermissions = Array.isArray(user.permissions) ? user.permissions : [];
@@ -202,7 +202,7 @@ export class UserService {
   async verifyUserPermission(
     userId: string,
     permissionName: string,
-    crud: keyof IPermission['crud']
+    crud: keyof Permission['crud']
   ): Promise<boolean> {
     // First check explicit user permissions (they take precedence)
     const user = await this.repository.findById(userId);
