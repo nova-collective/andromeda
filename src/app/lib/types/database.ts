@@ -54,7 +54,7 @@ export interface IUser extends Document {
   permissions: IPermission[];
 
   /** References to groups the user belongs to */
-  groups: Types.ObjectId[];
+  groups: ObjectId[];
 
   /** Creation timestamp */
   createdAt: Date;
@@ -81,7 +81,7 @@ export interface IGroup {
   createdBy: string;
 
   /** Array of member user ids (ObjectId) referenced by this group */
-  members: Types.ObjectId[];
+  members: ObjectId[];
 
   /** Permissions granted at the group level */
   permissions: IPermission[];

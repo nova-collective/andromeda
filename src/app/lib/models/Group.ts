@@ -16,14 +16,13 @@ const groupSchema: Schema<IGroup> = new Schema({
     required: true,
   },
   members: [{
-    walletAddress: String,
-    role: { type: String, enum: ['admin', 'member'], default: 'member' },
-    joinedAt: { type: Date, default: Date.now },
+    type: Schema.Types.ObjectId,
+    ref: 'User',
   }],
-  permissions: {
-    canInvite: { type: Boolean, default: true },
-    canPost: { type: Boolean, default: true },
-  },
+  permissions: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Permission',
+  }],
   settings: {
     isPublic: { type: Boolean, default: false },
     requiresApproval: { type: Boolean, default: false },

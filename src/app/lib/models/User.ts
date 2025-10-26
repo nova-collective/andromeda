@@ -1,5 +1,6 @@
 import mongoose, { Schema, Model } from 'mongoose';
 import { IUser } from '../types';
+import { ref } from 'process';
 
 /**
  * Mongoose schema for users. Mirrors the `IUser` application interface.
@@ -13,9 +14,8 @@ import { IUser } from '../types';
 const userSchema: Schema<IUser> = new Schema({
   walletAddress: {
     type: String,
-    required: true,
+    required: false,
     unique: true,
-    lowercase: true,
   },
   username: {
     type: String,
@@ -38,6 +38,10 @@ const userSchema: Schema<IUser> = new Schema({
   groups: [{
     type: Schema.Types.ObjectId,
     ref: 'Group',
+  }],
+  permissions: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Permission',
   }],
   createdAt: {
     type: Date,

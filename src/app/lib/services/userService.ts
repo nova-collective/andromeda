@@ -1,6 +1,6 @@
-import { IUser } from '@/app/lib/types';
-import { MongoDBUserRepository } from '@/app/lib/repositories';
-import { Types } from 'mongoose';
+import { IUser, IPermission } from '@/app/lib/types';
+import { MongoDBUserRepository, MongoDBGroupRepository } from '@/app/lib/repositories';
+import { ObjectId, Types } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 /**
@@ -121,7 +121,7 @@ export class UserService {
       const updatedGroups = currentGroups.filter(g => String(g) !== group);
       
       return await this.repository.update(userId, {
-        groups: updatedGroups as unknown as Types.ObjectId[]
+        groups: updatedGroups as unknown as ObjectId[]
       } as Partial<IUser>);
     } catch (error) {
       console.error('Error removing user from group:', error);
@@ -141,5 +141,99 @@ export class UserService {
    */
   isUserAdmin(user: IUser): boolean {
     return this.isUserInGroup(user, 'admin');
+  }
+
+  /**
+   * Get the concrete permission objects for a user.
+   *
+   * This returns the union of the user's explicit `permissions` and the
+   * permissions granted by groups the user belongs to. Returned permissions
+   * are de-duplicated by permission `name` (first seen wins).
+   *
+   * @param userId - string id of the user (ObjectId.toString())
+   * @returns Array of permission objects (may be empty)
+   */
+  async getUserPermissions(userId: string): Promise<IPermission[]> {
+    const user = await this.repository.findById(userId);
+    if (!user) return [];
+
+    const permsMap = new Map<string, IPermission>();
+
+    // Add explicit user permissions first (they take precedence)
+    if (Array.isArray((user as any).permissions)) {
+      for (const p of (user as any).permissions as IPermission[]) {
+        if (p && p.name) permsMap.set(p.name, p);
+      }
+    }
+
+    // Resolve permissions from groups
+    const groupRepo = new MongoDBGroupRepository();
+    const groups = (user as any).groups as unknown[] | undefined;
+    if (Array.isArray(groups)) {
+      for (const g of groups) {
+        try {
+          const groupId = typeof g === 'string' ? g : String((g as any).toString?.() ?? g);
+          const group = await groupRepo.findById(groupId);
+          if (group && Array.isArray(group.permissions)) {
+            for (const gp of group.permissions as IPermission[]) {
+              if (gp && gp.name && !permsMap.has(gp.name)) {
+                permsMap.set(gp.name, gp);
+              }
+            }
+          }
+        } catch (err) {
+          // Ignore individual group resolution failures and continue
+          console.error('Failed to resolve group permissions for', g, err);
+        }
+      }
+    }
+
+    return Array.from(permsMap.values());
+  }
+
+  /**
+   * Verify whether a user has a specific permission and CRUD capability.
+   * 
+   * If you expect to call this frequently, consider caching group lookups or the 
+   * computed effective permissions per user (with a TTL) to reduce DB round-trips.
+   *
+   * @param userId - string id of the user (ObjectId.toString())
+   * @param permissionName - name of the permission to check (e.g. 'posts.manage')
+   * @param crud - one of 'read' | 'create' | 'update' | 'delete'
+   * @returns boolean indicating whether the user has that CRUD capability for the permission
+   */
+  async verifyUserPermission(
+    userId: string,
+    permissionName: string,
+    crud: keyof IPermission['crud']
+  ): Promise<boolean> {
+    // First check explicit user permissions (they take precedence)
+    const user = await this.repository.findById(userId);
+    if (!user) return false;
+
+    if (Array.isArray((user as any).permissions)) {
+      const up = ((user as any).permissions as IPermission[]).find((perm) => perm.name === permissionName);
+      if (up) return Boolean(up.crud[crud]);
+    }
+
+    // Then check group permissions (user may inherit permissions from groups)
+    const groupRepo = new MongoDBGroupRepository();
+    const groups = (user as any).groups as unknown[] | undefined;
+    if (Array.isArray(groups)) {
+      for (const g of groups) {
+        try {
+          const groupId = typeof g === 'string' ? g : String((g as any).toString?.() ?? g);
+          const group = await groupRepo.findById(groupId);
+          if (group && Array.isArray(group.permissions)) {
+            const gp = (group.permissions as IPermission[]).find((perm) => perm.name === permissionName);
+            if (gp) return Boolean(gp.crud[crud]);
+          }
+        } catch (err) {
+          console.error('Failed to resolve group when verifying permission', g, err);
+        }
+      }
+    }
+
+    return false;
   }
 }

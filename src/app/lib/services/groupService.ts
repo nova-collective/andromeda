@@ -1,4 +1,4 @@
-import { IGroup, IGroupMember } from '@/app/lib/types';
+import { IGroup } from '@/app/lib/types';
 import { MongoDBGroupRepository } from '@/app/lib/repositories';
 
 /**
@@ -42,24 +42,30 @@ export class GroupService {
     return this.repository.delete(id);
   }
 
-  /** Add a member to a group */
-  async addMemberToGroup(groupId: string, member: IGroupMember): Promise<IGroup | null> {
-    return this.repository.addMember(groupId, member);
+  /** Add a user to a group (by user id) */
+  async addUserToGroup(groupId: string, userId: string): Promise<IGroup | null> {
+    return this.repository.addUser(groupId, userId);
   }
 
-  /** Remove a member from a group */
-  async removeMemberFromGroup(groupId: string, walletAddress: string): Promise<IGroup | null> {
-    return this.repository.removeMember(groupId, walletAddress);
+  /** Remove a user from a group (by user id) */
+  async removeUserFromGroup(groupId: string, userId: string): Promise<IGroup | null> {
+    return this.repository.removeUser(groupId, userId);
   }
 
-  /** Update a member's role in a group */
-  async updateMemberRole(groupId: string, walletAddress: string, role: string): Promise<IGroup | null> {
-    return this.repository.updateMemberRole(groupId, walletAddress, role);
+  /** Update a user's role in a group
+   *
+   * NOTE: group-level user role objects were removed. If you require
+   * per-member roles implement a dedicated membership collection or store
+   * roles on the user object. This method intentionally throws to make the
+   * absence explicit at runtime.
+   */
+  async updateUserRole(): Promise<never> {
+    throw new Error('Group-level user roles are not supported.');
   }
 
-  /** Find groups where a wallet address is a member */
-  async getGroupsByMember(walletAddress: string): Promise<IGroup[]> {
-    return this.repository.findByMember(walletAddress);
+  /** Find groups where a user id is a member */
+  async getGroupsByUserId(userId: string): Promise<IGroup[]> {
+    return this.repository.findByUserId(userId);
   }
 
   /** Get groups and optionally include members; filter by creator when provided */
