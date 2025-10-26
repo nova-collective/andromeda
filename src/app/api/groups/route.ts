@@ -8,9 +8,10 @@ function isMongoError(error: unknown): error is { code: number; message: string 
   return 'code' in obj && typeof obj['code'] === 'number' && 'message' in obj && typeof obj['message'] === 'string';
 }
 
-type GroupMember = string | { walletAddress: string; role?: string };
+// members are user ids (stored as ObjectId in the DB)
+type GroupMember = string | import('mongodb').ObjectId;
 type GroupDoc = { members?: GroupMember[]; [key: string]: unknown };
-type UserDoc = { walletAddress: string; username?: string; [key: string]: unknown };
+type UserDoc = { _id: import('mongodb').ObjectId; walletAddress: string; username?: string; [key: string]: unknown };
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
@@ -63,30 +64,32 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       groups.map(async (group) => {
           const membersArr = (group.members ?? []) as GroupMember[];
           if (membersArr.length > 0) {
-            const memberIds = membersArr.map((member: GroupMember) =>
-              typeof member === 'string' ? member : member.walletAddress
-            );
+            // Normalize to ObjectId instances for querying users by _id
+            const memberObjectIds = membersArr.map((member: GroupMember) => {
+              try {
+                return typeof member === 'string' ? new ObjectId(member) : member;
+              } catch {
+                // fallback: keep original value if it cannot be cast
+                return member as unknown as import('mongodb').ObjectId;
+              }
+            });
 
             const members = (await db.collection('users').find({
-              walletAddress: { $in: memberIds }
+              _id: { $in: memberObjectIds }
             }).toArray()) as unknown as UserDoc[];
 
             return {
               ...group,
-              members: members.map(user => {
-                const role = (membersArr.find((m: GroupMember) =>
-                  (typeof m === 'string' ? m : m.walletAddress) === user.walletAddress
-                ) as { role?: string } | undefined)?.role || 'member';
-
-                return {
-                  walletAddress: user.walletAddress,
-                  username: user.username,
-                  role,
-                };
-              })
+              // map user documents to a lightweight member view
+              members: members.map(user => ({
+                id: String(user._id),
+                walletAddress: user.walletAddress,
+                username: user.username,
+              }))
             };
           }
-        return group;
+
+          return { ...group, members: [] };
       })
     );
     
