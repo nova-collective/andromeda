@@ -1,6 +1,5 @@
 import mongoose, { Schema, Model } from 'mongoose';
 import { IUser } from '../types';
-import { ref } from 'process';
 
 /**
  * Mongoose schema for users. Mirrors the `IUser` application interface.

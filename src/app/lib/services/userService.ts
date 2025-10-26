@@ -160,31 +160,28 @@ export class UserService {
     const permsMap = new Map<string, IPermission>();
 
     // Add explicit user permissions first (they take precedence)
-    if (Array.isArray((user as any).permissions)) {
-      for (const p of (user as any).permissions as IPermission[]) {
-        if (p && p.name) permsMap.set(p.name, p);
-      }
+    const userPermissions = Array.isArray(user.permissions) ? user.permissions : [];
+    for (const p of userPermissions) {
+      if (p && p.name) permsMap.set(p.name, p);
     }
 
     // Resolve permissions from groups
     const groupRepo = new MongoDBGroupRepository();
-    const groups = (user as any).groups as unknown[] | undefined;
-    if (Array.isArray(groups)) {
-      for (const g of groups) {
-        try {
-          const groupId = typeof g === 'string' ? g : String((g as any).toString?.() ?? g);
-          const group = await groupRepo.findById(groupId);
-          if (group && Array.isArray(group.permissions)) {
-            for (const gp of group.permissions as IPermission[]) {
-              if (gp && gp.name && !permsMap.has(gp.name)) {
-                permsMap.set(gp.name, gp);
-              }
+    const groups = Array.isArray(user.groups) ? user.groups : [];
+    for (const g of groups) {
+      try {
+        const groupId = typeof g === 'string' ? g : String(g);
+        const group = await groupRepo.findById(groupId);
+        if (group && Array.isArray(group.permissions)) {
+          for (const gp of group.permissions) {
+            if (gp && gp.name && !permsMap.has(gp.name)) {
+              permsMap.set(gp.name, gp);
             }
           }
-        } catch (err) {
-          // Ignore individual group resolution failures and continue
-          console.error('Failed to resolve group permissions for', g, err);
         }
+      } catch (err) {
+        // Ignore individual group resolution failures and continue
+        console.error('Failed to resolve group permissions for', g, err);
       }
     }
 
@@ -211,26 +208,23 @@ export class UserService {
     const user = await this.repository.findById(userId);
     if (!user) return false;
 
-    if (Array.isArray((user as any).permissions)) {
-      const up = ((user as any).permissions as IPermission[]).find((perm) => perm.name === permissionName);
-      if (up) return Boolean(up.crud[crud]);
-    }
+    const userPermissions2 = Array.isArray(user.permissions) ? user.permissions : [];
+    const up = userPermissions2.find((perm) => perm.name === permissionName);
+    if (up) return Boolean(up.crud[crud]);
 
     // Then check group permissions (user may inherit permissions from groups)
     const groupRepo = new MongoDBGroupRepository();
-    const groups = (user as any).groups as unknown[] | undefined;
-    if (Array.isArray(groups)) {
-      for (const g of groups) {
-        try {
-          const groupId = typeof g === 'string' ? g : String((g as any).toString?.() ?? g);
-          const group = await groupRepo.findById(groupId);
-          if (group && Array.isArray(group.permissions)) {
-            const gp = (group.permissions as IPermission[]).find((perm) => perm.name === permissionName);
-            if (gp) return Boolean(gp.crud[crud]);
-          }
-        } catch (err) {
-          console.error('Failed to resolve group when verifying permission', g, err);
+    const groups2 = Array.isArray(user.groups) ? user.groups : [];
+    for (const g of groups2) {
+      try {
+        const groupId = typeof g === 'string' ? g : String(g);
+        const group = await groupRepo.findById(groupId);
+        if (group && Array.isArray(group.permissions)) {
+          const gp = group.permissions.find((perm) => perm.name === permissionName);
+          if (gp) return Boolean(gp.crud[crud]);
         }
+      } catch (err) {
+        console.error('Failed to resolve group when verifying permission', g, err);
       }
     }
 

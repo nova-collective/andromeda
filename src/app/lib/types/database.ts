@@ -1,4 +1,4 @@
-import { Document, ObjectId, Types } from 'mongoose';
+import { Document, ObjectId } from 'mongoose';
 
 /**
  * Permission entry used by users and groups.
