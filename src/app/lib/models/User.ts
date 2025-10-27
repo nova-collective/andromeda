@@ -11,6 +11,13 @@ import { IUser } from '../types';
  * - createdAt, lastLogin: timestamps
  */
 const userSchema: Schema<IUser> = new Schema({
+  /**
+   * The walletAddress field was changed from required to optional to support users
+   * who register with alternative identifiers (username and email). Authentication
+   * and identification can now be performed using username and email, both of which
+   * are required and unique. This change allows for non-wallet-based user accounts
+   * and improves flexibility in user onboarding.
+   */
   walletAddress: {
     type: String,
     required: false,
