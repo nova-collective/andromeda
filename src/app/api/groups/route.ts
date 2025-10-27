@@ -90,8 +90,14 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             };
           }
 
+          // If membersArr is empty, this group has no members.
+          // If membersArr is non-empty but all members failed to resolve (e.g., invalid ObjectIds),
+          // we still return an empty array for members. This is intentional for consistent response shape.
+          // Optionally, log a warning if membersArr is non-empty but all failed to resolve.
+          if (membersArr.length > 0) {
+            console.warn('All members failed to resolve for group:', group._id, membersArr);
+          }
           return { ...group, members: [] };
-      })
     );
     
     return NextResponse.json(groupsWithMembers);
