@@ -180,12 +180,11 @@ export class UserService {
     }
 
     // Resolve permissions from groups using cached repository instance
-  const groupRepo = this.groupRepository;
     const groups = Array.isArray(user.groups) ? user.groups : [];
     for (const g of groups) {
       try {
         const groupId = typeof g === 'string' ? g : String(g);
-        const group = await groupRepo.findById(groupId);
+        const group = await this.groupRepository.findById(groupId);
         if (group && Array.isArray(group.permissions)) {
           for (const gp of group.permissions) {
             if (gp && gp.name && !permsMap.has(gp.name)) {
