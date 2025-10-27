@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { generateToken, setTokenCookie } from './auth';
 import { MongoDBUserRepository } from '../repositories';
-import bcrypt from 'bcryptjs';
+import { hashPassword, validatePasswordStrength } from '../utils';
 import { AuthResponse, IUser } from '../types';
 
 /**
@@ -55,8 +55,10 @@ export default async function handler(
       return res.status(400).json({ message: 'Passwords do not match' });
     }
 
-    if (password.length < 6) {
-      return res.status(400).json({ message: 'Password must be at least 6 characters long' });
+    // Validate password strength using our utility
+    const passwordValidation = validatePasswordStrength(password);
+    if (!passwordValidation.isValid) {
+      return res.status(400).json({ message: passwordValidation.error || 'Invalid password' });
     }
 
     const repo = new MongoDBUserRepository();
@@ -70,7 +72,7 @@ export default async function handler(
       return res.status(400).json({ message: 'Email already exists' });
     }
 
-    const hashed = await bcrypt.hash(password, 10);
+    const hashed = await hashPassword(password);
 
     // Construct a minimal DB user payload. Cast via unknown to satisfy the
     // repository signature without using `any`.
