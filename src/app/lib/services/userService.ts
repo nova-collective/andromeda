@@ -204,30 +204,12 @@ export class UserService {
     permissionName: string,
     crud: keyof Permission['crud']
   ): Promise<boolean> {
-    // First check explicit user permissions (they take precedence)
-    const user = await this.repository.findById(userId);
-    if (!user) return false;
-
-    const userPermissions2 = Array.isArray(user.permissions) ? user.permissions : [];
-    const up = userPermissions2.find((perm) => perm.name === permissionName);
-    if (up) return Boolean(up.crud[crud]);
-
-    // Then check group permissions (user may inherit permissions from groups)
-    const groupRepo = new MongoDBGroupRepository();
-    const groups2 = Array.isArray(user.groups) ? user.groups : [];
-    for (const g of groups2) {
-      try {
-        const groupId = typeof g === 'string' ? g : String(g);
-        const group = await groupRepo.findById(groupId);
-        if (group && Array.isArray(group.permissions)) {
-          const gp = group.permissions.find((perm) => perm.name === permissionName);
-          if (gp) return Boolean(gp.crud[crud]);
-        }
-      } catch (err) {
-        console.error('Failed to resolve group when verifying permission', g, err);
-      }
+    // Use getUserPermissions to resolve all effective permissions (user + groups)
+    const permissions = await this.getUserPermissions(userId);
+    const perm = permissions.find((p) => p.name === permissionName);
+    if (perm && perm.crud && typeof perm.crud[crud] !== 'undefined') {
+      return Boolean(perm.crud[crud]);
     }
-
     return false;
   }
 }
