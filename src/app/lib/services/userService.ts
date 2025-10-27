@@ -179,7 +179,7 @@ export class UserService {
       if (p && p.name) permsMap.set(p.name, p);
     }
 
-  // Resolve permissions from groups using cached repository instance
+    // Resolve permissions from groups using cached repository instance
   const groupRepo = this.groupRepository;
     const groups = Array.isArray(user.groups) ? user.groups : [];
     for (const g of groups) {
