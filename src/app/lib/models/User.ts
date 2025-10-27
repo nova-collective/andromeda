@@ -41,7 +41,12 @@ const userSchema: Schema<IUser> = new Schema({
   permissions: [{
     name: { type: String, required: true },
     description: { type: String, required: false },
-    crud: [{ type: String, required: true }],
+    crud: {
+      read: { type: Boolean, required: true },
+      create: { type: Boolean, required: true },
+      update: { type: Boolean, required: true },
+      delete: { type: Boolean, required: true },
+    },
   }],
   createdAt: {
     type: Date,
