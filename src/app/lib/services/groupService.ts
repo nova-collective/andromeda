@@ -52,17 +52,6 @@ export class GroupService {
     return this.repository.removeUser(groupId, userId);
   }
 
-  /** Update a user's role in a group
-   *
-   * NOTE: group-level user role objects were removed. If you require
-   * per-member roles implement a dedicated membership collection or store
-   * roles on the user object. This method intentionally throws to make the
-   * absence explicit at runtime.
-   */
-  async updateUserRole(): Promise<never> {
-    throw new Error('Group-level user roles are not supported.');
-  }
-
   /** Find groups where a user id is a member */
   async getGroupsByUserId(userId: string): Promise<IGroup[]> {
     return this.repository.findByUserId(userId);
