@@ -1,5 +1,5 @@
 import { BaseRepository } from './baseRepository';
-import { IGroup, IGroupMember } from '@/app/lib/types';
+import { IGroup } from '@/app/lib/types';
 import getClient from '@/app/lib/config/mongodb';
 import { ObjectId, Document, Filter, UpdateFilter } from 'mongodb';
 
@@ -97,15 +97,15 @@ export class MongoDBGroupRepository extends BaseRepository<IGroup> {
   }
 
   // Group-specific methods
-  /** Add a member to a group */
-  async addMember(groupId: string, member: IGroupMember): Promise<IGroup | null> {
+  /** Add a user id to a group's members array */
+  async addUser(groupId: string, userId: string): Promise<IGroup | null> {
     const client = await getClient();
     const db = client.db('andromeda');
     
     const group = await db.collection(this.collectionName).findOneAndUpdate(
       { _id: new ObjectId(groupId) },
       ({
-        $push: { members: { ...member, joinedAt: new Date() } },
+        $push: { members: new ObjectId(userId) },
         $set: { updatedAt: new Date() }
       } as unknown) as UpdateFilter<Document>,
       { returnDocument: 'after' }
@@ -114,40 +114,25 @@ export class MongoDBGroupRepository extends BaseRepository<IGroup> {
     return this.mapGroup(group as Document | null);
   }
 
-  /** Remove a member from a group by wallet address */
-  async removeMember(groupId: string, walletAddress: string): Promise<IGroup | null> {
+  /** Remove a user id from a group's members array */
+  async removeUser(groupId: string, userId: string): Promise<IGroup | null> {
     const client = await getClient();
     const db = client.db('andromeda');
     
     const group = await db.collection(this.collectionName).findOneAndUpdate(
       { _id: new ObjectId(groupId) },
-      ({ $pull: { members: { walletAddress } }, $set: { updatedAt: new Date() } } as unknown) as UpdateFilter<Document>,
+      ({ $pull: { members: new ObjectId(userId) }, $set: { updatedAt: new Date() } } as unknown) as UpdateFilter<Document>,
       { returnDocument: 'after' }
     );
 
     return this.mapGroup(group as Document | null);
   }
-
-  /** Update a member's role inside the group */
-  async updateMemberRole(groupId: string, walletAddress: string, role: string): Promise<IGroup | null> {
+  /** Find groups where a given user id is a member */
+  async findByUserId(userId: string): Promise<IGroup[]> {
     const client = await getClient();
     const db = client.db('andromeda');
     
-    const group = await db.collection(this.collectionName).findOneAndUpdate(
-      { _id: new ObjectId(groupId), 'members.walletAddress': walletAddress },
-      ({ $set: { 'members.$.role': role, updatedAt: new Date() } } as unknown) as UpdateFilter<Document>,
-      { returnDocument: 'after' }
-    );
-
-    return this.mapGroup(group as Document | null);
-  }
-
-  /** Find groups where a given wallet address is a member */
-  async findByMember(walletAddress: string): Promise<IGroup[]> {
-    const client = await getClient();
-    const db = client.db('andromeda');
-    
-    const groups = await db.collection(this.collectionName).find({ 'members.walletAddress': walletAddress }).toArray();
+    const groups = await db.collection(this.collectionName).find({ members: new ObjectId(userId) }).toArray();
 
     return groups.map(group => this.mapGroup(group as Document)!).filter(Boolean) as IGroup[];
   }
@@ -165,9 +150,9 @@ export class MongoDBGroupRepository extends BaseRepository<IGroup> {
       name: obj.name as string,
       description: obj.description as string | undefined,
       createdBy: obj.createdBy as string,
-      members: (obj.members as IGroupMember[] | undefined) ?? [],
-      permissions: (obj.permissions as { canInvite: boolean; canPost: boolean } | undefined) ?? { canInvite: true, canPost: true },
-      settings: (obj.settings as { isPublic: boolean; requiresApproval: boolean } | undefined) ?? { isPublic: false, requiresApproval: false },
+      members: (obj.members as IGroup['members'] | undefined) ?? [],
+      permissions: (obj.permissions as IGroup['permissions'] | undefined) ?? [],
+      settings: (obj.settings as IGroup['settings'] | undefined) ?? { isPublic: false, requiresApproval: false },
       createdAt: obj.createdAt as Date | undefined,
       updatedAt: obj.updatedAt as Date | undefined
     };

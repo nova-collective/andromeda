@@ -8,9 +8,10 @@ function isMongoError(error: unknown): error is { code: number; message: string 
   return 'code' in obj && typeof obj['code'] === 'number' && 'message' in obj && typeof obj['message'] === 'string';
 }
 
-type GroupMember = string | { walletAddress: string; role?: string };
+// members are user ids (stored as ObjectId in the DB)
+type GroupMember = string | import('mongodb').ObjectId;
 type GroupDoc = { members?: GroupMember[]; [key: string]: unknown };
-type UserDoc = { walletAddress: string; username?: string; [key: string]: unknown };
+type UserDoc = { _id: import('mongodb').ObjectId; walletAddress: string; username?: string; [key: string]: unknown };
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
@@ -63,30 +64,43 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       groups.map(async (group) => {
           const membersArr = (group.members ?? []) as GroupMember[];
           if (membersArr.length > 0) {
-            const memberIds = membersArr.map((member: GroupMember) =>
-              typeof member === 'string' ? member : member.walletAddress
-            );
+            // Normalize to ObjectId instances for querying users by _id
+            const memberObjectIds = membersArr.map((member: GroupMember) => {
+              try {
+                return typeof member === 'string' ? new ObjectId(member) : member;
+              } catch (err) {
+                // Log and skip invalid member values
+                console.warn('Skipping invalid member value:', member, err);
+                return null;
+              }
+            }).filter((id): id is import('mongodb').ObjectId => id !== null);
 
             const members = (await db.collection('users').find({
-              walletAddress: { $in: memberIds }
+              _id: { $in: memberObjectIds }
             }).toArray()) as unknown as UserDoc[];
 
             return {
               ...group,
-              members: members.map(user => {
-                const role = (membersArr.find((m: GroupMember) =>
-                  (typeof m === 'string' ? m : m.walletAddress) === user.walletAddress
-                ) as { role?: string } | undefined)?.role || 'member';
-
-                return {
-                  walletAddress: user.walletAddress,
-                  username: user.username,
-                  role,
-                };
-              })
+              // map user documents to a lightweight member view
+              members: members.map(user => ({
+                id: String(user._id),
+                walletAddress: user.walletAddress,
+                username: user.username,
+              }))
             };
           }
-        return group;
+
+          // If membersArr is empty, this group has no members.
+          // If membersArr is non-empty but all members failed to resolve (e.g., invalid ObjectIds),
+          // we still return an empty array for members. This is intentional for consistent response shape.
+          // Optionally, log a warning if membersArr is non-empty but all failed to resolve.
+          if (membersArr.length > 0) {
+            // Avoid `any` cast: access _id via a safe Record<string, unknown> view.
+            const possibleId = (group as Record<string, unknown>)['_id'];
+            console.warn('All members failed to resolve for group:', possibleId, membersArr);
+          }
+
+          return { ...group, members: [] };
       })
     );
     

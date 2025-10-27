@@ -1,4 +1,5 @@
-import { Document, Types } from 'mongoose';
+import { Document, ObjectId } from 'mongoose';
+import { Permission } from './auth';
 
 /**
  * IUser describes the shape of a user document in the application.
@@ -20,33 +21,27 @@ export interface IUser extends Document {
 
   /** User-specific settings */
   settings: {
+    /** UI theme preference (e.g. 'default' | 'dark') */
     theme: string;
+    /** Whether the user receives notifications */
     notifications: boolean;
   };
 
+  /**
+   * Explicit permissions assigned to the user. These take precedence over
+   * permissions inherited from groups.
+   */
+  permissions: Permission[];
+
   /** References to groups the user belongs to */
-  groups: Types.ObjectId[];
+  groups: ObjectId[];
 
   /** Creation timestamp */
   createdAt: Date;
 
   /** Last login timestamp */
   lastLogin: Date;
-}
 
-/**
- * Represents a member entry inside a group. Members are stored with their
- * wallet address and optional role metadata.
- */
-export interface IGroupMember {
-  /** Member wallet address (unique identifier for the member) */
-  walletAddress: string;
-
-  /** Role of the member within the group */
-  role: 'admin' | 'member';
-
-  /** When the member joined the group */
-  joinedAt: Date;
 }
 
 /**
@@ -65,18 +60,17 @@ export interface IGroup {
   /** Wallet address of the user who created the group */
   createdBy: string;
 
-  /** Array of members (wallet addresses or member objects) */
-  members: IGroupMember[];
+  /** Array of member user ids (ObjectId) referenced by this group */
+  members: ObjectId[];
 
-  /** Permissions flags for the group */
-  permissions: {
-    canInvite: boolean;
-    canPost: boolean;
-  };
+  /** Permissions granted at the group level */
+  permissions: Permission[];
 
   /** Group-level settings */
   settings: {
+    /** Whether the group is visible to non-members */
     isPublic: boolean;
+    /** Whether joining the group requires approval */
     requiresApproval: boolean;
   };
 
