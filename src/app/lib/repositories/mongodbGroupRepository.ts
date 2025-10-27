@@ -150,9 +150,9 @@ export class MongoDBGroupRepository extends BaseRepository<IGroup> {
       name: obj.name as string,
       description: obj.description as string | undefined,
       createdBy: obj.createdBy as string,
-  members: (obj.members as IGroup['members'] | undefined) ?? [],
-  permissions: (obj.permissions as IGroup['permissions'] | undefined) ?? [],
-  settings: (obj.settings as IGroup['settings'] | undefined) ?? { isPublic: false, requiresApproval: false },
+      members: (obj.members as IGroup['members'] | undefined) ?? [],
+      permissions: (obj.permissions as IGroup['permissions'] | undefined) ?? [],
+      settings: (obj.settings as IGroup['settings'] | undefined) ?? { isPublic: false, requiresApproval: false },
       createdAt: obj.createdAt as Date | undefined,
       updatedAt: obj.updatedAt as Date | undefined
     };
