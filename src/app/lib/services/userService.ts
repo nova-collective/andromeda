@@ -9,9 +9,23 @@ import bcrypt from 'bcryptjs';
  */
 export class UserService {
   private repository: MongoDBUserRepository;
+  // Cached instance reused for group lookups — avoids creating a new
+  // repository for every permission check which can be expensive.
+  private groupRepository: MongoDBGroupRepository;
 
-  constructor() {
-    this.repository = new MongoDBUserRepository();
+  /**
+   * Accept repository instances for easier testing and DI. If omitted,
+   * concrete MongoDB repository implementations are created for runtime use.
+   *
+   * @param repository - optional user repository instance
+   * @param groupRepository - optional group repository instance
+   */
+  constructor(
+    repository?: MongoDBUserRepository,
+    groupRepository?: MongoDBGroupRepository
+  ) {
+    this.repository = repository ?? new MongoDBUserRepository();
+    this.groupRepository = groupRepository ?? new MongoDBGroupRepository();
   }
 
   /**
@@ -165,8 +179,8 @@ export class UserService {
       if (p && p.name) permsMap.set(p.name, p);
     }
 
-    // Resolve permissions from groups
-    const groupRepo = new MongoDBGroupRepository();
+  // Resolve permissions from groups using cached repository instance
+  const groupRepo = this.groupRepository;
     const groups = Array.isArray(user.groups) ? user.groups : [];
     for (const g of groups) {
       try {
@@ -212,8 +226,9 @@ export class UserService {
     const up = userPermissions2.find((perm) => perm.name === permissionName);
     if (up) return Boolean(up.crud[crud]);
 
-    // Then check group permissions (user may inherit permissions from groups)
-    const groupRepo = new MongoDBGroupRepository();
+  // Then check group permissions (user may inherit permissions from groups)
+  // Use cached repository instance rather than creating one per-call.
+  const groupRepo = this.groupRepository;
     const groups2 = Array.isArray(user.groups) ? user.groups : [];
     for (const g of groups2) {
       try {
