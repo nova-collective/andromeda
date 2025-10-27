@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { generateToken, setTokenCookie } from './auth';
 import { MongoDBUserRepository } from '../repositories';
-import bcrypt from 'bcryptjs';
+import { comparePassword } from '../utils';
 import { LoginRequest, AuthResponse, IUser, JWTPayload } from '../types';
 
 /**
@@ -42,7 +42,7 @@ export default async function handler(
       return res.status(401).json({ message: 'Invalid credentials' });
     }
     // Validate password hash (user.password is expected to be a hash)
-    const isValidPassword = await bcrypt.compare(password, dbUser.password || '');
+    const isValidPassword = await comparePassword(password, dbUser.password || '');
     if (!isValidPassword) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }

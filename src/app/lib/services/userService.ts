@@ -1,7 +1,7 @@
 import { IUser, Permission } from '@/app/lib/types';
 import { MongoDBUserRepository, MongoDBGroupRepository } from '@/app/lib/repositories';
 import { ObjectId, Types } from 'mongoose';
-import bcrypt from 'bcryptjs';
+import { comparePassword } from '@/app/lib/utils';
 
 /**
  * UserService is a small application-level service that wraps
@@ -89,16 +89,11 @@ export class UserService {
    * Returns `false` when the user has no password set or on error.
    */
   async validatePassword(user: IUser, password: string): Promise<boolean> {
-    try {
-      if (!user.password) {
-        return false;
-      }
-      
-      return await bcrypt.compare(password, user.password);
-    } catch (error) {
-      console.error('Error validating password:', error);
+    if (!user.password) {
       return false;
     }
+    
+    return await comparePassword(password, user.password);
   }
   /**
    * Add a user to a group (idempotent). Returns the updated user or null if
