@@ -95,9 +95,13 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           // we still return an empty array for members. This is intentional for consistent response shape.
           // Optionally, log a warning if membersArr is non-empty but all failed to resolve.
           if (membersArr.length > 0) {
-            console.warn('All members failed to resolve for group:', group._id, membersArr);
+            // Avoid `any` cast: access _id via a safe Record<string, unknown> view.
+            const possibleId = (group as Record<string, unknown>)['_id'];
+            console.warn('All members failed to resolve for group:', possibleId, membersArr);
           }
+
           return { ...group, members: [] };
+      })
     );
     
     return NextResponse.json(groupsWithMembers);
