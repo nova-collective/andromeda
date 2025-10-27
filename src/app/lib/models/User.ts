@@ -21,7 +21,6 @@ const userSchema: Schema<IUser> = new Schema({
   walletAddress: {
     type: String,
     required: false,
-    unique: true,
     sparse: true,
   },
   username: {
