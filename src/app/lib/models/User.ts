@@ -22,6 +22,7 @@ const userSchema: Schema<IUser> = new Schema({
     type: String,
     required: false,
     unique: true,
+    sparse: true,
   },
   username: {
     type: String,
