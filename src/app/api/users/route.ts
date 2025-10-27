@@ -31,16 +31,34 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     if (id) {
       const user = await userService.getUserById(id);
       if (!user) return NextResponse.json({ error: 'User not found' }, { status: 404 });
-      return NextResponse.json(user);
+      return NextResponse.json({
+        success: true,
+        message: 'User retrieved successfully',
+      });
     }
 
     if (walletAddress) {
       const user = await userService.getUserByWalletAddress(walletAddress);
-      return NextResponse.json(user);
+      return NextResponse.json({
+        success: true,
+        message: 'User retrieved successfully',
+      });
+    }
+
+    if (walletAddress) {
+      const user = await userService.getUserByWalletAddress(walletAddress);
+      if (!user) return NextResponse.json({ error: 'User not found' }, { status: 404 });
+      return NextResponse.json({
+        success: true,
+        message: 'User retrieved successfully',
+      });
     }
 
     const users = await userService.getAllUsers();
-    return NextResponse.json(users);
+    return NextResponse.json({
+        success: true,
+        message: 'Users retrieved successfully',
+      });
   } catch (error) {
     return handleError(error);
   }
@@ -73,7 +91,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // body should contain at least `walletAddress`. The service will
     // lowercase it and perform an upsert (create or update).
     const user = await userService.upsertUser(body.walletAddress, body);
-    return NextResponse.json(user);
+
+    return NextResponse.json({
+        success: true,
+        message: 'User created/updated successfully',
+      });
   } catch (error) {
     return handleError(error);
   }
@@ -113,7 +135,10 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    return NextResponse.json(user);
+    return NextResponse.json({
+        success: true,
+        message: 'User updated successfully',
+      });
   } catch (error) {
     return handleError(error);
   }
@@ -137,7 +162,10 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    return NextResponse.json({ success: true, message: 'User deleted successfully' });
+    return NextResponse.json({ 
+      success: true, 
+      message: 'User deleted successfully'
+    });
   } catch (error) {
     return handleError(error);
   }

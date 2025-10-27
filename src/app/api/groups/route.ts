@@ -1,177 +1,173 @@
 import { NextRequest, NextResponse } from 'next/server';
-import getClient from '@/app/lib/config/mongodb';
-import { ObjectId } from 'mongodb';
+import { GroupService, UserService } from '@/app/lib/services';
+import { IGroup } from '@/app/lib/types';
 
-function isMongoError(error: unknown): error is { code: number; message: string } {
-  if (typeof error !== 'object' || error === null) return false;
-  const obj = error as Record<string, unknown>;
-  return 'code' in obj && typeof obj['code'] === 'number' && 'message' in obj && typeof obj['message'] === 'string';
+const groupService = new GroupService();
+const userService = new UserService();
+
+/**
+ * Convert an unknown error into a JSON NextResponse with a 500 status.
+ * Centralized so handlers can call it in catch blocks.
+ * @param error - The thrown value
+ */
+function handleError(error: unknown): NextResponse {
+  const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+  return NextResponse.json({ error: errorMessage }, { status: 500 });
 }
 
-// members are user ids (stored as ObjectId in the DB)
-type GroupMember = string | import('mongodb').ObjectId;
-type GroupDoc = { members?: GroupMember[]; [key: string]: unknown };
-type UserDoc = { _id: import('mongodb').ObjectId; walletAddress: string; username?: string; [key: string]: unknown };
-
+/**
+ * POST handler to create a new group.
+ * Expects a JSON body containing at minimum:
+ * - `name` (string)
+ * - `createdBy` (string)
+ * Optional fields: `description`, `members`, `permissions`, `settings`
+ * Returns the created group document.
+ */
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    const client = await getClient();
-    const db = client.db('andromeda');
-    
     const body = await request.json();
     
-    const groupData = {
-      ...body,
-      createdAt: new Date(),
-      members: body.members || []
-    };
-    
-    const result = await db.collection('groups').insertOne(groupData);
-    
-    const group = await db.collection('groups').findOne({ 
-      _id: result.insertedId 
-    });
-    
-    return NextResponse.json(group);
-  } catch (error: unknown) {
-    if (isMongoError(error)) {
-      if (error.code === 11000) {
-        return NextResponse.json({ error: 'Duplicate group name' }, { status: 400 });
-      }
+    // Validate required fields
+    if (!body.name || !body.createdBy) {
+      return NextResponse.json({ 
+        error: 'Name and createdBy are required' 
+      }, { status: 400 });
     }
     
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+    // Create group using service
+    const group = await groupService.createGroup(body);
+    return NextResponse.json({
+        success: true,
+        message: 'Group created successfully',
+      });
+  } catch (error: unknown) {
+    return handleError(error);
   }
 }
 
+/**
+ * GET handler for `/api/groups`.
+ * Query params:
+ * - `createdBy`: filter groups by creator wallet address
+ * Returns groups with populated member information.
+ */
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
-    const client = await getClient();
-    const db = client.db('andromeda');
-    
     const { searchParams } = new URL(request.url);
     const createdBy = searchParams.get('createdBy');
     
-    let query = {};
+    // Get groups using service
+    let groups: IGroup[];
     if (createdBy) {
-      query = { createdBy: createdBy.toLowerCase() };
+      groups = await groupService.getGroupsByCreator(createdBy);
+    } else {
+      groups = await groupService.getAllGroups();
     }
     
-    const groups = (await db.collection('groups').find(query).toArray()) as GroupDoc[];
-    
+    // Populate member information for each group
     const groupsWithMembers = await Promise.all(
       groups.map(async (group) => {
-          const membersArr = (group.members ?? []) as GroupMember[];
-          if (membersArr.length > 0) {
-            // Normalize to ObjectId instances for querying users by _id
-            const memberObjectIds = membersArr.map((member: GroupMember) => {
+        if (group.members && group.members.length > 0) {
+          // Get member details using user service
+          const memberDetails = await Promise.all(
+            group.members.map(async (memberId) => {
               try {
-                return typeof member === 'string' ? new ObjectId(member) : member;
+                const user = await userService.getUserById(String(memberId));
+                if (user) {
+                  return {
+                    id: user.id || String(user._id),
+                    walletAddress: user.walletAddress,
+                    username: user.username,
+                  };
+                }
+                return null;
               } catch (err) {
-                // Log and skip invalid member values
-                console.warn('Skipping invalid member value:', member, err);
+                console.warn('Failed to resolve member:', memberId, err);
                 return null;
               }
-            }).filter((id): id is import('mongodb').ObjectId => id !== null);
-
-            const members = (await db.collection('users').find({
-              _id: { $in: memberObjectIds }
-            }).toArray()) as unknown as UserDoc[];
-
-            return {
-              ...group,
-              // map user documents to a lightweight member view
-              members: members.map(user => ({
-                id: String(user._id),
-                walletAddress: user.walletAddress,
-                username: user.username,
-              }))
-            };
-          }
-
-          // If membersArr is empty, this group has no members.
-          // If membersArr is non-empty but all members failed to resolve (e.g., invalid ObjectIds),
-          // we still return an empty array for members. This is intentional for consistent response shape.
-          // Optionally, log a warning if membersArr is non-empty but all failed to resolve.
-          if (membersArr.length > 0) {
-            // Avoid `any` cast: access _id via a safe Record<string, unknown> view.
-            const possibleId = (group as Record<string, unknown>)['_id'];
-            console.warn('All members failed to resolve for group:', possibleId, membersArr);
-          }
-
-          return { ...group, members: [] };
+            })
+          );
+          
+          // Filter out null values (failed member lookups)
+          const validMembers = memberDetails.filter(member => member !== null);
+          
+          return {
+            ...group,
+            members: validMembers
+          };
+        }
+        
+        return {
+          ...group,
+          members: []
+        };
       })
     );
     
-    return NextResponse.json(groupsWithMembers);
+    return NextResponse.json({
+        success: true,
+        message: 'Group retrieved successfully',
+      });
   } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+    return handleError(error);
   }
 }
 
+/**
+ * PUT handler to update a group by id.
+ * Expects a JSON body with:
+ * - `id` (string) - the document id to update
+ * - other fields to update
+ * Returns the updated group document or 404 if not found.
+ */
 export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
-    const client = await getClient();
-    const db = client.db('andromeda');
-    
     const body = await request.json();
     const { id, ...updateData } = body;
-    
-    const group = await db.collection('groups').findOneAndUpdate(
-      { _id: new ObjectId(id) },
-      { 
-        $set: {
-          ...updateData,
-          updatedAt: new Date()
-        }
-      },
-      { 
-        returnDocument: 'after'
-      }
-    );
-    
+
+    if (!id) {
+      return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+    }
+
+    // Update group using service
+    const group = await groupService.updateGroup(id, updateData);
     if (!group) {
       return NextResponse.json({ error: 'Group not found' }, { status: 404 });
     }
-    
-    return NextResponse.json(group);
+
+    return NextResponse.json({
+        success: true,
+        message: 'Group updated successfully',
+      });
   } catch (error: unknown) {
-    if (isMongoError(error)) {
-      if (error.code === 11000) {
-        return NextResponse.json({ error: 'Duplicate group name' }, { status: 400 });
-      }
-    }
-    
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+    return handleError(error);
   }
 }
 
+/**
+ * DELETE handler to remove a group by id via query parameter `id`.
+ * Returns 200 with success flag or 404 if not found.
+ */
 export async function DELETE(request: NextRequest): Promise<NextResponse> {
   try {
-    const client = await getClient();
-    const db = client.db('andromeda');
-    
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
-    
+
     if (!id) {
       return NextResponse.json({ error: 'Group ID is required' }, { status: 400 });
     }
-    
-    const result = await db.collection('groups').deleteOne({ 
-      _id: new ObjectId(id) 
-    });
-    
-    if (result.deletedCount === 0) {
+
+    // Delete group using service
+    const success = await groupService.deleteGroup(id);
+    if (!success) {
       return NextResponse.json({ error: 'Group not found' }, { status: 404 });
     }
-    
-    return NextResponse.json({ success: true });
+
+    return NextResponse.json({
+      success: true,
+      message: 'Group deleted successfully'
+    });
   } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+    return handleError(error);
   }
 }
