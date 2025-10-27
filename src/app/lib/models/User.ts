@@ -11,11 +11,17 @@ import { IUser } from '../types';
  * - createdAt, lastLogin: timestamps
  */
 const userSchema: Schema<IUser> = new Schema({
+  /**
+   * The walletAddress field was changed from required to optional to support users
+   * who register with alternative identifiers (username and email). Authentication
+   * and identification can now be performed using username and email, both of which
+   * are required and unique. This change allows for non-wallet-based user accounts
+   * and improves flexibility in user onboarding.
+   */
   walletAddress: {
     type: String,
-    required: true,
-    unique: true,
-    lowercase: true,
+    required: false,
+    sparse: true,
   },
   username: {
     type: String,
@@ -38,6 +44,16 @@ const userSchema: Schema<IUser> = new Schema({
   groups: [{
     type: Schema.Types.ObjectId,
     ref: 'Group',
+  }],
+  permissions: [{
+    name: { type: String, required: true },
+    description: { type: String, required: false },
+    crud: {
+      read: { type: Boolean, required: true },
+      create: { type: Boolean, required: true },
+      update: { type: Boolean, required: true },
+      delete: { type: Boolean, required: true },
+    },
   }],
   createdAt: {
     type: Date,

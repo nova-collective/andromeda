@@ -15,14 +15,25 @@ const groupSchema: Schema<IGroup> = new Schema({
     type: String,
     required: true,
   },
-  members: [{
-    walletAddress: String,
-    role: { type: String, enum: ['admin', 'member'], default: 'member' },
-    joinedAt: { type: Date, default: Date.now },
-  }],
+  members: {
+    type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    default: []
+  },
+  // Permissions are embedded objects (application-level type), not DB refs
   permissions: {
-    canInvite: { type: Boolean, default: true },
-    canPost: { type: Boolean, default: true },
+    type: [
+      {
+        name: { type: String, required: true, enum: ['users', 'groups'] },
+        description: { type: String },
+        crud: {
+          read: { type: Boolean, default: false },
+          create: { type: Boolean, default: false },
+          update: { type: Boolean, default: false },
+          delete: { type: Boolean, default: false },
+        },
+      },
+    ],
+    default: [],
   },
   settings: {
     isPublic: { type: Boolean, default: false },

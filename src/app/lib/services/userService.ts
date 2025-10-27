@@ -1,6 +1,6 @@
-import { IUser } from '@/app/lib/types';
-import { MongoDBUserRepository } from '@/app/lib/repositories';
-import { Types } from 'mongoose';
+import { IUser, Permission } from '@/app/lib/types';
+import { MongoDBUserRepository, MongoDBGroupRepository } from '@/app/lib/repositories';
+import { ObjectId, Types } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 /**
@@ -9,9 +9,23 @@ import bcrypt from 'bcryptjs';
  */
 export class UserService {
   private repository: MongoDBUserRepository;
+  // Cached instance reused for group lookups — avoids creating a new
+  // repository for every permission check which can be expensive.
+  private groupRepository: MongoDBGroupRepository;
 
-  constructor() {
-    this.repository = new MongoDBUserRepository();
+  /**
+   * Accept repository instances for easier testing and DI. If omitted,
+   * concrete MongoDB repository implementations are created for runtime use.
+   *
+   * @param repository - optional user repository instance
+   * @param groupRepository - optional group repository instance
+   */
+  constructor(
+    repository?: MongoDBUserRepository,
+    groupRepository?: MongoDBGroupRepository
+  ) {
+    this.repository = repository ?? new MongoDBUserRepository();
+    this.groupRepository = groupRepository ?? new MongoDBGroupRepository();
   }
 
   /**
@@ -65,7 +79,7 @@ export class UserService {
    */
   async upsertUser(walletAddress: string, userData: Partial<IUser>): Promise<IUser> {
     return this.repository.upsert(
-      { walletAddress: walletAddress.toLowerCase() }, 
+      { walletAddress: walletAddress }, 
       userData
     );
   }
@@ -121,7 +135,7 @@ export class UserService {
       const updatedGroups = currentGroups.filter(g => String(g) !== group);
       
       return await this.repository.update(userId, {
-        groups: updatedGroups as unknown as Types.ObjectId[]
+        groups: updatedGroups as unknown as ObjectId[]
       } as Partial<IUser>);
     } catch (error) {
       console.error('Error removing user from group:', error);
@@ -141,5 +155,74 @@ export class UserService {
    */
   isUserAdmin(user: IUser): boolean {
     return this.isUserInGroup(user, 'admin');
+  }
+
+  /**
+   * Get the concrete permission objects for a user.
+   *
+   * This returns the union of the user's explicit `permissions` and the
+   * permissions granted by groups the user belongs to. Returned permissions
+   * are de-duplicated by permission `name` (first seen wins).
+   *
+   * @param userId - string id of the user (ObjectId.toString())
+   * @returns Array of permission objects (may be empty)
+   */
+  async getUserPermissions(userId: string): Promise<Permission[]> {
+    const user = await this.repository.findById(userId);
+    if (!user) return [];
+
+    const permsMap = new Map<string, Permission>();
+
+    // Add explicit user permissions first (they take precedence)
+    const userPermissions = Array.isArray(user.permissions) ? user.permissions : [];
+    for (const p of userPermissions) {
+      if (p && p.name) permsMap.set(p.name, p);
+    }
+
+    // Resolve permissions from groups using cached repository instance
+    const groups = Array.isArray(user.groups) ? user.groups : [];
+    for (const g of groups) {
+      try {
+        const groupId = typeof g === 'string' ? g : String(g);
+        const group = await this.groupRepository.findById(groupId);
+        if (group && Array.isArray(group.permissions)) {
+          for (const gp of group.permissions) {
+            if (gp && gp.name && !permsMap.has(gp.name)) {
+              permsMap.set(gp.name, gp);
+            }
+          }
+        }
+      } catch (err) {
+        // Ignore individual group resolution failures and continue
+        console.error('Failed to resolve group permissions for', g, err);
+      }
+    }
+
+    return Array.from(permsMap.values());
+  }
+
+  /**
+   * Verify whether a user has a specific permission and CRUD capability.
+   * 
+   * If you expect to call this frequently, consider caching group lookups or the 
+   * computed effective permissions per user (with a TTL) to reduce DB round-trips.
+   *
+   * @param userId - string id of the user (ObjectId.toString())
+   * @param permissionName - name of the permission to check (e.g. 'users')
+   * @param crud - one of 'read' | 'create' | 'update' | 'delete'
+   * @returns boolean indicating whether the user has that CRUD capability for the permission
+   */
+  async verifyUserPermission(
+    userId: string,
+    permissionName: string,
+    crud: keyof Permission['crud']
+  ): Promise<boolean> {
+    // Use getUserPermissions to resolve all effective permissions (user + groups)
+    const permissions = await this.getUserPermissions(userId);
+    const perm = permissions.find((p) => p.name === permissionName);
+    if (perm && perm.crud && typeof perm.crud[crud] !== 'undefined') {
+      return Boolean(perm.crud[crud]);
+    }
+    return false;
   }
 }

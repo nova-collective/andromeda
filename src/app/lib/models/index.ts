@@ -3,5 +3,5 @@ import Group from './Group'
 
 export {
     Group,
-    User
+    User,
 }

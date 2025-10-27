@@ -58,3 +58,24 @@ export interface LoginRequest {
   /** Plain-text password supplied by the client (over TLS) */
   password: string;
 }
+
+/**
+ * Permission type used by users and groups.
+ *
+ * `name` identifies the permission (for example `posts.manage`) and the
+ * `crud` flags describe which operations are allowed for holders of this
+ * permission. `description` is optional human-readable context.
+ */
+export type Permission = {
+  /** Short machine name for the permission; currently restricted to known resources */
+  name: 'users' | 'groups';
+  /** Optional human-friendly description */
+  description?: string;
+  /** CRUD capabilities associated with the permission */
+  crud: {
+    read: boolean;
+    create: boolean;
+    update: boolean;
+    delete: boolean;
+  };
+}
