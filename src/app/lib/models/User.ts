@@ -39,8 +39,9 @@ const userSchema: Schema<IUser> = new Schema({
     ref: 'Group',
   }],
   permissions: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Permission',
+    name: { type: String, required: true },
+    description: { type: String, required: false },
+    crud: [{ type: String, required: true }],
   }],
   createdAt: {
     type: Date,
