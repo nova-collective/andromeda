@@ -209,7 +209,7 @@ export class UserService {
    * computed effective permissions per user (with a TTL) to reduce DB round-trips.
    *
    * @param userId - string id of the user (ObjectId.toString())
-   * @param permissionName - name of the permission to check (e.g. 'posts.manage')
+   * @param permissionName - name of the permission to check (e.g. 'users')
    * @param crud - one of 'read' | 'create' | 'update' | 'delete'
    * @returns boolean indicating whether the user has that CRUD capability for the permission
    */
