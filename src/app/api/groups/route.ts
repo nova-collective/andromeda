@@ -68,11 +68,12 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             const memberObjectIds = membersArr.map((member: GroupMember) => {
               try {
                 return typeof member === 'string' ? new ObjectId(member) : member;
-              } catch {
-                // fallback: keep original value if it cannot be cast
-                return member as unknown as import('mongodb').ObjectId;
+              } catch (err) {
+                // Log and skip invalid member values
+                console.warn('Skipping invalid member value:', member, err);
+                return null;
               }
-            });
+            }).filter((id): id is import('mongodb').ObjectId => id !== null);
 
             const members = (await db.collection('users').find({
               _id: { $in: memberObjectIds }
