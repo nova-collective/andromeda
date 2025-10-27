@@ -34,6 +34,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json({
         success: true,
         message: 'User retrieved successfully',
+        user,
       });
     }
 
@@ -42,15 +43,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json({
         success: true,
         message: 'User retrieved successfully',
-      });
-    }
-
-    if (walletAddress) {
-      const user = await userService.getUserByWalletAddress(walletAddress);
-      if (!user) return NextResponse.json({ error: 'User not found' }, { status: 404 });
-      return NextResponse.json({
-        success: true,
-        message: 'User retrieved successfully',
+        user,
       });
     }
 
@@ -58,6 +51,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({
         success: true,
         message: 'Users retrieved successfully',
+        users,
       });
   } catch (error) {
     return handleError(error);
@@ -95,6 +89,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({
         success: true,
         message: 'User created/updated successfully',
+        user,
       });
   } catch (error) {
     return handleError(error);
@@ -138,6 +133,7 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({
         success: true,
         message: 'User updated successfully',
+        user,
       });
   } catch (error) {
     return handleError(error);
@@ -164,7 +160,8 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
 
     return NextResponse.json({ 
       success: true, 
-      message: 'User deleted successfully'
+      message: 'User deleted successfully',
+      userId: id,
     });
   } catch (error) {
     return handleError(error);

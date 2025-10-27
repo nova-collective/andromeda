@@ -39,6 +39,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({
         success: true,
         message: 'Group created successfully',
+        group,
       });
   } catch (error: unknown) {
     return handleError(error);
@@ -107,6 +108,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({
         success: true,
         message: 'Group retrieved successfully',
+        group: groupsWithMembers,
       });
   } catch (error: unknown) {
     return handleError(error);
@@ -138,6 +140,7 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({
         success: true,
         message: 'Group updated successfully',
+        group,
       });
   } catch (error: unknown) {
     return handleError(error);
@@ -165,7 +168,8 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
 
     return NextResponse.json({
       success: true,
-      message: 'Group deleted successfully'
+      message: 'Group deleted successfully',
+      groupId: id,
     });
   } catch (error: unknown) {
     return handleError(error);
