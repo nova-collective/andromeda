@@ -13,12 +13,12 @@ REST handlers for `/api/groups`, implemented in `route.ts`. All handlers return 
 
 ### Authorization
 
-Handlers validate the `Authorization` bearer token (`Authorization: Bearer <token>`) and ensure the caller has `groups` permission with the relevant CRUD action:
+Handlers validate the `Authorization` bearer token (`Authorization: Bearer <token>`) and ensure the caller has `Group` permission with the relevant CRUD action:
 
-- `POST` → `groups:create`
-- `GET` → `groups:read`
-- `PUT` → `groups:update`
-- `DELETE` → `groups:delete`
+- `POST` → `Group:Create`
+- `GET` → `Group:Read`
+- `PUT` → `Group:Update`
+- `DELETE` → `Group:Delete`
 
 ### POST `/api/groups`
 
