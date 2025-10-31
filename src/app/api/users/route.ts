@@ -147,10 +147,10 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
     }
 
     const rawBody = await request.json();
-      const { value, errorResponse } = validateRequestBody(validateUpdateUser, rawBody);
+    const { value, errorResponse } = validateRequestBody(validateUpdateUser, rawBody);
 
-      if (errorResponse) {
-        return errorResponse;
+    if (errorResponse) {
+      return errorResponse;
     }
 
     const { id, ...updateData } = value as {
