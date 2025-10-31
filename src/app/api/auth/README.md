@@ -31,7 +31,7 @@ interface AuthResponse {
 
 #### Authentication Flow
 
-1. **Input Validation**: `validateRequestBody` with `validateLoginCredentials` ensures the shape is correct.
+1. **Input Validation**: The request body is manually validated to ensure required fields (`username`, `password`) are present and correctly typed.
 2. **User Lookup**: Find user by username in database
 3. **Password Verification**: Compare plain text password with stored bcrypt hash
 4. **JWT Generation**: Create token with user information and effective permissions
