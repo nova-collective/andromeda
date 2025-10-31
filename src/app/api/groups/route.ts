@@ -7,6 +7,7 @@ import {
   validateRequestBody,
   ensureGroupNameUnique,
 } from '@/app/lib/validators';
+import { authorizeRequest } from '@/app/api/auth/guard';
 
 const groupService = new GroupService();
 const userService = new UserService();
@@ -27,6 +28,11 @@ function handleError(error: unknown): NextResponse {
  */
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
+    const auth = authorizeRequest(request, 'Group', 'create');
+    if (!auth.ok) {
+      return auth.response;
+    }
+
     const rawBody = await request.json();
     const { value, errorResponse } = validateRequestBody(validateCreateGroup, rawBody);
 
@@ -63,6 +69,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
  */
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
+    const auth = authorizeRequest(request, 'Group', 'read');
+    if (!auth.ok) {
+      return auth.response;
+    }
+
     const { searchParams } = new URL(request.url);
     const createdBy = searchParams.get('createdBy');
     
@@ -130,6 +141,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
  */
 export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
+    const auth = authorizeRequest(request, 'Group', 'update');
+    if (!auth.ok) {
+      return auth.response;
+    }
+
     const rawBody = await request.json();
     const { value, errorResponse } = validateRequestBody(validateUpdateGroup, rawBody);
 
@@ -170,6 +186,11 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
  */
 export async function DELETE(request: NextRequest): Promise<NextResponse> {
   try {
+    const auth = authorizeRequest(request, 'Group', 'delete');
+    if (!auth.ok) {
+      return auth.response;
+    }
+
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 

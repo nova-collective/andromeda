@@ -10,6 +10,7 @@ import {
   ensureCreateUserUniqueness,
   ensureUpdateUserUniqueness,
 } from '@/app/lib/validators';
+import { authorizeRequest } from '@/app/api/auth/guard';
 
 const userService = new UserService();
 
@@ -32,6 +33,11 @@ function handleError(error: unknown): NextResponse {
  */
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
+    const auth = authorizeRequest(request, 'User', 'read');
+    if (!auth.ok) {
+      return auth.response;
+    }
+
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
     const walletAddress = searchParams.get('walletAddress');
@@ -74,6 +80,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
  */
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
+    const auth = authorizeRequest(request, 'User', 'create');
+    if (!auth.ok) {
+      return auth.response;
+    }
+
     const rawBody = await request.json();
       const { value, errorResponse } = validateRequestBody(validateUpsertUser, rawBody);
 
@@ -130,6 +141,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
  */
 export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
+    const auth = authorizeRequest(request, 'User', 'update');
+    if (!auth.ok) {
+      return auth.response;
+    }
+
     const rawBody = await request.json();
       const { value, errorResponse } = validateRequestBody(validateUpdateUser, rawBody);
 
@@ -183,6 +199,11 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
  */
 export async function DELETE(request: NextRequest): Promise<NextResponse> {
   try {
+    const auth = authorizeRequest(request, 'User', 'delete');
+    if (!auth.ok) {
+      return auth.response;
+    }
+
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 

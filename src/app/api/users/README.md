@@ -7,9 +7,19 @@ Handlers for `/api/users`, defined in `route.ts`. Responses follow a consistent 
 	"success": boolean,
 	"message": string,
 	"user" | "users" | "userId"?: ...,
+
 	"error"?: string
 }
 ```
+
+### Authorization
+
+Each handler validates the `token` cookie and enforces the required permission/action pair:
+
+- `GET` → `users:read`
+- `POST` → `users:create`
+- `PUT` → `users:update`
+- `DELETE` → `users:delete`
 
 ### GET `/api/users`
 
@@ -99,4 +109,4 @@ Remove a user by id via query string.
 - `UserService` encapsulates data access and password utilities, keeping route handlers thin.
 - Password validation/hashing uses helpers in `src/app/lib/utils/password`.
 - Duplicate username/email protection is handled by `ensureCreateUserUniqueness`/`ensureUpdateUserUniqueness` and database indexes, letting the API return descriptive 400 responses.
-- Authorization is not enforced in this file; secure these routes with middleware or edge protection suited to your deployment.
+- `authorizeRequest` enforces authentication and per-handler permission scopes by decoding the JWT cookie.

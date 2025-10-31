@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { comparePassword } from '@/app/lib/utils';
-import { MongoDBUserRepository } from '@/app/lib/repositories';
 import { generateToken } from '@/app/lib/auth/auth';
 import { UserService } from '@/app/lib/services';
 import { AuthResponse, IUser, JWTPayload, LoginRequest } from '@/app/lib/types';
@@ -31,8 +30,7 @@ export async function POST(request: NextRequest): Promise<ApiResponse> {
       );
     }
 
-    const repo = new MongoDBUserRepository();
-    const user = await repo.findByUsername(username);
+  const user = await userService.getUserByUsername(username);
 
     if (!user) {
       return NextResponse.json(
@@ -53,7 +51,7 @@ export async function POST(request: NextRequest): Promise<ApiResponse> {
 
     // Update last login timestamp best-effort.
     try {
-      await repo.update(userId, { lastLogin: new Date() } as Partial<IUser>);
+      await userService.updateUser(userId, { lastLogin: new Date() } as Partial<IUser>);
     } catch (error) {
       console.error('Failed to update lastLogin:', error);
     }

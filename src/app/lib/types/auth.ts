@@ -70,7 +70,7 @@ export interface LoginRequest {
  */
 export type Permission = {
   /** Short machine name for the permission; currently restricted to known resources */
-  name: 'users' | 'groups';
+  name: 'User' | 'Group';
   /** Optional human-friendly description */
   description?: string;
   /** CRUD capabilities associated with the permission */

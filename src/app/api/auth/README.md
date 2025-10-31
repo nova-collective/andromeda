@@ -25,7 +25,7 @@ interface AuthResponse {
 1. **Input Validation**: `validateRequestBody` with `validateLoginCredentials` ensures the shape is correct.
 2. **User Lookup**: Find user by username in database
 3. **Password Verification**: Compare plain text password with stored bcrypt hash
-4. **JWT Generation**: Create token with user information
+4. **JWT Generation**: Create token with user information and effective permissions
 5. **Cookie Setting**: Set secure HTTP-only authentication cookie
 6. **Response**: Return success message with safe user object
 
@@ -58,7 +58,7 @@ interface RegisterRequest {
 4. **Duplicate Checking**: Verify username and email are unique
 5. **Password Hashing**: Hash password using bcrypt before storage
 6. **User Creation**: Create new user document in database
-7. **Auto Login**: Generate JWT and set authentication cookie
+7. **Auto Login**: Generate JWT (including merged permissions) and set authentication cookie
 8. **Response**: Return success with user information
 
 #### Validation Rules
@@ -86,3 +86,7 @@ Handles `GET /api/auth/me` requests for session validation and user information.
 - **User Context**: Get current user information for UI
 - **Protected Routes**: Verify authentication before accessing resources
 - **Token Refresh**: Validate token is still valid
+
+### Authorization Guard
+
+`src/app/api/auth/guard.ts` exports `authorizeRequest`, a helper used by protected routes (e.g., users and groups APIs). It reads the JWT from the `token` cookie, validates it, and enforces permission-specific CRUD access using the `permissions` array embedded in the payload.
