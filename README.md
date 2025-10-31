@@ -36,7 +36,7 @@ Andromeda is an open-source web3 publishing platform that lets authors mint thei
 
 ## Key Features
 
-- **Authentication & Authorization**: JWT cookies with user/group permission merging, Joi-based validation, and reusable middleware helpers.
+- **Authentication & Authorization**: JWT bearer tokens with user/group permission merging, Joi-based validation, and reusable middleware helpers.
 - **User & Group Management**: RESTful APIs for CRUD operations, uniqueness enforcement, and normalized Joi schemas.
 - **Password Utilities**: Centralized hashing, comparison, and strength validation.
 - **Configurable Patterns**: Shared regex utilities for IDs, usernames, wallets, and emails across services.
@@ -48,7 +48,7 @@ Andromeda is an open-source web3 publishing platform that lets authors mint thei
 | Layer | Technology |
 | --- | --- |
 | Frontend & API | Next.js App Router (React 19, TypeScript, Tailwind CSS 4) |
-| Authentication | JWT (jsonwebtoken), HTTP-only cookies, bcryptjs |
+| Authentication | JWT (jsonwebtoken), bearer tokens, bcryptjs |
 | Database | MongoDB + Mongoose repositories |
 | Blockchain | Hardhat (Solidity 0.8), Polygon PoS (Mainnet & Amoy) |
 | Tooling | pnpm, Vercel CLI/hosting, ESLint, PostCSS |

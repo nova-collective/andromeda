@@ -46,9 +46,28 @@ export interface JWTPayload {
  * - `message` contains a human-readable status message.
  * - `user` is optional and, if present, omits sensitive fields such as `password`.
  */
+export interface AuthenticatedUser {
+  /** Stringified identifier for the authenticated user */
+  id?: string;
+  /** Login username */
+  username: string;
+  /** Contact email address */
+  email: string;
+  /** Groups assigned to the user */
+  groups: string[];
+  /** Effective permissions merged from user and groups */
+  permissions: Permission[];
+  /** Optional bearer token returned by login/register flows */
+  token?: string;
+  /** Token expiration window (mirrors config `TOKEN_EXPIRATION`) */
+  tokenExpiresIn?: string;
+  /** Last time the user authenticated successfully */
+  lastLogin?: string | Date;
+}
+
 export interface AuthResponse {
   message: string;
-  user?: Omit<User, 'password'>;
+  user?: AuthenticatedUser;
 }
 
 /**

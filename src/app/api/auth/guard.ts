@@ -17,15 +17,25 @@ interface AuthorizationFailure {
 export type AuthorizationResult = AuthorizationSuccess | AuthorizationFailure;
 
 /**
- * Validate the JWT token stored in the request cookies and ensure the payload
- * grants the required permission for the specified CRUD action.
+ * Extract a bearer token from the Authorization header.
+ * Returns null when the header is missing or malformed.
+ */
+export function extractBearerToken(request: NextRequest): string | null {
+  const authHeader = request.headers.get('authorization') ?? '';
+  const match = /^\s*Bearer\s+(.+)$/i.exec(authHeader);
+  return match ? match[1].trim() : null;
+}
+
+/**
+ * Validate the bearer token supplied via the Authorization header and ensure
+ * the payload grants the required permission for the specified CRUD action.
  */
 export function authorizeRequest(
   request: NextRequest,
   permission: Permission['name'],
   action: CrudAction,
 ): AuthorizationResult {
-  const token = request.cookies.get('token')?.value;
+  const token = extractBearerToken(request);
   if (!token) {
     return {
       ok: false,

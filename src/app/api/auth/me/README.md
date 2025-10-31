@@ -1,8 +1,8 @@
 ## Auth Me API
 
 Handler for `/api/auth/me`, located in `route.ts`. Returns the authenticated user's profile
-information. The route expects authentication middleware to attach user identity details to the
-request context before execution.
+information together with merged permissions. The route reads the bearer token directly from the
+`Authorization` header and does not depend on cookies or upstream context injection.
 
 ### Endpoint Overview
 
@@ -10,47 +10,46 @@ request context before execution.
 - **Consumes**: No request body
 - **Produces**: JSON response containing the current user's profile data
 
-### Expected Middleware State
+### Authentication Requirements
 
-The handler relies on upstream middleware (e.g., Next.js middleware, edge functions, or API route
-wrappers) to:
+- Clients must send `Authorization: Bearer <JWT>` with the request.
+- The JWT is verified server-side using the shared auth utilities.
+- On success, the handler looks up the user by username and re-computes effective permissions via
+  `UserService.getUserPermissions`.
 
-1. Validate the session or token (JWT, API key, etc.).
-2. Resolve the associated user id or wallet address.
-3. Inject the resolved identity into the request via headers or custom properties (see
-   `middleware.ts` for the project's implementation).
-
-If the middleware fails to provide identity details, the route responds with `401`.
+If the header is missing or the token is invalid, the route responds with `401`.
 
 ### Response Shape
 
-Successful responses include the normalized user payload fetched from `UserService`:
+Successful responses use the shared `AuthResponse` shape:
 
-```json
+```jsonc
 {
-  "success": true,
-  "message": "User retrieved successfully",
+  "message": "Authenticated",
   "user": {
     "id": "...",
-    "walletAddress": "0x...",
     "username": "...",
     "email": "...",
-    "permissions": ["..."],
     "groups": ["..."],
-    "settings": { "theme": "dark", "notifications": true }
+    "permissions": [
+      {
+        "name": "User",
+        "crud": { "read": true, "create": false, "update": false, "delete": false }
+      }
+    ],
+    "lastLogin": "2024-01-01T12:34:56.000Z"
   }
 }
 ```
 
 Errors return:
 
-- `401` when the request lacks authentication context
+- `401` when the request lacks a valid bearer token
 - `404` if the associated user cannot be found
 - `500` for unexpected failures
 
 ### Implementation Notes
 
-- `UserService.getUserById` (or wallet address, depending on middleware) performs the data lookup.
-- The handler uses the shared `handleError` helper pattern to normalize server errors.
-- Extend or customize the middleware to align with your chosen authentication strategy (JWT, API
-  tokens, session cookies).
+- `UserService.getUserByUsername` performs the data lookup and ensures Mongo-specific fields remain server-side.
+- `normalizePermissions` converts Mongoose documents into JSON-safe objects for the response payload.
+- Extend or customize the guard to align with your chosen authentication strategy (JWT bearer tokens, API keys, etc.).

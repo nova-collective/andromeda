@@ -1,18 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/app/lib/auth/auth';
-import { MongoDBUserRepository } from '@/app/lib/repositories';
+import { UserService } from '@/app/lib/services';
 import { AuthResponse } from '@/app/lib/types';
-import { buildResponseBody, ApiResponse } from '../helpers';
+import { extractBearerToken } from '../guard';
+import { buildResponseBody, ApiResponse, normalizePermissions } from '../helpers';
+
+const userService = new UserService();
 
 /**
  * GET /api/auth/me
  *
- * Validates the JWT stored in the `token` cookie and returns the associated
- * user object. Returns 401 when the cookie is missing or invalid.
+ * Validates the JWT supplied via the `Authorization` header and returns the associated
+ * user object along with effective permissions. Returns 401 when the header is missing
+ * or invalid.
  */
 export async function GET(request: NextRequest): Promise<ApiResponse> {
   try {
-    const token = request.cookies.get('token')?.value;
+    const token = extractBearerToken(request);
 
     if (!token) {
       return NextResponse.json(
@@ -29,8 +33,7 @@ export async function GET(request: NextRequest): Promise<ApiResponse> {
       );
     }
 
-    const repo = new MongoDBUserRepository();
-    const user = await repo.findByUsername(decoded.username);
+    const user = await userService.getUserByUsername(decoded.username);
 
     if (!user) {
       return NextResponse.json(
@@ -39,7 +42,11 @@ export async function GET(request: NextRequest): Promise<ApiResponse> {
       );
     }
 
-    return NextResponse.json(buildResponseBody(user));
+    const userId = user._id ? String(user._id) : String((user as { id?: string | number }).id);
+    const rawPermissions = await userService.getUserPermissions(userId);
+    const permissions = normalizePermissions(rawPermissions);
+
+    return NextResponse.json(buildResponseBody(user, { permissions }));
   } catch (error) {
     console.error('Auth check error:', error);
     return NextResponse.json(

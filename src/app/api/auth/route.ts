@@ -1,72 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { comparePassword } from '@/app/lib/utils';
 import { UserService } from '@/app/lib/services';
-import {
-  generateToken,
-  verifyToken,
-  TOKEN_MAX_AGE_SECONDS,
-} from '@/app/lib/auth/auth';
+import { generateToken, verifyToken } from '@/app/lib/auth/auth';
 import {
   AuthResponse,
   LoginRequest,
   IUser,
   JWTPayload,
 } from '@/app/lib/types';
-import { TOKEN_EXPIRATION } from '@/app/lib/config';
-
-type ApiResponse = NextResponse<AuthResponse>;
+import { extractBearerToken } from './guard';
+import {
+  ApiResponse,
+  buildResponseBody,
+  normalizePermissions,
+  withAuthHeader,
+} from './helpers';
 
 const userService = new UserService();
-
-/**
- * Build the JSON response body that the auth endpoints return.
- *
- * @param user - The user document fetched from the repository.
- * @param token - Optional JWT token (included on login responses).
- */
-function buildResponseBody(
-  user: IUser,
-  token?: string,
-): AuthResponse {
-  const stringId = user._id ? String(user._id) : (user as unknown as { id?: string | number }).id;
-  const groups = Array.isArray(user.groups)
-    ? user.groups.map((group) => String(group))
-    : [];
-
-  return {
-    message: token ? 'Login successful' : 'Authenticated',
-    user: {
-      id: stringId,
-      username: user.username,
-      email: user.email,
-      groups,
-      ...(token
-        ? {
-            token,
-            tokenExpiresIn: TOKEN_EXPIRATION,
-          }
-        : {}),
-      lastLogin: user.lastLogin,
-    },
-  } as AuthResponse;
-}
-
-/**
- * Attach the auth token as an HTTP-only cookie on the response.
- *
- * @param response - Response object returned by NextResponse.json.
- * @param token - Signed JWT token to persist in the cookie.
- */
-function withAuthCookie(response: ApiResponse, token: string): ApiResponse {
-  response.cookies.set('token', token, {
-    httpOnly: true,
-    sameSite: 'strict',
-    maxAge: TOKEN_MAX_AGE_SECONDS,
-    secure: process.env.NODE_ENV === 'production',
-    path: '/',
-  });
-  return response;
-}
 
 /**
  * POST /api/auth
@@ -110,8 +60,8 @@ export async function POST(request: NextRequest): Promise<ApiResponse> {
 
     // Update last login timestamp best-effort.
     try {
-  const id = user._id ? String(user._id) : String((user as { id?: string | number }).id);
-  await userService.updateUser(id, { lastLogin: new Date() } as Partial<IUser>);
+      const id = user._id ? String(user._id) : String((user as { id?: string | number }).id);
+      await userService.updateUser(id, { lastLogin: new Date() } as Partial<IUser>);
     } catch (error) {
       console.error('Failed to update lastLogin:', error);
     }
@@ -122,16 +72,7 @@ export async function POST(request: NextRequest): Promise<ApiResponse> {
       : [];
 
     const rawPermissions = await userService.getUserPermissions(userId);
-    const permissions: JWTPayload['permissions'] = rawPermissions.map((permission) => ({
-      name: permission.name,
-      description: permission.description,
-      crud: {
-        read: permission.crud.read,
-        create: permission.crud.create,
-        update: permission.crud.update,
-        delete: permission.crud.delete,
-      },
-    }));
+    const permissions = normalizePermissions(rawPermissions);
 
     const payload: JWTPayload = {
       userId,
@@ -142,8 +83,10 @@ export async function POST(request: NextRequest): Promise<ApiResponse> {
 
     const token = generateToken(payload);
 
-    const response = NextResponse.json(buildResponseBody(user, token));
-    return withAuthCookie(response as ApiResponse, token);
+    const response = NextResponse.json(
+      buildResponseBody(user, { token, permissions }),
+    ) as ApiResponse;
+    return withAuthHeader(response, token);
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json(
@@ -156,12 +99,12 @@ export async function POST(request: NextRequest): Promise<ApiResponse> {
 /**
  * GET /api/auth
  *
- * Validates the JWT stored in the `token` cookie and returns the associated
- * user object. Returns 401 when the cookie is missing or invalid.
+ * Validates the JWT supplied via the `Authorization` header and returns the associated
+ * user object. Returns 401 when the header is missing or invalid.
  */
 export async function GET(request: NextRequest): Promise<ApiResponse> {
   try {
-    const token = request.cookies.get('token')?.value;
+    const token = extractBearerToken(request);
 
     if (!token) {
       return NextResponse.json(
@@ -178,7 +121,7 @@ export async function GET(request: NextRequest): Promise<ApiResponse> {
       );
     }
 
-  const user = await userService.getUserByUsername(decoded.username);
+    const user = await userService.getUserByUsername(decoded.username);
 
     if (!user) {
       return NextResponse.json(
@@ -187,7 +130,11 @@ export async function GET(request: NextRequest): Promise<ApiResponse> {
       );
     }
 
-    return NextResponse.json(buildResponseBody(user));
+    const userId = user._id ? String(user._id) : String((user as { id?: string | number }).id);
+    const rawPermissions = await userService.getUserPermissions(userId);
+    const permissions = normalizePermissions(rawPermissions);
+
+    return NextResponse.json(buildResponseBody(user, { permissions }));
   } catch (error) {
     console.error('Auth check error:', error);
     return NextResponse.json(

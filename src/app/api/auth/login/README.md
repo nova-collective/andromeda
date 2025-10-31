@@ -38,7 +38,8 @@ Invalid payloads return `400` with a Joi-derived error message.
 2. Use `UserService` to fetch the user record.
 3. Compare the provided password against the stored hash with `comparePassword`.
 4. On success, issue a response containing `success: true`, a descriptive `message`, and minimal
-   user metadata (e.g., `id`, `walletAddress`, `username`).
+  user metadata (e.g., `id`, `walletAddress`, `username`).
+5. Attach the JWT as a `Bearer` token in the `Authorization` response header for clients to store.
 
 Failures produce:
 
@@ -64,7 +65,6 @@ Failures produce:
 ### Implementation Notes
 
 - Password hashing and comparison reuse the helpers in `@/app/lib/utils/password`.
-- The route does not mint tokens directly; integrate with your session or token issuance logic
-  after a successful login response.
+- The response already includes a signed JWT exposed via the `Authorization` header.
 - Apply middleware to guard the endpoint against brute-force attempts (rate limiting, captcha,
   etc.) as needed for your deployment.

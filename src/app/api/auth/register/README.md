@@ -1,7 +1,7 @@
 ## Auth Register API
 
 Handler for `POST /api/auth/register`, implemented in `route.ts`. Creates a new user account,
-performs basic validation, and issues an authentication cookie on success.
+performs basic validation, and returns a bearer token on success.
 
 ### Request Body
 
@@ -30,12 +30,12 @@ Failures return `400` with a descriptive message.
 - Generate a JWT using `generateToken`.
 - Build the response body with `buildResponseBody` and override the message to
   "Registration successful".
-- Attach the token as an HTTP-only cookie using `withAuthCookie`.
+- Expose the token through the `Authorization` response header using `withAuthHeader`.
 
 ### Responses
 
 - `201` with `{ success: true, message: 'Registration successful', user, tokenExpiresIn }` and
-  a `token` cookie on success.
+  an `Authorization: Bearer <token>` response header on success.
 - `400` for validation errors (missing fields, password mismatch, weak password, duplicates).
 - `500` for unexpected errors.
 

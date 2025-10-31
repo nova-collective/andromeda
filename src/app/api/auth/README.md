@@ -16,7 +16,16 @@ interface LoginRequest {
 ```typescript
 interface AuthResponse {
   message: string;
-  user?: Omit<User, 'password'>; // Safe user object without password
+  user?: {
+    id?: string;
+    username: string;
+    email: string;
+    groups: string[];
+    permissions: Permission[];
+    token?: string;            // Present on login/register responses
+    tokenExpiresIn?: string;   // Mirrors TOKEN_EXPIRATION config
+    lastLogin?: string;        // ISO string when available
+  };
 }
 ```
 
@@ -26,8 +35,8 @@ interface AuthResponse {
 2. **User Lookup**: Find user by username in database
 3. **Password Verification**: Compare plain text password with stored bcrypt hash
 4. **JWT Generation**: Create token with user information and effective permissions
-5. **Cookie Setting**: Set secure HTTP-only authentication cookie
-6. **Response**: Return success message with safe user object
+5. **Authorization Header**: Return a bearer token in the `Authorization` response header
+6. **Response**: Return success message with safe user object, permissions, and optional token metadata
 
 #### Security Features
 
@@ -58,8 +67,8 @@ interface RegisterRequest {
 4. **Duplicate Checking**: Verify username and email are unique
 5. **Password Hashing**: Hash password using bcrypt before storage
 6. **User Creation**: Create new user document in database
-7. **Auto Login**: Generate JWT (including merged permissions) and set authentication cookie
-8. **Response**: Return success with user information
+7. **Auto Login**: Generate JWT (including merged permissions) and expose it via the `Authorization` header
+8. **Response**: Return success with user information, permissions, and bearer token metadata
 
 #### Validation Rules
 
@@ -75,10 +84,10 @@ Handles `GET /api/auth/me` requests for session validation and user information.
 
 #### Authentication Flow
 
-1. **Cookie Extraction**: Read `token` cookie from request
+1. **Authorization Header**: Read bearer token from the `Authorization` request header
 2. **Token Verification**: Validate JWT signature and expiry
 3. **User Lookup**: Find current user by username from token
-4. **Response Mapping**: Return safe user object (no password)
+4. **Response Mapping**: Return safe user object (no password) plus effective permissions
 
 #### Use Cases
 
@@ -89,4 +98,4 @@ Handles `GET /api/auth/me` requests for session validation and user information.
 
 ### Authorization Guard
 
-`src/app/api/auth/guard.ts` exports `authorizeRequest`, a helper used by protected routes (e.g., users and groups APIs). It reads the JWT from the `token` cookie, validates it, and enforces permission-specific CRUD access using the `permissions` array embedded in the payload.
+`src/app/api/auth/guard.ts` exports `authorizeRequest`, a helper used by protected routes (e.g., users and groups APIs). It reads the bearer token from the `Authorization` header, validates it, and enforces permission-specific CRUD access using the `permissions` array embedded in the payload.

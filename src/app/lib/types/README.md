@@ -40,13 +40,29 @@ interface JWTPayload {
 }
 ```
 
+### `AuthenticatedUser`
+Representation of safe user data returned by authentication endpoints.
+
+```typescript
+interface AuthenticatedUser {
+  id?: string;
+  username: string;
+  email: string;
+  groups: string[];
+  permissions: Permission[];
+  token?: string;
+  tokenExpiresIn?: string;
+  lastLogin?: string | Date;
+}
+```
+
 ### `AuthResponse`
 Standardized response format for authentication endpoints.
 
 ```typescript
 interface AuthResponse {
   message: string;
-  user?: Omit<User, 'password'>; // Safe user object without password
+  user?: AuthenticatedUser;
 }
 ```
 
@@ -65,7 +81,7 @@ Permission system for users and groups with CRUD capabilities.
 
 ```typescript
 type Permission = {
-  name: 'users' | 'groups'; // Restricted to known resources
+  name: 'User' | 'Group'; // Restricted to known resources
   description?: string;
   crud: {
     read: boolean;
@@ -176,7 +192,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<AuthRespo
 
 ## Type Safety Guidelines
 
-1. **Never expose passwords**: Always use `Omit<User, 'password'>` for client responses
+1. **Never expose passwords**: Use the `AuthenticatedUser` type for client responses
 2. **Use proper error handling**: Cast unknown errors appropriately
 3. **Validate input data**: Use type guards or validation libraries for request payloads
 4. **Repository patterns**: Use the `Repository<T>` interface for consistent data access

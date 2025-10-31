@@ -13,7 +13,7 @@ REST handlers for `/api/groups`, implemented in `route.ts`. All handlers return 
 
 ### Authorization
 
-Handlers validate the `token` cookie and ensure the caller has `groups` permission with the relevant CRUD action:
+Handlers validate the `Authorization` bearer token (`Authorization: Bearer <token>`) and ensure the caller has `groups` permission with the relevant CRUD action:
 
 - `POST` → `groups:create`
 - `GET` → `groups:read`
@@ -105,4 +105,4 @@ Remove a group by id supplied as a query parameter.
 - Business logic is delegated to `GroupService` and `UserService`. The latter is used to populate member metadata on GET requests.
 - `ensureGroupNameUnique` provides early conflict detection, complementing persistence-layer constraints.
 - Error handling is centralized via `handleError`, which normalizes unknown exceptions into a 500 JSON response while logging the original message.
-- `authorizeRequest` protects each handler by decoding the JWT cookie and enforcing scoped permissions.
+- `authorizeRequest` protects each handler by decoding the bearer token and enforcing scoped permissions.

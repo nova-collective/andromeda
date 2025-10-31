@@ -3,7 +3,7 @@ import { comparePassword } from '@/app/lib/utils';
 import { generateToken } from '@/app/lib/auth/auth';
 import { UserService } from '@/app/lib/services';
 import { AuthResponse, IUser, JWTPayload, LoginRequest } from '@/app/lib/types';
-import { buildResponseBody, withAuthCookie, ApiResponse } from '../helpers';
+import { buildResponseBody, withAuthHeader, ApiResponse, normalizePermissions } from '../helpers';
 
 const userService = new UserService();
 
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest): Promise<ApiResponse> {
       );
     }
 
-  const user = await userService.getUserByUsername(username);
+    const user = await userService.getUserByUsername(username);
 
     if (!user) {
       return NextResponse.json(
@@ -61,16 +61,7 @@ export async function POST(request: NextRequest): Promise<ApiResponse> {
       : [];
 
     const rawPermissions = await userService.getUserPermissions(userId);
-    const permissions: JWTPayload['permissions'] = rawPermissions.map((permission) => ({
-      name: permission.name,
-      description: permission.description,
-      crud: {
-        read: permission.crud.read,
-        create: permission.crud.create,
-        update: permission.crud.update,
-        delete: permission.crud.delete,
-      },
-    }));
+    const permissions = normalizePermissions(rawPermissions);
 
     const payload: JWTPayload = {
       userId,
@@ -81,8 +72,10 @@ export async function POST(request: NextRequest): Promise<ApiResponse> {
 
     const token = generateToken(payload);
 
-    const response = NextResponse.json(buildResponseBody(user, token));
-    return withAuthCookie(response as ApiResponse, token);
+  const response = NextResponse.json(
+    buildResponseBody(user, { token, permissions }),
+  ) as ApiResponse;
+  return withAuthHeader(response, token);
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json(
