@@ -86,10 +86,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 
     const rawBody = await request.json();
-      const { value, errorResponse } = validateRequestBody(validateUpsertUser, rawBody);
+    const { value, errorResponse } = validateRequestBody(validateUpsertUser, rawBody);
 
-      if (errorResponse) {
-        return errorResponse;
+    if (errorResponse) {
+      return errorResponse;
     }
 
     const body = value as {
