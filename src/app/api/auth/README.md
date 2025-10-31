@@ -1,6 +1,6 @@
 ## Authentication Endpoints
 
-### Login Handler (`login.ts`)
+### Login Handler (`login/route.ts`)
 
 Handles `POST /api/auth/login` requests for user authentication.
 
@@ -22,7 +22,7 @@ interface AuthResponse {
 
 #### Authentication Flow
 
-1. **Input Validation**: Verify username and password are provided
+1. **Input Validation**: `validateRequestBody` with `validateLoginCredentials` ensures the shape is correct.
 2. **User Lookup**: Find user by username in database
 3. **Password Verification**: Compare plain text password with stored bcrypt hash
 4. **JWT Generation**: Create token with user information
@@ -36,7 +36,7 @@ interface AuthResponse {
 - **Error Handling**: Generic "Invalid credentials" message for security
 - **Rate Limiting**: Should be implemented at reverse proxy level
 
-### Registration Handler (`register.ts`)
+### Registration Handler (`register/route.ts`)
 
 Handles `POST /api/auth/register` requests for new user creation.
 
@@ -69,7 +69,7 @@ interface RegisterRequest {
 - **Unique Constraints**: username and email must be unique
 - **Email Format**: Should be valid email format (add validation as needed)
 
-### Current User Handler (`me.ts`)
+### Current User Handler (`me/route.ts`)
 
 Handles `GET /api/auth/me` requests for session validation and user information.
 

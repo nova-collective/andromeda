@@ -18,7 +18,6 @@ The authentication layer provides:
 ## Files Overview
 
 - **`auth.ts`** - Core JWT utilities (generate, verify, cookie management)
-- **`register.ts`** - Registration endpoint handler with validation
 - **`permissions.ts`** - Group-based permission checking utilities
 - **`index.ts`** - Central export barrel for all auth functions
 
