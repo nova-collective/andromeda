@@ -72,10 +72,10 @@ export async function POST(request: NextRequest): Promise<ApiResponse> {
 
     const token = generateToken(payload);
 
-  const response = NextResponse.json(
-    buildResponseBody(user, { token, permissions }),
-  ) as ApiResponse;
-  return withAuthHeader(response, token);
+    const response = NextResponse.json(
+      buildResponseBody(user, { token, permissions }),
+    ) as ApiResponse;
+    return withAuthHeader(response, token);
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json(
