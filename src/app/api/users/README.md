@@ -16,10 +16,10 @@ Handlers for `/api/users`, defined in `route.ts`. Responses follow a consistent 
 
 Each handler validates the `Authorization` bearer token (`Authorization: Bearer <token>`) and enforces the required permission/action pair:
 
-- `GET` → `users:read`
-- `POST` → `users:create`
-- `PUT` → `users:update`
-- `DELETE` → `users:delete`
+- `GET` → `User/read`
+- `POST` → `User/create`
+- `PUT` → `User/update`
+- `DELETE` → `User/delete`
 
 ### GET `/api/users`
 
