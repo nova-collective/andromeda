@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { comparePassword } from '@/app/lib/utils';
 import { MongoDBUserRepository } from '@/app/lib/repositories';
+import { UserService } from '@/app/lib/services';
 import {
   generateToken,
   verifyToken,
@@ -15,6 +16,8 @@ import {
 import { TOKEN_EXPIRATION } from '@/app/lib/config';
 
 type ApiResponse = NextResponse<AuthResponse>;
+
+const userService = new UserService();
 
 /**
  * Build the JSON response body that the auth endpoints return.
@@ -89,8 +92,8 @@ export async function POST(request: NextRequest): Promise<ApiResponse> {
       );
     }
 
-    const repo = new MongoDBUserRepository();
-    const user = await repo.findByUsername(username);
+  const repo = new MongoDBUserRepository();
+  const user = await repo.findByUsername(username);
 
     if (!user) {
       return NextResponse.json(
@@ -115,13 +118,29 @@ export async function POST(request: NextRequest): Promise<ApiResponse> {
       console.error('Failed to update lastLogin:', error);
     }
 
-    const payload = {
-      userId: user._id ? String(user._id) : String((user as { id?: string | number }).id),
+    const userId = user._id ? String(user._id) : String((user as { id?: string | number }).id);
+    const groups = Array.isArray(user.groups)
+      ? user.groups.map((group) => String(group))
+      : [];
+
+    const rawPermissions = await userService.getUserPermissions(userId);
+    const permissions: JWTPayload['permissions'] = rawPermissions.map((permission) => ({
+      name: permission.name,
+      description: permission.description,
+      crud: {
+        read: permission.crud.read,
+        create: permission.crud.create,
+        update: permission.crud.update,
+        delete: permission.crud.delete,
+      },
+    }));
+
+    const payload: JWTPayload = {
+      userId,
       username: user.username,
-      groups: Array.isArray(user.groups)
-        ? user.groups.map((group) => String(group))
-        : [],
-    } as unknown as JWTPayload;
+      groups,
+      permissions,
+    };
 
     const token = generateToken(payload);
 

@@ -26,12 +26,14 @@ export interface User {
  * - `iat` and `exp` are optional standard JWT timestamps (issued-at and expiry).
  */
 export interface JWTPayload {
-  /** Numeric id of the user that the token represents */
-  userId: number;
+  /** Identifier of the user represented by the token */
+  userId: string | number;
   /** Username of the authenticated user */
   username: string;
   /** User groups attached to the token */
   groups: string[];
+  /** Effective permissions (user overrides group permissions) */
+  permissions: Permission[];
   /** Issued-at timestamp (optional) */
   iat?: number;
   /** Expiration timestamp (optional) */

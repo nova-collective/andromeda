@@ -31,9 +31,10 @@ Payload structure for JWT authentication tokens.
 
 ```typescript
 interface JWTPayload {
-  userId: number;
+  userId: string | number;
   username: string;
   groups: string[];
+  permissions: Permission[];
   iat?: number; // Issued at
   exp?: number; // Expires at
 }

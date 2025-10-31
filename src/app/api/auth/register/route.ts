@@ -81,17 +81,32 @@ export async function POST(request: NextRequest): Promise<ApiResponse> {
 
 		const createdUser = await userService.createUser(userPayload);
 
-		const userId = createdUser._id
-			? String(createdUser._id)
-			: String((createdUser as unknown as { id?: string | number }).id);
+			const userId = createdUser._id
+				? String(createdUser._id)
+				: String((createdUser as unknown as { id?: string | number }).id);
 
-		const tokenPayload = {
-			userId,
-			username: createdUser.username,
-			groups: Array.isArray(createdUser.groups)
+			const groups = Array.isArray(createdUser.groups)
 				? createdUser.groups.map((group) => String(group))
-				: [],
-		} as unknown as JWTPayload;
+				: [];
+
+			const rawPermissions = await userService.getUserPermissions(userId);
+			const permissions: JWTPayload['permissions'] = rawPermissions.map((permission) => ({
+				name: permission.name,
+				description: permission.description,
+				crud: {
+					read: permission.crud.read,
+					create: permission.crud.create,
+					update: permission.crud.update,
+					delete: permission.crud.delete,
+				},
+			}));
+
+			const tokenPayload: JWTPayload = {
+				userId,
+				username: createdUser.username,
+				groups,
+				permissions,
+			};
 
 		const token = generateToken(tokenPayload);
 
