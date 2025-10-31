@@ -23,11 +23,17 @@ function resolveTokenMaxAge(expiration: string): number {
   const DEFAULT_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
   const match = /^\s*(\d+)\s*([smhd])?\s*$/i.exec(expiration);
   if (!match) {
+    console.warn(
+      `[auth] Invalid token expiration value "${expiration}". Falling back to default (${DEFAULT_MAX_AGE} seconds = 7 days).`
+    );
     return DEFAULT_MAX_AGE;
   }
 
   const value = Number(match[1]);
   if (!Number.isFinite(value) || value <= 0) {
+    console.warn(
+      `[auth] Non-positive or non-numeric token expiration value "${expiration}". Falling back to default (${DEFAULT_MAX_AGE} seconds = 7 days).`
+    );
     return DEFAULT_MAX_AGE;
   }
 
