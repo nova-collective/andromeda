@@ -22,6 +22,11 @@ export class GroupService {
     return this.repository.findAll(query);
   }
 
+  /** Find a group by its name */
+  async getGroupByName(name: string): Promise<IGroup | null> {
+    return this.repository.findByField('name', name);
+  }
+
   /** Retrieve all groups */
   async getAllGroups(): Promise<IGroup[]> {
     return this.repository.findAll();

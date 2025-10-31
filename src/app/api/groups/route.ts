@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GroupService, UserService } from '@/app/lib/services';
 import { IGroup } from '@/app/lib/types';
+import {
+  validateCreateGroup,
+  validateUpdateGroup,
+  validateRequestBody,
+  ensureGroupNameUnique,
+} from '@/app/lib/validators';
 
 const groupService = new GroupService();
 const userService = new UserService();
@@ -25,17 +31,24 @@ function handleError(error: unknown): NextResponse {
  */
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    const body = await request.json();
-    
-    // Validate required fields
-    if (!body.name || !body.createdBy) {
-      return NextResponse.json({ 
-        error: 'Name and createdBy are required' 
-      }, { status: 400 });
+    const rawBody = await request.json();
+    const { value, errorResponse } = validateRequestBody(validateCreateGroup, rawBody);
+
+    if (errorResponse) {
+      return errorResponse;
     }
-    
-    // Create group using service
-    const group = await groupService.createGroup(body);
+
+    const body = value as {
+      name: string;
+      createdBy: string;
+    } & Record<string, unknown>;
+
+    const conflict = await ensureGroupNameUnique(groupService, body.name);
+    if (conflict) {
+      return NextResponse.json({ error: conflict }, { status: 400 });
+    }
+
+    const group = await groupService.createGroup(body as unknown as Omit<IGroup, 'id' | 'createdAt'>);
     return NextResponse.json({
         success: true,
         message: 'Group created successfully',
@@ -124,15 +137,26 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
  */
 export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
-    const body = await request.json();
-    const { id, ...updateData } = body;
+    const rawBody = await request.json();
+    const { value, errorResponse } = validateRequestBody(validateUpdateGroup, rawBody);
 
-    if (!id) {
-      return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+    if (errorResponse) {
+      return errorResponse;
     }
 
-    // Update group using service
-    const group = await groupService.updateGroup(id, updateData);
+    const { id, ...updateData } = value as {
+      id: string;
+      name?: string;
+    } & Record<string, unknown>;
+
+    if (typeof updateData.name === 'string') {
+      const conflict = await ensureGroupNameUnique(groupService, updateData.name, id);
+      if (conflict) {
+        return NextResponse.json({ error: conflict }, { status: 400 });
+      }
+    }
+
+    const group = await groupService.updateGroup(id, updateData as Partial<IGroup>);
     if (!group) {
       return NextResponse.json({ error: 'Group not found' }, { status: 404 });
     }
