@@ -2,13 +2,44 @@ import bcrypt from 'bcryptjs';
 import { BaseRepository } from './baseRepository';
 import { IUser } from '../types';
 import getClient from '@/app/lib/config/mongodb';
-import { ObjectId, Document, Filter } from 'mongodb';
+import { ObjectId, Document, Filter, Db, MongoServerError } from 'mongodb';
 
 /**
  * MongoDB-backed implementation of the user repository.
  */
 export class MongoDBUserRepository extends BaseRepository<IUser> {
   private collectionName = 'users';
+  private static indexesEnsured = false;
+
+  /** Ensure unique indexes are created once per process */
+  private async ensureIndexes(db: Db): Promise<void> {
+    if (MongoDBUserRepository.indexesEnsured) return;
+    const collection = db.collection(this.collectionName);
+    await collection.createIndexes([
+      { key: { email: 1 }, unique: true, name: 'users_email_unique' },
+      { key: { username: 1 }, unique: true, name: 'users_username_unique' },
+    ]);
+    MongoDBUserRepository.indexesEnsured = true;
+  }
+
+  /** Translate MongoDB duplicate key errors into domain-friendly messages */
+  private handleDuplicateKey(error: unknown): never {
+    if (error instanceof MongoServerError && error.code === 11000) {
+      const keyPattern = (error.keyPattern ?? {}) as Record<string, unknown>;
+      if (Object.prototype.hasOwnProperty.call(keyPattern, 'email')) {
+        throw new Error('Email must be unique');
+      }
+      if (Object.prototype.hasOwnProperty.call(keyPattern, 'username')) {
+        throw new Error('Username must be unique');
+      }
+    }
+
+    if (error instanceof Error) {
+      throw error;
+    }
+
+    throw new Error(String(error));
+  }
 
   /** Find a user by string id */
   async findById(id: string): Promise<IUser | null> {
@@ -62,6 +93,7 @@ export class MongoDBUserRepository extends BaseRepository<IUser> {
   async create(data: Omit<IUser, 'id' | 'createdAt'>): Promise<IUser> {
     const client = await getClient();
     const db = client.db('andromeda');
+    await this.ensureIndexes(db);
     
     // Ensure we don't accidentally pass a non-ObjectId `_id` to insertOne
     const rest = data as unknown as Record<string, unknown>;
@@ -71,30 +103,39 @@ export class MongoDBUserRepository extends BaseRepository<IUser> {
       lastLogin: new Date()
     };
 
-    const result = await db.collection(this.collectionName).insertOne(userData as unknown as Document);
-    const user = await this.findById(result.insertedId.toString());
-    return user!;
+    try {
+      const result = await db.collection(this.collectionName).insertOne(userData as unknown as Document);
+      const user = await this.findById(result.insertedId.toString());
+      return user!;
+    } catch (error) {
+      this.handleDuplicateKey(error);
+    }
   }
 
   /** Update a user by id */
   async update(id: string, data: Partial<IUser>): Promise<IUser | null> {
     const client = await getClient();
     const db = client.db('andromeda');
+    await this.ensureIndexes(db);
     
-    const result = await db.collection(this.collectionName).findOneAndUpdate(
-      { _id: new ObjectId(id) },
-      { 
-        $set: {
-          ...data,
-          updatedAt: new Date()
-        }
-      },
-      { returnDocument: 'after' }
-    );
+    try {
+      const result = await db.collection(this.collectionName).findOneAndUpdate(
+        { _id: new ObjectId(id) },
+        { 
+          $set: {
+            ...data,
+            updatedAt: new Date()
+          }
+        },
+        { returnDocument: 'after' }
+      );
 
-    // `findOneAndUpdate` returns an object with a `value` property that
-    // contains the updated document (or null). Return that document as IUser.
-    return (result?.value as unknown) as IUser | null;
+      // `findOneAndUpdate` returns an object with a `value` property that
+      // contains the updated document (or null). Return that document as IUser.
+      return (result?.value as unknown) as IUser | null;
+    } catch (error) {
+      this.handleDuplicateKey(error);
+    }
   }
 
   /**
@@ -110,6 +151,7 @@ export class MongoDBUserRepository extends BaseRepository<IUser> {
   async patch(id: string, data: Partial<IUser>): Promise<IUser | null> {
     const client = await getClient();
     const db = client.db('andromeda');
+    await this.ensureIndexes(db);
 
     // Clone and prepare update data
     const updateData: Record<string, unknown> = { ...data } as Record<string, unknown>;
@@ -122,18 +164,22 @@ export class MongoDBUserRepository extends BaseRepository<IUser> {
       delete updateData.password;
     }
 
-    const result = await db.collection(this.collectionName).findOneAndUpdate(
-      { _id: new ObjectId(id) },
-      {
-        $set: {
-          ...updateData,
-          updatedAt: new Date(),
+    try {
+      const result = await db.collection(this.collectionName).findOneAndUpdate(
+        { _id: new ObjectId(id) },
+        {
+          $set: {
+            ...updateData,
+            updatedAt: new Date(),
+          },
         },
-      },
-      { returnDocument: 'after' }
-    );
+        { returnDocument: 'after' }
+      );
 
-    return (result?.value as unknown) as IUser | null;
+      return (result?.value as unknown) as IUser | null;
+    } catch (error) {
+      this.handleDuplicateKey(error);
+    }
   }
 
   /** Delete a user by id */
@@ -152,27 +198,32 @@ export class MongoDBUserRepository extends BaseRepository<IUser> {
   async upsert(filter: Record<string, unknown>, data: Partial<IUser>): Promise<IUser> {
     const client = await getClient();
     const db = client.db('andromeda');
+    await this.ensureIndexes(db);
     
-    const result = await db.collection(this.collectionName).findOneAndUpdate(
-      filter as unknown as Filter<Document>,
-      { 
-        $set: {
-          ...data,
-          lastLogin: new Date(),
-          updatedAt: new Date()
+    try {
+      const result = await db.collection(this.collectionName).findOneAndUpdate(
+        filter as unknown as Filter<Document>,
+        { 
+          $set: {
+            ...data,
+            lastLogin: new Date(),
+            updatedAt: new Date()
+          },
+          $setOnInsert: {
+            createdAt: new Date()
+          }
         },
-        $setOnInsert: {
-          createdAt: new Date()
+        { 
+          upsert: true,
+          returnDocument: 'after'
         }
-      },
-      { 
-        upsert: true,
-        returnDocument: 'after'
-      }
-    );
+      );
 
-    // upsert:true with returnDocument:'after' should return the upserted document.
-    // Use a non-null assertion because the driver guarantees a value when upserting.
-    return (result!.value as unknown) as IUser;
+      // upsert:true with returnDocument:'after' should return the upserted document.
+      // Use a non-null assertion because the driver guarantees a value when upserting.
+      return (result!.value as unknown) as IUser;
+    } catch (error) {
+      this.handleDuplicateKey(error);
+    }
   }
 }

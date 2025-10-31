@@ -1,2 +1,2 @@
-// Export all password utilities
 export * from './password';
+export * from './patterns';

@@ -1,97 +1,140 @@
 <p align="center">
-<img src="./asset/andromeda-logo.png" alt="Andromeda" style="display: block; margin: 0 auto;" />
+  <img src="./asset/andromeda-logo.png" alt="Andromeda logo" width="240" />
 </p>
 
-<p align="center">
-<img src="./asset/subtitle.png" alt="Your key, your book" style="display: block; margin: 0 auto;" />
-</p>
+<p align="center"><em>Your key, your book.</em></p>
 
-------
+---
 
-## About
+# Andromeda
 
-Andromeda is a web platform that makes it possible:
+Andromeda is an open-source web3 publishing platform that lets authors mint their works as NFTs and deliver them directly to readers. By coupling a Next.js front-end with Polygon smart contracts and MongoDB persistence, the project aims to redefine the relationship between authors and readers while keeping operational costs low.
 
-* For authors to publish any kind of fictional or non-fictional work as an NFT.
-* For readers to buy these NFTs and read the authors' works in different formats.
+## Table of Contents
 
-The mission of this platform is to allow authors to directly mint and tokenize their work, and to enable readers to access books simply.
-The web platform is open source. To mint their text as an NFT, the author covers the blockchain gas fees and pays a commission for platform maintenance. This commission can be a subscription fee or a percentage of copy sales. This model allows the platform to cover its costs without resorting to sponsorships, ensuring it remains free and independent.
-The reader pays the price set by the author.
+- [Andromeda](#andromeda)
+  - [Table of Contents](#table-of-contents)
+  - [Why Andromeda](#why-andromeda)
+  - [Key Features](#key-features)
+  - [Architecture \& Tech Stack](#architecture--tech-stack)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Setup](#setup)
+    - [Run the App](#run-the-app)
+  - [Available Scripts](#available-scripts)
+  - [Documentation](#documentation)
+  - [Deployment \& Environments](#deployment--environments)
+  - [Contributing](#contributing)
+  - [License](#license)
 
-If and when screen readers become available that can browse the web and log in to a platform using a blockchain wallet, users will be able to buy the book directly from the author and read it on their preferred device. In this way:
+## Why Andromeda
 
-* Intermediary costs are reduced, benefiting both the author and the reader.
-* The author can mint a limited quantity of copies, certified by the blockchain network, and set the price.
-* The reader can buy a certified copy (the NFT) directly from the author, which is the digital equivalent of owning a signed copy.
+- **Direct author-to-reader distribution**: Authors mint limited editions, set pricing, and receive payment without intermediaries.
+- **Certified ownership**: Readers collect NFTs that prove ownership of a digital edition—akin to a signed physical copy.
+- **Sustainable model**: Gas fees and a light platform commission fund ongoing maintenance without advertising or sponsorship lock-in.
+- **Inclusive roadmap**: Built with accessibility in mind so screen-reader and wallet-based flows can eventually purchase and read books without extra tooling.
 
-The philosophy behind Andromeda is to directly connect authors with people who buy an NFT because they want to read the work, not just to speculate. The primary goal is to create a direct author-reader relationship, rather than a marketplace for financial investment in unread artworks (though this is also possible).
+## Key Features
 
-## Technical documentation
+- **Authentication & Authorization**: JWT bearer tokens with user/group permission merging, Joi-based validation, and reusable middleware helpers.
+- **User & Group Management**: RESTful APIs for CRUD operations, uniqueness enforcement, and normalized Joi schemas.
+- **Password Utilities**: Centralized hashing, comparison, and strength validation.
+- **Configurable Patterns**: Shared regex utilities for IDs, usernames, wallets, and emails across services.
+- **Smart Contract Tooling**: Hardhat-powered workspace prepared for ERC-1155 book minting and sales contracts.
+- **Documentation First**: Each API route and validator module ships with inline JSDoc and README guidance.
 
- * [Functional anaysis](https://github.com/nova-collective/andromeda/wiki/Functional-analysis)
- * [Technical analysis](https://github.com/nova-collective/andromeda/wiki/Technical-analysis)
+## Architecture & Tech Stack
 
+| Layer | Technology |
+| --- | --- |
+| Frontend & API | Next.js App Router (React 19, TypeScript, Tailwind CSS 4) |
+| Authentication | JWT (jsonwebtoken), bearer tokens, bcryptjs |
+| Database | MongoDB + Mongoose repositories |
+| Blockchain | Hardhat (Solidity 0.8), Polygon PoS (Mainnet & Amoy) |
+| Tooling | pnpm, Vercel CLI/hosting, ESLint, PostCSS |
 
+Repository highlights:
 
-## Tech stack
+- `src/app/api` – Next.js API route handlers for auth, users, groups, and validators.
+- `src/app/lib` – Shared services, repositories, types, utils, and validators with modular documentation.
+- `contracts` & `ignition` – Solidity contracts plus deployment scripts (Hardhat Ignition).
+- `public/assets` – Static assets consumed by the frontend.
 
-Andromeda is an application based on [Next.js](https://nextjs.org/docs/app/getting-started/installation) for the web app features and [Hardhat](https://hardhat.org/docs/getting-started) for the blockchain features. Other technologies used are:
-
-* [Node.js](https://nodejs.org/en)
-* [Polygon](https://polygon.technology/)
-* [MongoDB](https://www.mongodb.com/)
-
-## Getting started
+## Getting Started
 
 ### Prerequisites
-The following software should be installed on your machine in order to run this application:
 
-* [Node.js](https://nodejs.org/en) v22.20.0 with pnpm v10.16.1 (consider using [nvm](https://github.com/nvm-sh/nvm) to manage node.js);
-* [Vercel CLI](https://vercel.com/docs/cli)
+- Node.js 22.20.0 and pnpm 10.16.1 (consider using `nvm`).
+- Vercel CLI (`npm i -g vercel`).
+- Local MongoDB instance or a connection string (e.g., MongoDB Atlas).
 
-### How to run
+### Setup
 
-1. Install the dependencies with `pnpm i`
-2. Login to Vercel using `vercel login`:
-   1. the github user needs grants for the project: email to `nova.web3.collective@gmail.com`
-3. Link to the project: `vercel link`
-4. Pull the `.env.local` configuration file by running the command: `vercel env pull`
-5. Install and configure a MongoDB locally then:
-   1. install a MongoDB client ([MongoDB Compass](https://www.mongodb.com/products/tools/compass) is suggested)
-   2. connect the MongoDB client to the running `mongod` instance
-   3. create an `andromeda` database
-6. Build the Next.js app with `pnpm build`
-7. Start the Next.js app with `pnpm start`
-   1. Alternatively you can start the app in dev mode (suggested way if you are a dev of this project): `pnpm dev`
+```bash
+pnpm install
+vercel login            # requires access to the Vercel project
+vercel link             # link local repo to Vercel project
+vercel env pull .env.local
+```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Configure MongoDB:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Start `mongod` locally or provision a remote cluster.
+2. (Optional) Use MongoDB Compass to create a database named `andromeda`.
+3. Ensure the connection string you pulled via Vercel points to the running instance.
 
-## Deploy
-The application is deployed and hosted on [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Run the App
 
-## Environments
-Each environment is mapped to a branch:
+```bash
+# Development (recommended during active work)
 
-* Production: main branch (protected)
-* Preview: develop branch (protected)
-* Feature instances: feature branches (not active at the moment)
 
-## CI/CD
-[TO DO]
+# Production build & serve
+pnpm build
+pnpm start
+```
 
-## Testing 
-[TO DO]
+Visit `http://localhost:3000` once the server is running.
 
-### linting
-It is a good practice to run the linter before to commit: `pnpm run lint`.
+> Fonts are optimized using [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) with Vercel's Geist family.
 
-## Analytics
-Andromeda uses [Vercel Web Analytics](https://vercel.com/docs/analytics/quickstart#add-the-analytics-component-to-your-app).
+## Available Scripts
 
-## How to contribute
-1. clone the repository
-2. checkout to develop branch
-3. start a feature branch with the following syntax `feature/<feature-branch-name>` (consider using [git-flow next](https://git-flow.sh/))
+- `pnpm dev` – Start the Next.js dev server.
+- `pnpm build` – Create an optimized production build.
+- `pnpm start` – Run the production server (after `pnpm build`).
+- `pnpm lint` – Execute ESLint with the shared config.
+- `node test-password-utils.mjs` – Smoke-test password hashing utilities.
+
+Add contract testing and application-specific test scripts as the project matures.
+
+## Documentation
+
+- Functional overview: [Wiki · Functional analysis](https://github.com/nova-collective/andromeda/wiki/Functional-analysis)
+- Technical deep dive: [Wiki · Technical analysis](https://github.com/nova-collective/andromeda/wiki/Technical-analysis)
+- API docs live alongside routes (e.g., `src/app/api/auth/login/README.md`).
+- Validator and utility usage docs located within `src/app/lib/**/README.md`.
+
+## Deployment & Environments
+
+- **Hosting**: Vercel (serverless functions + static assets).
+- **Branches**:
+  - `main` → Production (protected).
+  - `develop` → Preview environment (protected).
+  - `feature/*` → Ephemeral preview deployments when enabled.
+
+CI/CD pipelines leverage Vercel Deploy Hooks; additional automation (tests, audits) will roll out as the codebase stabilizes.
+
+## Contributing
+
+1. Fork or clone the repository.
+2. Branch from `develop` using `feature/<short-description>` (git-flow friendly).
+3. Keep PRs scoped and documented (include testing notes, screenshots for UI changes).
+4. Run `pnpm lint` before pushing to ensure style consistency.
+5. Submit a pull request to `develop` for review.
+
+Security issues should be reported privately to `nova.web3.collective@gmail.com`.
+
+## License
+
+Distributed under the terms of the **GNU General Public License v3.0**. See [LICENSE](LICENSE) for details.

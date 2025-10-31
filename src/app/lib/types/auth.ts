@@ -26,12 +26,14 @@ export interface User {
  * - `iat` and `exp` are optional standard JWT timestamps (issued-at and expiry).
  */
 export interface JWTPayload {
-  /** Numeric id of the user that the token represents */
-  userId: number;
+  /** Identifier of the user represented by the token */
+  userId: string | number;
   /** Username of the authenticated user */
   username: string;
   /** User groups attached to the token */
   groups: string[];
+  /** Effective permissions (user overrides group permissions) */
+  permissions: Permission[];
   /** Issued-at timestamp (optional) */
   iat?: number;
   /** Expiration timestamp (optional) */
@@ -44,9 +46,28 @@ export interface JWTPayload {
  * - `message` contains a human-readable status message.
  * - `user` is optional and, if present, omits sensitive fields such as `password`.
  */
+export interface AuthenticatedUser {
+  /** Stringified identifier for the authenticated user */
+  id?: string;
+  /** Login username */
+  username: string;
+  /** Contact email address */
+  email: string;
+  /** Groups assigned to the user */
+  groups: string[];
+  /** Effective permissions merged from user and groups */
+  permissions: Permission[];
+  /** Optional bearer token returned by login/register flows */
+  token?: string;
+  /** Token expiration window (mirrors config `TOKEN_EXPIRATION`) */
+  tokenExpiresIn?: string;
+  /** Last time the user authenticated successfully */
+  lastLogin?: string | Date;
+}
+
 export interface AuthResponse {
   message: string;
-  user?: Omit<User, 'password'>;
+  user?: AuthenticatedUser;
 }
 
 /**
@@ -68,7 +89,7 @@ export interface LoginRequest {
  */
 export type Permission = {
   /** Short machine name for the permission; currently restricted to known resources */
-  name: 'users' | 'groups';
+  name: 'User' | 'Group';
   /** Optional human-friendly description */
   description?: string;
   /** CRUD capabilities associated with the permission */
