@@ -14,7 +14,11 @@ export class MongoDBUserRepository extends BaseRepository<IUser> {
   /** Ensure unique indexes are created once per process */
   private async ensureIndexes(db: Db): Promise<void> {
     if (MongoDBUserRepository.indexesEnsured) return;
-    await db.collection(this.collectionName).createIndex({ email: 1 }, { unique: true, name: 'users_email_unique' });
+    const collection = db.collection(this.collectionName);
+    await collection.createIndexes([
+      { key: { email: 1 }, unique: true, name: 'users_email_unique' },
+      { key: { username: 1 }, unique: true, name: 'users_username_unique' },
+    ]);
     MongoDBUserRepository.indexesEnsured = true;
   }
 
@@ -24,6 +28,9 @@ export class MongoDBUserRepository extends BaseRepository<IUser> {
       const keyPattern = (error.keyPattern ?? {}) as Record<string, unknown>;
       if (Object.prototype.hasOwnProperty.call(keyPattern, 'email')) {
         throw new Error('Email must be unique');
+      }
+      if (Object.prototype.hasOwnProperty.call(keyPattern, 'username')) {
+        throw new Error('Username must be unique');
       }
     }
 

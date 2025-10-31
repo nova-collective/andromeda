@@ -45,6 +45,11 @@ export class UserService {
     return this.repository.findByField('walletAddress', walletAddress);
   }
 
+  /** Retrieve a user by username */
+  async getUserByUsername(username: string): Promise<IUser | null> {
+    return this.repository.findByUsername(username);
+  }
+
   /**
    * Retrieve all users (optionally this could accept pagination later).
    */

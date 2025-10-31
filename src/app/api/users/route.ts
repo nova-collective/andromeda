@@ -1,6 +1,7 @@
 // app/api/users/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { UserService } from '@/app/lib/services';
+import { IUser } from '@/app/lib/types';
 import { hashPassword, isBcryptHash, validatePasswordStrength } from '@/app/lib/utils/password';
 
 const userService = new UserService();
@@ -81,6 +82,26 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       // Hash the password
       body.password = await hashPassword(body.password);
     }
+
+    const username = typeof body.username === 'string' ? body.username.trim() : '';
+    const walletAddress = typeof body.walletAddress === 'string' ? body.walletAddress : '';
+
+  let existingByUsername: IUser | null = null;
+    if (username) {
+      existingByUsername = await userService.getUserByUsername(username);
+    }
+
+  let existingByWallet: IUser | null = null;
+    if (walletAddress) {
+      existingByWallet = await userService.getUserByWalletAddress(walletAddress);
+    }
+
+    if (
+      existingByUsername &&
+      (!existingByWallet || String(existingByUsername._id) !== String(existingByWallet._id))
+    ) {
+      return NextResponse.json({ error: 'Username must be unique' }, { status: 400 });
+    }
     
     // body should contain at least `walletAddress`. The service will
     // lowercase it and perform an upsert (create or update).
@@ -92,7 +113,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         user,
       });
   } catch (error) {
-    if (error instanceof Error && error.message === 'Email must be unique') {
+    if (
+      error instanceof Error &&
+      (error.message === 'Email must be unique' || error.message === 'Username must be unique')
+    ) {
       return NextResponse.json({ error: error.message }, { status: 400 });
     }
     return handleError(error);
@@ -139,6 +163,12 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
         user,
       });
   } catch (error) {
+    if (
+      error instanceof Error &&
+      (error.message === 'Email must be unique' || error.message === 'Username must be unique')
+    ) {
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    }
     return handleError(error);
   }
 }
