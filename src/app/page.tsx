@@ -2,7 +2,7 @@ import Image from 'next/image';
 import UserProfile from './components/UserProfile';
 import Header from './components/Header';
 
-const demoWalletAddress = "0x742E4C2C5Dc63b6154F8a43c3c4a8A9F9c6a1B2c";
+const demoWalletAddress = "0x75C3d1F328d5Ce9fCFC29Dac48C8Ca64D1E745E1";
 
 export default function Home() {
   return (
