@@ -6,14 +6,10 @@
  * respective modules and are re-exported here for convenience.
  */
 import { generateToken, verifyToken, setTokenCookie, clearTokenCookie } from './auth';
-import login from './login';
-import me from './me';
 
 export {
     generateToken,
     verifyToken,
     setTokenCookie,
     clearTokenCookie,
-    login,
-    me,
 };

@@ -1,7 +1,16 @@
 // app/api/users/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { UserService } from '@/app/lib/services';
-import { hashPassword, isBcryptHash, validatePasswordStrength } from '@/app/lib/utils/password';
+import { IUser } from '@/app/lib/types';
+import { hashPassword, isBcryptHash } from '@/app/lib/utils/password';
+import {
+  validateUpsertUser,
+  validateUpdateUser,
+  validateRequestBody,
+  ensureCreateUserUniqueness,
+  ensureUpdateUserUniqueness,
+} from '@/app/lib/validators';
+import { authorizeRequest } from '@/app/api/auth/guard';
 
 const userService = new UserService();
 
@@ -24,6 +33,11 @@ function handleError(error: unknown): NextResponse {
  */
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
+    const auth = authorizeRequest(request, 'User', 'read');
+    if (!auth.ok) {
+      return auth.response;
+    }
+
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
     const walletAddress = searchParams.get('walletAddress');
@@ -60,31 +74,49 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
 /**
  * POST handler to create or update a user by walletAddress.
- * Expects a JSON body containing at minimum:
- * - `walletAddress` (string)
- * Additional user fields may be provided and will be stored/merged.
- * If a password is provided, it will be hashed before storage.
- * Returns the created/updated user document.
+ * Validates the request body via `validateUpsertUser`, hashes passwords when needed,
+ * and rejects username/email collisions with a 400 response.
+ * Returns the created/updated user document on success.
  */
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    const body = await request.json();
-    
+    const auth = authorizeRequest(request, 'User', 'create');
+    if (!auth.ok) {
+      return auth.response;
+    }
+
+    const rawBody = await request.json();
+    const { value, errorResponse } = validateRequestBody(validateUpsertUser, rawBody);
+
+    if (errorResponse) {
+      return errorResponse;
+    }
+
+    const body = value as {
+      walletAddress: string;
+      username?: string;
+      password?: string;
+      email?: string;
+    } & Record<string, unknown>;
+
     // Hash password if provided and not already hashed
-    if (body.password && !isBcryptHash(body.password)) {
-      // Validate password strength
-      const validation = validatePasswordStrength(body.password);
-      if (!validation.isValid) {
-        return NextResponse.json({ error: validation.error }, { status: 400 });
-      }
-      
-      // Hash the password
+    if (typeof body.password === 'string' && !isBcryptHash(body.password)) {
       body.password = await hashPassword(body.password);
+    }
+
+    const conflict = await ensureCreateUserUniqueness(userService, {
+      walletAddress: body.walletAddress,
+      username: body.username,
+      email: body.email,
+    });
+
+    if (conflict) {
+      return NextResponse.json({ error: conflict }, { status: 400 });
     }
     
     // body should contain at least `walletAddress`. The service will
     // lowercase it and perform an upsert (create or update).
-    const user = await userService.upsertUser(body.walletAddress, body);
+    const user = await userService.upsertUser(body.walletAddress, body as unknown as Partial<IUser>);
 
     return NextResponse.json({
         success: true,
@@ -92,40 +124,55 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         user,
       });
   } catch (error) {
+    if (
+      error instanceof Error &&
+      (error.message === 'Email must be unique' || error.message === 'Username must be unique')
+    ) {
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    }
     return handleError(error);
   }
 }
 
 /**
  * PUT handler to update a user by id.
- * Expects a JSON body with:
- * - `id` (string) - the document id to update
- * - other fields to update
- * If a password is provided, it will be hashed before storage.
- * Returns the updated user document or 404 if not found.
+ * Runs `validateUpdateUser`, hashes passwords as required, and enforces username/email
+ * uniqueness before delegating to the service. Returns 404 when the target user is missing.
  */
 export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
-    const body = await request.json();
-    const { id, ...updateData } = body;
-
-    if (!id) {
-      return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+    const auth = authorizeRequest(request, 'User', 'update');
+    if (!auth.ok) {
+      return auth.response;
     }
 
+    const rawBody = await request.json();
+    const { value, errorResponse } = validateRequestBody(validateUpdateUser, rawBody);
+
+    if (errorResponse) {
+      return errorResponse;
+    }
+
+    const { id, ...updateData } = value as {
+      id: string;
+      password?: string;
+    } & Record<string, unknown>;
+
     // Hash password if provided and not already hashed
-    if (updateData.password && !isBcryptHash(updateData.password)) {
-      // Validate password strength
-      const validation = validatePasswordStrength(updateData.password);
-      if (!validation.isValid) {
-        return NextResponse.json({ error: validation.error }, { status: 400 });
-      }
-      
-      // Hash the password
+    if (typeof updateData.password === 'string' && !isBcryptHash(updateData.password)) {
       updateData.password = await hashPassword(updateData.password);
     }
 
-    const user = await userService.updateUser(id, updateData);
+    const updateConflict = await ensureUpdateUserUniqueness(userService, id, {
+      username: typeof updateData.username === 'string' ? updateData.username : undefined,
+      email: typeof updateData.email === 'string' ? updateData.email : undefined,
+    });
+
+    if (updateConflict) {
+      return NextResponse.json({ error: updateConflict }, { status: 400 });
+    }
+
+    const user = await userService.updateUser(id, updateData as Partial<IUser>);
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
@@ -136,6 +183,12 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
         user,
       });
   } catch (error) {
+    if (
+      error instanceof Error &&
+      (error.message === 'Email must be unique' || error.message === 'Username must be unique')
+    ) {
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    }
     return handleError(error);
   }
 }
@@ -146,6 +199,11 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
  */
 export async function DELETE(request: NextRequest): Promise<NextResponse> {
   try {
+    const auth = authorizeRequest(request, 'User', 'delete');
+    if (!auth.ok) {
+      return auth.response;
+    }
+
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 

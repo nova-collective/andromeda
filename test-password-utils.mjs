@@ -2,7 +2,7 @@ import { hashPassword, comparePassword, isBcryptHash, validatePasswordStrength }
 
 /**
  * Simple test script to verify password utilities work correctly.
- * Run with: node --loader ts-node/esm test-password.mjs
+ * Run with: node --loader ts-node/esm test-password-utils.mjs
  */
 
 async function testPasswordUtils() {
