@@ -1,6 +1,7 @@
 import { MongoClient, MongoClientOptions } from 'mongodb';
 import { attachDatabasePool } from '@vercel/functions';
 import data from '../config/mainConfig.json';
+import { ensureMongoIndexes } from './mongodbIndexes';
 
 const options: MongoClientOptions = data.databases.mongodb || {};
 
@@ -22,6 +23,7 @@ export default async function getClient(): Promise<MongoClient> {
     await client.connect();
     isConnected = true;
     console.log('MongoDB connected successfully');
+    await ensureMongoIndexes(client);
   }
   return client;
 }

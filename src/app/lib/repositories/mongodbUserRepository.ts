@@ -2,25 +2,13 @@ import bcrypt from 'bcryptjs';
 import { BaseRepository } from './baseRepository';
 import { IUser } from '../types';
 import getClient from '@/app/lib/config/mongodb';
-import { ObjectId, Document, Filter, Db, MongoServerError } from 'mongodb';
+import { ObjectId, Document, Filter, MongoServerError } from 'mongodb';
 
 /**
  * MongoDB-backed implementation of the user repository.
  */
 export class MongoDBUserRepository extends BaseRepository<IUser> {
   private collectionName = 'users';
-  private static indexesEnsured = false;
-
-  /** Ensure unique indexes are created once per process */
-  private async ensureIndexes(db: Db): Promise<void> {
-    if (MongoDBUserRepository.indexesEnsured) return;
-    const collection = db.collection(this.collectionName);
-    await collection.createIndexes([
-      { key: { email: 1 }, unique: true, name: 'users_email_unique' },
-      { key: { username: 1 }, unique: true, name: 'users_username_unique' },
-    ]);
-    MongoDBUserRepository.indexesEnsured = true;
-  }
 
   /** Translate MongoDB duplicate key errors into domain-friendly messages */
   private handleDuplicateKey(error: unknown): never {
@@ -93,7 +81,6 @@ export class MongoDBUserRepository extends BaseRepository<IUser> {
   async create(data: Omit<IUser, 'id' | 'createdAt'>): Promise<IUser> {
     const client = await getClient();
     const db = client.db('andromeda');
-    await this.ensureIndexes(db);
     
     // Ensure we don't accidentally pass a non-ObjectId `_id` to insertOne
     const rest = data as unknown as Record<string, unknown>;
@@ -116,7 +103,6 @@ export class MongoDBUserRepository extends BaseRepository<IUser> {
   async update(id: string, data: Partial<IUser>): Promise<IUser | null> {
     const client = await getClient();
     const db = client.db('andromeda');
-    await this.ensureIndexes(db);
     
     try {
       const result = await db.collection(this.collectionName).findOneAndUpdate(
@@ -151,7 +137,6 @@ export class MongoDBUserRepository extends BaseRepository<IUser> {
   async patch(id: string, data: Partial<IUser>): Promise<IUser | null> {
     const client = await getClient();
     const db = client.db('andromeda');
-    await this.ensureIndexes(db);
 
     // Clone and prepare update data
     const updateData: Record<string, unknown> = { ...data } as Record<string, unknown>;
@@ -198,7 +183,6 @@ export class MongoDBUserRepository extends BaseRepository<IUser> {
   async upsert(filter: Record<string, unknown>, data: Partial<IUser>): Promise<IUser> {
     const client = await getClient();
     const db = client.db('andromeda');
-    await this.ensureIndexes(db);
     
     try {
       const result = await db.collection(this.collectionName).findOneAndUpdate(
