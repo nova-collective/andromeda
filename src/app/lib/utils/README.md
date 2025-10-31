@@ -1,86 +1,49 @@
-# Password Utilities
+# Validation Utilities
 
-This module provides secure password handling utilities using bcrypt for hashing and validation.
+Helpers under this directory support authentication and request validation.
+`index.ts` re-exports the modules so consumers can import from `@/app/lib/utils`.
 
-## Functions
+## Password Helpers
 
-### `hashPassword(password: string, saltRounds?: number): Promise<string>`
+All password helpers live in `password.ts` and wrap `bcryptjs`.
 
-Hashes a plain text password using bcrypt.
-
-- **password**: The plain text password to hash
-- **saltRounds**: Number of salt rounds (default: 12)
-- **returns**: Promise resolving to the hashed password
-
-```typescript
-import { hashPassword } from '@/app/lib/utils/password';
-
-const hashedPassword = await hashPassword('myPassword123');
-```
-
-### `comparePassword(password: string, hashedPassword: string): Promise<boolean>`
-
-Compares a plain text password with a hashed password.
-
-- **password**: The plain text password to verify
-- **hashedPassword**: The hashed password to compare against
-- **returns**: Promise resolving to true if passwords match, false otherwise
+- `hashPassword(password: string, saltRounds = 12)` returns a bcrypt hash.
+- `comparePassword(password: string, hashedPassword: string)` verifies a hash.
+- `isBcryptHash(value: string)` detects whether the input already looks hashed.
+- `validatePasswordStrength(password: string)` enforces the baseline complexity rules used by the API validators.
 
 ```typescript
-import { comparePassword } from '@/app/lib/utils/password';
+import { hashPassword, validatePasswordStrength } from '@/app/lib/utils';
 
-const isValid = await comparePassword('myPassword123', hashedPassword);
+const { isValid, error } = validatePasswordStrength(candidatePassword);
+if (!isValid) throw new Error(error);
+
+const hashedPassword = await hashPassword(candidatePassword);
 ```
 
-### `isBcryptHash(value: string): boolean`
+These helpers are consumed by the `/api/users`, `/api/auth/login`, and
+`/api/auth/register` routes to keep hashing and comparison logic consistent.
 
-Checks if a string is already a bcrypt hash.
+## Pattern Constants
 
-- **value**: The string to check
-- **returns**: True if the string appears to be a bcrypt hash
+`patterns.ts` centralizes regular expressions referenced by the validators.
+
+- `objectIdPattern` matches a 24-character MongoDB ObjectId.
+- `usernamePattern` allows 3-32 characters using alphanumerics, dot, underscore, or hyphen.
+- `emailPattern` enforces a simple RFC-style email shape for form validation.
+- `passwordPattern` requires uppercase, lowercase, numeric, and symbol characters.
+- `walletPattern` accepts Ethereum-like `0x...` addresses or 3-64 character aliases.
+- `groupNamePattern` ensures group names start alphanumeric and permit spaces, underscores, or hyphens.
 
 ```typescript
-import { isBcryptHash } from '@/app/lib/utils/password';
+import { usernamePattern } from '@/app/lib/utils';
 
-const isHash = isBcryptHash('$2a$12$...');
+const isValidUsername = usernamePattern.test(candidateUsername);
 ```
 
-### `validatePasswordStrength(password: string): { isValid: boolean; error?: string }`
-
-Validates password strength (basic validation).
-
-- **password**: The password to validate
-- **returns**: Object with isValid boolean and error message if invalid
-
-```typescript
-import { validatePasswordStrength } from '@/app/lib/utils/password';
-
-const validation = validatePasswordStrength('myPassword123');
-if (!validation.isValid) {
-  console.error(validation.error);
-}
-```
-
-## Usage in API Routes
-
-The password utilities are automatically used in:
-
-- **POST /api/users**: Hashes passwords when creating users
-- **PUT /api/users**: Hashes passwords when updating user passwords
-- **POST /api/auth/login**: Compares passwords during authentication
-- **POST /api/auth/register**: Hashes passwords during registration
-
-## Security Features
-
-- **Secure hashing**: Uses bcrypt with configurable salt rounds (default: 12)
-- **Password validation**: Ensures minimum password requirements
-- **Hash detection**: Prevents double-hashing of already hashed passwords
-- **Error handling**: Graceful error handling with appropriate logging
+Validators pull these constants to guarantee requests and database writes share the
+same validation rules.
 
 ## Testing
 
-Run the test script to verify functionality:
-
-```bash
-node test-password-utils.mjs
-```
+Run `node test-password-utils.mjs` from the repository root to execute the password utility smoke tests.

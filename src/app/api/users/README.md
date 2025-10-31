@@ -42,8 +42,9 @@ interface UpsertUserRequest {
 ```
 
 #### Validation & Side Effects
+- Request bodies run through the shared `validateRequestBody(validateUpsertUser, body)` helper, which applies the Joi schema and normalizes the payload.
 - Passwords are validated for strength and hashed unless already a bcrypt hash.
-- Username and email must be unique; the handler returns `400` if duplicates are detected.
+- Username and email must be unique; the handler returns `400` if duplicates are detected via `ensureCreateUserUniqueness`.
 - Delegates persistence to `UserService.upsertUser`, which lowercases the wallet address and applies timestamps.
 
 #### Responses
@@ -71,6 +72,8 @@ interface UpdateUserRequest {
 
 Passwords undergo the same validation/hashing path as the POST handler. Username/email uniqueness errors return a `400`.
 
+Validation uses `validateRequestBody(validateUpdateUser, body)` before the handler calls `ensureUpdateUserUniqueness`.
+
 #### Responses
 - `200` with updated `{ user }`.
 - `400` when `id` is missing or uniqueness rules fail.
@@ -92,7 +95,8 @@ Remove a user by id via query string.
 
 ### Implementation Notes
 
+- `validateRequestBody` centralizes Joi validation, uniform error responses, and typed payload access.
 - `UserService` encapsulates data access and password utilities, keeping route handlers thin.
 - Password validation/hashing uses helpers in `src/app/lib/utils/password`.
-- Duplicate username/email protection is handled both at the repository layer (MongoDB unique indexes) and with pre-flight checks in the POST handler to provide clear 400 responses.
+- Duplicate username/email protection is handled by `ensureCreateUserUniqueness`/`ensureUpdateUserUniqueness` and database indexes, letting the API return descriptive 400 responses.
 - Authorization is not enforced in this file; secure these routes with middleware or edge protection suited to your deployment.

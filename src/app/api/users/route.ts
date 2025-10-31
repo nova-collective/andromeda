@@ -68,11 +68,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
 /**
  * POST handler to create or update a user by walletAddress.
- * Expects a JSON body containing at minimum:
- * - `walletAddress` (string)
- * Additional user fields may be provided and will be stored/merged.
- * If a password is provided, it will be hashed before storage.
- * Returns the created/updated user document.
+ * Validates the request body via `validateUpsertUser`, hashes passwords when needed,
+ * and rejects username/email collisions with a 400 response.
+ * Returns the created/updated user document on success.
  */
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
@@ -127,11 +125,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
 /**
  * PUT handler to update a user by id.
- * Expects a JSON body with:
- * - `id` (string) - the document id to update
- * - other fields to update
- * If a password is provided, it will be hashed before storage.
- * Returns the updated user document or 404 if not found.
+ * Runs `validateUpdateUser`, hashes passwords as required, and enforces username/email
+ * uniqueness before delegating to the service. Returns 404 when the target user is missing.
  */
 export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {

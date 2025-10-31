@@ -27,10 +27,11 @@ interface CreateGroupRequest {
 }
 ```
 
-#### Responses
-- `201` success payload with the persisted `group` document.
-- `400` when `name` or `createdBy` is missing.
-- `500` for unexpected errors (see logs for details).
+#### Validation & Responses
+- The body is processed through `validateRequestBody(validateCreateGroup, body)`, so Joi error details map to a `400` response.
+- `ensureGroupNameUnique` rejects duplicate names with a `400`.
+- Successful requests return `200` with the new `group` document.
+- `500` signals unexpected failures.
 
 ### GET `/api/groups`
 
@@ -71,11 +72,10 @@ interface UpdateGroupRequest {
 }
 ```
 
-#### Responses
-- `200` with updated `group` when found.
-- `400` if `id` is missing.
-- `404` if no group matches the provided `id`.
-- `500` otherwise.
+#### Validation & Responses
+- Bodies go through `validateRequestBody(validateUpdateGroup, body)` before applying changes.
+- Renaming a group triggers `ensureGroupNameUnique`; duplicates produce a `400`.
+- `200` returns the updated `group`, `404` indicates the group was not found, and `500` covers other errors.
 
 ### DELETE `/api/groups`
 
@@ -92,6 +92,8 @@ Remove a group by id supplied as a query parameter.
 
 ### Implementation Notes
 
+- `validateRequestBody` centralizes schema validation and consistent error messaging.
 - Business logic is delegated to `GroupService` and `UserService`. The latter is used to populate member metadata on GET requests.
+- `ensureGroupNameUnique` provides early conflict detection, complementing persistence-layer constraints.
 - Error handling is centralized via `handleError`, which normalizes unknown exceptions into a 500 JSON response while logging the original message.
 - The handlers do not enforce authentication or authorization themselves; integrate route middleware or edge checks to restrict access where necessary.

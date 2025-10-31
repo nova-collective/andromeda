@@ -5,6 +5,10 @@ import { AuthResponse, IUser } from '@/app/lib/types';
 
 export type ApiResponse = NextResponse<AuthResponse>;
 
+/**
+ * Normalize the user identifier to a string when available.
+ * Falls back to `user.id` when `_id` is absent.
+ */
 function resolveStringId(user: IUser): string | number | undefined {
   if (user._id) {
     return String(user._id);
@@ -13,6 +17,11 @@ function resolveStringId(user: IUser): string | number | undefined {
   return fallback;
 }
 
+/**
+ * Compose the authentication response payload, optionally embedding an access token.
+ * @param user - The authenticated user entity
+ * @param token - Optional token issued for the session
+ */
 export function buildResponseBody(user: IUser, token?: string): AuthResponse {
   const id = resolveStringId(user);
   const groups = Array.isArray(user.groups)
@@ -37,6 +46,11 @@ export function buildResponseBody(user: IUser, token?: string): AuthResponse {
   } as AuthResponse;
 }
 
+/**
+ * Attach the auth token as an HTTP-only cookie on the response.
+ * @param response - The response to decorate
+ * @param token - The token value to store
+ */
 export function withAuthCookie(response: ApiResponse, token: string): ApiResponse {
   response.cookies.set('token', token, {
     httpOnly: true,

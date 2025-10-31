@@ -9,6 +9,7 @@ import {
 } from '@/app/lib/utils';
 import { permissionSchema } from '@/app/lib/validators';
 
+/** Joi schema for optional user settings metadata. */
 const settingsSchema = Joi.object({
 	theme: Joi.string().trim(),
 	notifications: Joi.boolean(),
@@ -40,6 +41,7 @@ const passwordSchema = Joi.string()
 	}, 'password strength validation')
 	.messages({ 'string.pattern.base': 'Password must be at least 8 characters and include uppercase, lowercase, number, and special character.' });
 
+/** Base Joi field definitions shared across user validation schemas. */
 const baseUserFields = {
 	username: usernameSchema,
 	email: emailSchema,
@@ -50,6 +52,10 @@ const baseUserFields = {
 	lastLogin: Joi.date(),
 };
 
+/**
+ * Joi schema describing the payload for creating or upserting a user.
+ * Requires walletAddress while applying shared base field validations.
+ */
 export const upsertUserSchema = Joi.object({
 	walletAddress: Joi.string()
 		.trim()
@@ -59,6 +65,9 @@ export const upsertUserSchema = Joi.object({
 	...baseUserFields,
 }).prefs({ abortEarly: false, stripUnknown: true });
 
+/**
+ * Joi schema for updating an existing user by id and optional fields.
+ */
 export const updateUserSchema = Joi.object({
 	id: Joi.string().trim().pattern(objectIdPattern).required(),
 	walletAddress: Joi.string()
@@ -68,16 +77,19 @@ export const updateUserSchema = Joi.object({
 	...baseUserFields,
 }).prefs({ abortEarly: false, stripUnknown: true });
 
+/** Validate a user create/upsert payload using {@link upsertUserSchema}. */
 export function validateUpsertUser(input: unknown) {
 	return upsertUserSchema.validate(input);
 }
 
+/** Validate a user update payload using {@link updateUserSchema}. */
 export function validateUpdateUser(input: unknown) {
 	return updateUserSchema.validate(input);
 }
 
 type UserIdentifier = { _id?: unknown; id?: unknown } | null | undefined;
 
+/** Resolve a consistent string id from different user identifier shapes. */
 const resolveUserId = (user: UserIdentifier): string | null => {
 	if (!user || typeof user !== 'object') {
 		return null;
@@ -94,6 +106,7 @@ const resolveUserId = (user: UserIdentifier): string | null => {
 	return null;
 };
 
+/** Contract used by uniqueness helpers to fetch users based on various identifiers. */
 export interface UserLookupService {
 	getUserByUsername(username: string): Promise<UserIdentifier>;
 	getUserByEmail(email: string): Promise<UserIdentifier>;
@@ -106,6 +119,10 @@ interface CreateUserPayload {
 	email?: string;
 }
 
+/**
+ * Ensure that username and email are unique when creating/upserting users.
+ * @returns Error message if a conflict exists; otherwise null.
+ */
 export async function ensureCreateUserUniqueness(
 	service: UserLookupService,
 	payload: CreateUserPayload,
@@ -141,6 +158,11 @@ interface UpdateUserPayload {
 	email?: string;
 }
 
+/**
+ * Ensure that username/email remain unique when updating an existing user.
+ * @param id - user id being updated (string form of ObjectId)
+ * @returns Error message for conflicts, otherwise null.
+ */
 export async function ensureUpdateUserUniqueness(
 	service: UserLookupService,
 	id: string,

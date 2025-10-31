@@ -10,6 +10,10 @@ const settingsSchema = Joi.object({
 	requiresApproval: Joi.boolean(),
 }).optional();
 
+/**
+ * Joi schema describing the payload required to create a group.
+ * Validates core fields (name, creator) and optional metadata.
+ */
 export const createGroupSchema = Joi.object({
 	name: Joi.string().trim().pattern(groupNamePattern).required(),
 	description: Joi.string().trim().allow('', null).optional(),
@@ -19,6 +23,10 @@ export const createGroupSchema = Joi.object({
 	settings: settingsSchema,
 }).prefs({ abortEarly: false, stripUnknown: true });
 
+/**
+ * Joi schema for updating an existing group.
+ * Requires a valid group id and optionally accepts other mutable fields.
+ */
 export const updateGroupSchema = Joi.object({
 	id: Joi.string().trim().pattern(objectIdPattern).required(),
 	name: Joi.string().trim().pattern(groupNamePattern).optional(),
@@ -28,16 +36,19 @@ export const updateGroupSchema = Joi.object({
 	settings: settingsSchema,
 }).prefs({ abortEarly: false, stripUnknown: true });
 
+/** Validate payloads against {@link createGroupSchema}. */
 export function validateCreateGroup(input: unknown) {
 	return createGroupSchema.validate(input);
 }
 
+/** Validate payloads against {@link updateGroupSchema}. */
 export function validateUpdateGroup(input: unknown) {
 	return updateGroupSchema.validate(input);
 }
 
 type GroupIdentifier = { _id?: unknown; id?: unknown } | null | undefined;
 
+/** Resolve a string id from a group document or repository result. */
 const resolveGroupId = (group: GroupIdentifier): string | null => {
 	if (!group || typeof group !== 'object') {
 		return null;
@@ -54,10 +65,18 @@ const resolveGroupId = (group: GroupIdentifier): string | null => {
 	return null;
 };
 
+/** Contract describing the lookups required for uniqueness checks. */
 export interface GroupLookupService {
 	getGroupByName(name: string): Promise<GroupIdentifier>;
 }
 
+/**
+ * Ensure a group name is not already taken by another group.
+ * @param service - implementation able to look up groups by name
+ * @param name - proposed group name
+ * @param currentId - optional current group id when updating
+ * @returns Error message when duplicate detected; otherwise null
+ */
 export async function ensureGroupNameUnique(
 	service: GroupLookupService,
 	name: string,

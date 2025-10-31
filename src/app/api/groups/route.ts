@@ -22,12 +22,8 @@ function handleError(error: unknown): NextResponse {
 }
 
 /**
- * POST handler to create a new group.
- * Expects a JSON body containing at minimum:
- * - `name` (string)
- * - `createdBy` (string)
- * Optional fields: `description`, `members`, `permissions`, `settings`
- * Returns the created group document.
+ * POST handler to create a new group. Applies `validateCreateGroup` via `validateRequestBody`,
+ * rejects duplicate names using `ensureGroupNameUnique`, and returns the persisted document.
  */
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
@@ -129,11 +125,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 }
 
 /**
- * PUT handler to update a group by id.
- * Expects a JSON body with:
- * - `id` (string) - the document id to update
- * - other fields to update
- * Returns the updated group document or 404 if not found.
+ * PUT handler to update a group by id. Validates the payload with `validateUpdateGroup`,
+ * enforces name uniqueness when renaming, and returns 404 if the group is missing.
  */
 export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
