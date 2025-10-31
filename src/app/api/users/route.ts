@@ -92,6 +92,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         user,
       });
   } catch (error) {
+    if (error instanceof Error && error.message === 'Email must be unique') {
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    }
     return handleError(error);
   }
 }
