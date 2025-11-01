@@ -46,7 +46,7 @@ const functions = {
   },
   scriptsCodeCoverage() {
     try {
-      execSync("npm run test:coverage", execSyncOptions);
+      execSync("npm run test-scripts:coverage", execSyncOptions);
     } catch (error) {
       console.log(error);
       process.exit(1);

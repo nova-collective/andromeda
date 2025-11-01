@@ -15,8 +15,8 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "test": "vitest run",
-    "test:coverage": "vitest run --coverage",
+    "test-scripts": "vitest run",
+    "test-scripts:coverage": "vitest run --coverage",
     "duplicated": "npx jscpd"
   },
   "dependencies": {
