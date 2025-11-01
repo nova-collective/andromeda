@@ -30,7 +30,7 @@ try {
   fn(params);
 } catch (error) {
   console.error(
-    "Error: the function invoked does not exists or there is an error in the function",
+    "Error: the function invoked does not exist or there is an error in the function",
   );
   console.error(error);
   process.exit(1);
