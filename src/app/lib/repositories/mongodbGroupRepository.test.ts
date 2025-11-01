@@ -26,19 +26,6 @@ vi.mock('@/app/lib/config/mongodb', () => ({
   default: getClientMock,
 }));
 
-const buildGroupDoc = (overrides: Partial<Document> = {}) => ({
-  _id: GROUP_ID,
-  name: 'Writers',
-  description: 'A writing collective',
-  createdBy: 'user-1',
-  members: [],
-  permissions: [],
-  settings: { isPublic: true, requiresApproval: false },
-  createdAt: new Date('2024-01-01T00:00:00.000Z'),
-  updatedAt: new Date('2024-01-02T00:00:00.000Z'),
-  ...overrides,
-});
-
 describe('MongoDBGroupRepository', () => {
   let repository: MongoDBGroupRepository;
 

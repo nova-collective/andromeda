@@ -204,7 +204,7 @@ describe('userValidator', () => {
 				getUserByEmail: vi.fn().mockResolvedValue(null),
 			};
 
-			await expect(ensureCreateUserUniqueness(service as any, {
+			await expect(ensureCreateUserUniqueness(service, {
 				walletAddress: validWallet,
 				username: 'optional-wallet',
 			})).resolves.toBeNull();
