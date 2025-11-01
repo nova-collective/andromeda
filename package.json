@@ -46,7 +46,7 @@
     "@types/node": "^22.18.8",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@vitest/coverage-v8": "4.0.6",
+    "@vitest/coverage-v8": "^4.0.6",
     "eslint": "^9",
     "eslint-config-next": "15.5.4",
     "forge-std": "github:foundry-rs/forge-std#v1.9.4",
