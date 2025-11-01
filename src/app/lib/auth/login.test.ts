@@ -54,20 +54,21 @@ const createMockResponse = () => {
 	};
 };
 
-const handlerPromise = import('./login').then((module) => module.default);
+const loadHandler = () => import('./login').then(module => module.default);
 
 describe('auth/login handler', () => {
-		beforeEach(() => {
-			vi.clearAllMocks();
-			repoMock = createRepoMock();
-			repoConstructor.mockReturnValue(repoMock);
-			mockGenerateToken.mockReset();
-			mockSetTokenCookie.mockReset();
-			mockComparePassword.mockReset();
+	beforeEach(() => {
+		vi.resetModules();
+		repoMock = createRepoMock();
+		repoConstructor.mockClear();
+		repoConstructor.mockImplementation(() => repoMock);
+		mockGenerateToken.mockReset();
+		mockSetTokenCookie.mockReset();
+		mockComparePassword.mockReset();
 	});
 
 	it('rejects non-POST methods with 405', async () => {
-		const handler = await handlerPromise;
+		const handler = await loadHandler();
 		const req = { method: 'GET', body: {} } as unknown as NextApiRequest;
 		const res = createMockResponse();
 
@@ -78,7 +79,7 @@ describe('auth/login handler', () => {
 	});
 
 	it('returns 400 when credentials are missing', async () => {
-		const handler = await handlerPromise;
+		const handler = await loadHandler();
 		const req = { method: 'POST', body: { username: '', password: '' } } as unknown as NextApiRequest;
 		const res = createMockResponse();
 
@@ -92,7 +93,7 @@ describe('auth/login handler', () => {
 	it('returns 500 when an unexpected error occurs', async () => {
 		const error = new Error('database offline');
 		repoMock.findByUsername.mockRejectedValueOnce(error);
-		const handler = await handlerPromise;
+		const handler = await loadHandler();
 		const req = { method: 'POST', body: { username: 'alice', password: 'secret' } } as unknown as NextApiRequest;
 		const res = createMockResponse();
 		const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
