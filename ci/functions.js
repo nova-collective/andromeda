@@ -6,7 +6,7 @@ const execSyncOptions = { stdio: "inherit" };
 const functions = {
   installDeps() {
     try {
-      execSync("pnpm install", execSyncOptions);
+      execSync("npm install", execSyncOptions);
     } catch (error) {
       console.log(error);
       process.exit(1);
@@ -14,7 +14,7 @@ const functions = {
   },
   lint() {
     try {
-      execSync("pnpm run lint", execSyncOptions);
+      execSync("npm run lint", execSyncOptions);
     } catch (error) {
       console.log(error);
       process.exit(1);
@@ -22,7 +22,7 @@ const functions = {
   },
   checksDuplications() {
     try {
-      execSync("pnpm run duplicated", execSyncOptions);
+      execSync("npm run duplicated", execSyncOptions);
     } catch (error) {
       console.log(error);
       process.exit(1);
@@ -30,7 +30,7 @@ const functions = {
   },
   smartContractsUnitTest() {
     try {
-      execSync("pnpm run test-contracts", execSyncOptions);
+      execSync("npm run test-contracts", execSyncOptions);
     } catch (error) {
       console.log(error);
       process.exit(1);
@@ -38,7 +38,7 @@ const functions = {
   },
   scriptsUnitTest() {
     try {
-      execSync("pnpm run test-scripts", execSyncOptions);
+      execSync("npm run test-scripts", execSyncOptions);
     } catch (error) {
       console.log(error);
       process.exit(1);
@@ -46,7 +46,7 @@ const functions = {
   },
   scriptsCodeCoverage() {
     try {
-      execSync("pnpm run test:coverage", execSyncOptions);
+      execSync("npm run test:coverage", execSyncOptions);
     } catch (error) {
       console.log(error);
       process.exit(1);
