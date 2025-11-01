@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { isBcryptHash } from '@/app/lib/utils/password';
+import { isBcryptHash } from '@/app/lib/utils/passwordUtil';
 import {
 	objectIdPattern,
 	usernamePattern,
