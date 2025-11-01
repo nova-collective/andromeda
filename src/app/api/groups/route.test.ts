@@ -304,6 +304,7 @@ describe('GET /api/groups', () => {
 		});
 		const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
+		await GET(createRequest());
 		expect(consoleSpy).toHaveBeenCalledWith('Failed to resolve member:', group.members[0], expect.any(Error));
 		const lastCall = jsonMock.mock.calls.at(-1);
 		const payload = lastCall?.[0] as { group: Array<{ members: unknown[] }> } | undefined;
