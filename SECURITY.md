@@ -2,20 +2,31 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+This repository (`nova-collective/andromeda`) follows a simple supported-versions policy for security fixes.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+| Version | Supported |
+| ------- | --------- |
+| 1.9.x   | :white_check_mark: Supported — receives security fixes and patches |
+| 1.8.x   | :white_check_mark: Supported for critical/security fixes only |
+| < 1.8   | :x: Unsupported — upgrade to latest stable (1.9.x)
+
+If you are unsure whether a specific release is covered, open a private issue addressed to the security contact below.
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+If you believe you've found a security vulnerability in Andromeda, please report it privately so we can investigate and remediate before public disclosure.
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+Preferred reporting channels:
+
+- Email: `nova.web3.collective@gmail.com` (preferred)
+
+When reporting, include as much of the following as possible:
+
+- A short summary of the issue
+- Affected version(s) (check `package.json` → `version`)
+- Step-by-step reproduction steps or a minimal PoC
+- Expected and actual behavior
+- Any relevant logs, stack traces, or payloads
+- Your contact information (email) so we can follow up
+
+If you need to send sensitive proof-of-concept material, please indicate that you would like instructions for encrypting the report; we will provide our PGP key on request.
