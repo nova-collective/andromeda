@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  codeQuality:
+
+    runs-on: ubuntu-latest
+    # env:
+    #   ALCHEMY_PRIVATE_KEY: ${{ secrets.ALCHEMY_PRIVATE_KEY }}
+    #   SEPOLIA_URL: ${{ secrets.SEPOLIA_URL }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Use Node.js 22.x
+      uses: actions/setup-node@v2
+      with:
+        node-version: 22.x
+
+    - name: Install dependencies
+      run: node ci --function installDeps
+
+    - name: Run linter
+      run: node ci --function lint
+
+    - name: Run duplications check
+      run: node ci --function checksDuplications
+
+    # - name: Run smart contracts unit tests
+    #  run: node ci --function smartContractsUnitTest
+    
+    - name: Run scripts unit tests
+      run: node ci --function scriptsUnitTest
+
+    - name: Run code coverage
+      run: node ci --function scriptsCodeCoverage
+    
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v4.0.1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        slug: nova-collective/andromeda

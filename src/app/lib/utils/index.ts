@@ -1,2 +1,2 @@
-export * from './password';
-export * from './patterns';
+export * from './passwordUtil';
+export * from './patternsUtil';
