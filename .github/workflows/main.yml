@@ -8,20 +8,30 @@ on:
 
 jobs:
   codeQuality:
-
     runs-on: ubuntu-latest
+    environment: ci  # Optional: requires setting up environment protection rules
+    permissions:
+      contents: read          # Read repository contents
+      pull-requests: read     # Read PR details
+      actions: read          # Read workflow status
+      checks: write          # Write check results
+      statuses: write        # Update commit status
     # env:
     #   ALCHEMY_PRIVATE_KEY: ${{ secrets.ALCHEMY_PRIVATE_KEY }}
     #   SEPOLIA_URL: ${{ secrets.SEPOLIA_URL }}
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.CI_TOKEN }}
 
     - name: Use Node.js 22.x
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
         node-version: 22.x
+        cache: 'npm'
+        cache-dependency-path: package-lock.json
 
     - name: Install dependencies
       run: node ci --function installDeps
