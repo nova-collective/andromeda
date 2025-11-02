@@ -1,3 +1,4 @@
+import React from 'react';
 import Image from 'next/image';
 import UserProfile from './components/UserProfile';
 import Header from './components/Header';

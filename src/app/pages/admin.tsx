@@ -1,3 +1,4 @@
+import React from 'react';
 import WithAuth from '../components/WithAuth';
 import { User } from '../lib/types';
 

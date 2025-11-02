@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { UserService } from '@/app/lib/services';
 import { IUser } from '@/app/lib/types';
-import { hashPassword, isBcryptHash } from '@/app/lib/utils/password';
+import { hashPassword, isBcryptHash } from '@/app/lib/utils/passwordUtil';
 import {
   validateUpsertUser,
   validateUpdateUser,

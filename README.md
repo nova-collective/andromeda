@@ -5,27 +5,28 @@
 <p align="center"><em>Your key, your book.</em></p>
 
 ---
-
-# Andromeda
+[![codecov](https://codecov.io/gh/nova-collective/andromeda/graph/badge.svg?token=Y9crT7fh7l)](https://codecov.io/gh/nova-collective/andromeda) [![HitCount](https://hits.dwyl.com/nova-collective/andromeda.svg)](https://hits.dwyl.com/nova-collective/andromeda)
 
 Andromeda is an open-source web3 publishing platform that lets authors mint their works as NFTs and deliver them directly to readers. By coupling a Next.js front-end with Polygon smart contracts and MongoDB persistence, the project aims to redefine the relationship between authors and readers while keeping operational costs low.
 
 ## Table of Contents
 
-- [Andromeda](#andromeda)
-  - [Table of Contents](#table-of-contents)
-  - [Why Andromeda](#why-andromeda)
-  - [Key Features](#key-features)
-  - [Architecture \& Tech Stack](#architecture--tech-stack)
-  - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Setup](#setup)
-    - [Run the App](#run-the-app)
-  - [Available Scripts](#available-scripts)
-  - [Documentation](#documentation)
-  - [Deployment \& Environments](#deployment--environments)
-  - [Contributing](#contributing)
-  - [License](#license)
+- [Table of Contents](#table-of-contents)
+- [Why Andromeda](#why-andromeda)
+- [Key Features](#key-features)
+- [Architecture \& Tech Stack](#architecture--tech-stack)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Setup](#setup)
+  - [Run the App](#run-the-app)
+- [Available Scripts](#available-scripts)
+- [Testing \& Coverage](#testing--coverage)
+  - [Test conventions](#test-conventions)
+- [Continuous Integration](#continuous-integration)
+- [Documentation](#documentation)
+- [Deployment \& Environments](#deployment--environments)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Why Andromeda
 
@@ -106,7 +107,30 @@ Visit `http://localhost:3000` once the server is running.
 - `pnpm lint` – Execute ESLint with the shared config.
 - `node test-password-utils.mjs` – Smoke-test password hashing utilities.
 
+## Testing & Coverage
+
+- `pnpm test` – Run the full Vitest suite once.
+- `pnpm test -- --watch` – Re-run tests on file changes while developing.
+- `pnpm test:coverage` – Generate a coverage report with source maps.
+
+The project uses [Vitest](https://vitest.dev/), React Testing Library, and `@testing-library/jest-dom` for unit and integration-style tests across API routes, React components, and library utilities. Coverage reports are output to `coverage/` (HTML + JSON). After running `pnpm test:coverage`, open `coverage/index.html` in a browser to inspect per-file metrics.
+
+### Test conventions
+
+- Place new tests next to the code they exercise (e.g., `feature.ts` → `feature.test.ts`).
+- Mock external services (MongoDB, JWT, bcrypt) via Vitest's module mocking to keep tests deterministic.
+- Avoid `any`; prefer explicit types or inference to maintain type safety in tests.
+- When tests rely on environment variables, set them in the test via `vi.stubEnv` or local mocks rather than changing `.env` files.
+
 Add contract testing and application-specific test scripts as the project matures.
+
+## Continuous Integration
+
+- **Workflow**: `.github/workflows/main.yml` runs on pull requests targeting `main` or `develop`, executing quality gates on Ubuntu runners.
+- **Task runner**: Each CI step shells into the local orchestrator (`node ci --function <name>`). Available functions in `ci/functions.js` cover dependency install (`installDeps` → `pnpm install`), linting (`lint` → `pnpm run lint`), duplicate-code checks (`checksDuplications` → `pnpm run duplicated`), script unit tests (`scriptsUnitTest` → `pnpm run test-scripts`), and coverage runs (`scriptsCodeCoverage` → `pnpm run test:coverage`). Optional helpers exist for Hardhat tests (`smartContractsUnitTest` → `pnpm run test-contracts`) and Git tagging (`tagRelease`).
+- **Manual usage**: Reproduce CI locally by calling `node ci --function lint` or any other function name. Pass JSON parameters with `--params '{"key":"value"}'` if the handler supports configurables.
+- **Coverage upload**: After tests, the workflow publishes `coverage/` artifacts via `codecov/codecov-action@v4`; set `CODECOV_TOKEN` in repository secrets for PR status checks.
+- **Extending CI**: Implement new automation in `ci/functions.js`, export it through the function map, and call it from the workflow for consistent local/remote parity.
 
 ## Documentation
 
