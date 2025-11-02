@@ -14,7 +14,7 @@ If you are unsure whether a specific release is covered, open a private issue ad
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability in this project, please report it by emailing our security team at [nova.web3.collective@gmail.com](mailto:nova.web3.collective@gmail.com) or by submitting a report via [GitHub Security Advisories](https://github.com/OWNER/REPO/security/advisories).
+If you discover a security vulnerability in this project, please report it by emailing our security team at [nova.web3.collective@gmail.com](mailto:nova.web3.collective@gmail.com) or by submitting a report via [GitHub Security Advisories](https://github.com/nova-collective/andromeda/security/advisores).
 We aim to acknowledge all vulnerability reports within 2 business days. You can expect regular updates on the status of your report, and we will notify you when the vulnerability is resolved or if it is declined.
 Please do not disclose the vulnerability publicly until we have had a chance to address it.
 
