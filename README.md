@@ -5,7 +5,7 @@
 <p align="center"><em>Your key, your book.</em></p>
 
 ---
-[![codecov](https://codecov.io/gh/nova-collective/andromeda/graph/badge.svg?token=Y9crT7fh7l)](https://codecov.io/gh/nova-collective/andromeda)
+[![codecov](https://codecov.io/gh/nova-collective/andromeda/graph/badge.svg?token=Y9crT7fh7l)](https://codecov.io/gh/nova-collective/andromeda) [![HitCount](https://hits.dwyl.com/nova-collective/andromeda.svg)](https://hits.dwyl.com/nova-collective/andromeda)
 
 Andromeda is an open-source web3 publishing platform that lets authors mint their works as NFTs and deliver them directly to readers. By coupling a Next.js front-end with Polygon smart contracts and MongoDB persistence, the project aims to redefine the relationship between authors and readers while keeping operational costs low.
 
