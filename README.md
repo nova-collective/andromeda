@@ -5,30 +5,28 @@
 <p align="center"><em>Your key, your book.</em></p>
 
 ---
-
-# Andromeda
+[![codecov](https://codecov.io/gh/nova-collective/andromeda/graph/badge.svg?token=Y9crT7fh7l)](https://codecov.io/gh/nova-collective/andromeda)
 
 Andromeda is an open-source web3 publishing platform that lets authors mint their works as NFTs and deliver them directly to readers. By coupling a Next.js front-end with Polygon smart contracts and MongoDB persistence, the project aims to redefine the relationship between authors and readers while keeping operational costs low.
 
 ## Table of Contents
 
-- [Andromeda](#andromeda)
-  - [Table of Contents](#table-of-contents)
-  - [Why Andromeda](#why-andromeda)
-  - [Key Features](#key-features)
-  - [Architecture \& Tech Stack](#architecture--tech-stack)
-  - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Setup](#setup)
-    - [Run the App](#run-the-app)
-  - [Available Scripts](#available-scripts)
-  - [Testing \& Coverage](#testing--coverage)
-    - [Test conventions](#test-conventions)
-  - [Continuous Integration](#continuous-integration)
-  - [Documentation](#documentation)
-  - [Deployment \& Environments](#deployment--environments)
-  - [Contributing](#contributing)
-  - [License](#license)
+- [Table of Contents](#table-of-contents)
+- [Why Andromeda](#why-andromeda)
+- [Key Features](#key-features)
+- [Architecture \& Tech Stack](#architecture--tech-stack)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Setup](#setup)
+  - [Run the App](#run-the-app)
+- [Available Scripts](#available-scripts)
+- [Testing \& Coverage](#testing--coverage)
+  - [Test conventions](#test-conventions)
+- [Continuous Integration](#continuous-integration)
+- [Documentation](#documentation)
+- [Deployment \& Environments](#deployment--environments)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Why Andromeda
 
