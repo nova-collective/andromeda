@@ -1,6 +1,8 @@
-import React, { ComponentType, useEffect, useState } from 'react';
+import React, { type ComponentType, useEffect, useState } from 'react';
+
 import { useRouter } from 'next/router';
-import { User } from '@/app/lib/types';
+
+import { type User } from '@/app/lib/types';
 
 /**
  * Props injected into a component wrapped with `withAuth`.

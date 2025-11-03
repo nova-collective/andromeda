@@ -1,8 +1,12 @@
 import bcrypt from 'bcryptjs';
+import { ObjectId, MongoServerError } from 'mongodb';
+
 import { BaseRepository } from './baseRepository';
-import { IUser } from '../types';
+
+import type { IUser } from '../types';
+import type { Document, Filter } from 'mongodb';
+
 import getClient from '@/app/lib/config/mongodb';
-import { ObjectId, Document, Filter, MongoServerError } from 'mongodb';
 
 /**
  * MongoDB-backed implementation of the user repository.
@@ -44,7 +48,7 @@ export class MongoDBUserRepository extends BaseRepository<IUser> {
     const client = await getClient();
     const db = client.db('andromeda');
     const user = await db.collection(this.collectionName).findOne({ 
-      username: username 
+      username 
     });
     return user as unknown as IUser | null;
   }
@@ -54,7 +58,7 @@ export class MongoDBUserRepository extends BaseRepository<IUser> {
     const client = await getClient();
     const db = client.db('andromeda');
     const user = await db.collection(this.collectionName).findOne({ 
-      email: email 
+      email 
     });
     return user as unknown as IUser | null;
   }
@@ -64,7 +68,7 @@ export class MongoDBUserRepository extends BaseRepository<IUser> {
     const client = await getClient();
     const db = client.db('andromeda');
     const user = await db.collection(this.collectionName).findOne({ 
-      [field]: value as unknown 
+      [field]: value 
     });
     return user as unknown as IUser | null;
   }
@@ -73,7 +77,7 @@ export class MongoDBUserRepository extends BaseRepository<IUser> {
   async findAll(query?: Record<string, unknown>): Promise<IUser[]> {
     const client = await getClient();
     const db = client.db('andromeda');
-    const users = await db.collection(this.collectionName).find(query || {}).toArray();
+  const users = await db.collection(this.collectionName).find(query ?? {}).toArray();
     return users as unknown as IUser[];
   }
 

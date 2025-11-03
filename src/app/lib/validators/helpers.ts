@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import Joi from 'joi';
+
+import type Joi from 'joi';
 
 type JoiValidator<T> = (input: unknown) => Joi.ValidationResult<T>;
 

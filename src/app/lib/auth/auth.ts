@@ -1,8 +1,10 @@
 import jwt from 'jsonwebtoken';
+
+import { TOKEN_EXPIRATION } from '../config';
+import { type JWTPayload } from '../types/auth';
+
 import type { SignOptions } from 'jsonwebtoken';
 import type { NextApiResponse } from 'next';
-import { JWTPayload } from '../types/auth';
-import { TOKEN_EXPIRATION } from '../config';
 
 /**
  * JWT secret used to sign and verify tokens. Must be set in the environment.

@@ -1,7 +1,9 @@
-import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
 import type { NextRequest } from 'next/server';
-import type { ObjectId } from 'mongoose';
+
+import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
+
 import type { IGroup, IUser } from '@/app/lib/types';
+import type { ObjectId } from 'mongoose';
 
 const mocks = vi.hoisted(() => {
 	const createJsonResponse = (body: unknown, init?: { status?: number }) => ({

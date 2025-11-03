@@ -1,8 +1,10 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { generateToken, setTokenCookie } from './auth';
 import { MongoDBUserRepository } from '../repositories';
 import { comparePassword } from '../utils';
-import { LoginRequest, AuthResponse, IUser, JWTPayload } from '../types';
+
+import { generateToken, setTokenCookie } from './auth';
+
+import type { LoginRequest, AuthResponse, IUser, JWTPayload } from '../types';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 /**
  * POST /api/auth/login
@@ -42,7 +44,7 @@ export default async function handler(
       return res.status(401).json({ message: 'Invalid credentials' });
     }
     // Validate password hash (user.password is expected to be a hash)
-    const isValidPassword = await comparePassword(password, dbUser.password || '');
+  const isValidPassword = await comparePassword(password, dbUser.password ?? '');
     if (!isValidPassword) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
@@ -56,7 +58,7 @@ export default async function handler(
 
     const jwtPayload = {
       userId: dbUser._id ? (typeof dbUser._id === 'string' ? dbUser._id : dbUser._id.toString()) : String(dbUser.id),
-      username: dbUser.username || '',
+  username: dbUser.username ?? '',
       groups: dbUser.groups ? dbUser.groups.map((g) => String(g)) : [],
     } as unknown as JWTPayload;
 

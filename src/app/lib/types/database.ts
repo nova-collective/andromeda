@@ -1,5 +1,5 @@
-import { Document, ObjectId } from 'mongoose';
-import { Permission } from './auth';
+import type { Permission } from './auth';
+import type { Document, ObjectId } from 'mongoose';
 
 /**
  * IUser describes the shape of a user document in the application.

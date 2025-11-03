@@ -14,7 +14,8 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test-scripts": "vitest run",
     "test-scripts:coverage": "vitest run --coverage",
     "duplicated": "npx jscpd"

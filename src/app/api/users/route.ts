@@ -1,7 +1,9 @@
 // app/api/users/route.ts
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
+
+import { authorizeRequest } from '@/app/api/auth/guard';
 import { UserService } from '@/app/lib/services';
-import { IUser } from '@/app/lib/types';
+import { type IUser } from '@/app/lib/types';
 import { hashPassword, isBcryptHash } from '@/app/lib/utils/passwordUtil';
 import {
   validateUpsertUser,
@@ -10,7 +12,6 @@ import {
   ensureCreateUserUniqueness,
   ensureUpdateUserUniqueness,
 } from '@/app/lib/validators';
-import { authorizeRequest } from '@/app/api/auth/guard';
 
 const userService = new UserService();
 

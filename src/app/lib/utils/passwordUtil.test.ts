@@ -1,5 +1,6 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
 import bcrypt from 'bcryptjs';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { comparePassword, hashPassword, isBcryptHash, validatePasswordStrength } from './passwordUtil';
 
 vi.mock('bcryptjs', () => ({

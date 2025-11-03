@@ -1,13 +1,14 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
+
+import { authorizeRequest } from '@/app/api/auth/guard';
 import { GroupService, UserService } from '@/app/lib/services';
-import { IGroup } from '@/app/lib/types';
+import { type IGroup } from '@/app/lib/types';
 import {
   validateCreateGroup,
   validateUpdateGroup,
   validateRequestBody,
   ensureGroupNameUnique,
 } from '@/app/lib/validators';
-import { authorizeRequest } from '@/app/api/auth/guard';
 
 const groupService = new GroupService();
 const userService = new UserService();

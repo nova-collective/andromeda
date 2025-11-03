@@ -1,20 +1,22 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { comparePassword } from '@/app/lib/utils';
-import { UserService } from '@/app/lib/services';
-import { generateToken, verifyToken } from '@/app/lib/auth/auth';
-import {
-  AuthResponse,
-  LoginRequest,
-  IUser,
-  JWTPayload,
-} from '@/app/lib/types';
+import { type NextRequest, NextResponse } from 'next/server';
+
 import { extractBearerToken } from './guard';
 import {
-  ApiResponse,
+  type ApiResponse,
   buildResponseBody,
   normalizePermissions,
   withAuthHeader,
 } from './helpers';
+
+import { generateToken, verifyToken } from '@/app/lib/auth/auth';
+import { UserService } from '@/app/lib/services';
+import {
+  type AuthResponse,
+  type LoginRequest,
+  type IUser,
+  type JWTPayload,
+} from '@/app/lib/types';
+import { comparePassword } from '@/app/lib/utils';
 
 const userService = new UserService();
 

@@ -1,5 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
+
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 type RepoMock = {
 	findByUsername: ReturnType<typeof vi.fn>;

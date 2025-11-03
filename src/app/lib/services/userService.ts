@@ -1,6 +1,8 @@
-import { IUser, Permission } from '@/app/lib/types';
+import { type ObjectId, Types } from 'mongoose';
+
+import type { IUser, Permission } from '@/app/lib/types';
+
 import { MongoDBUserRepository, MongoDBGroupRepository } from '@/app/lib/repositories';
-import { ObjectId, Types } from 'mongoose';
 import { comparePassword } from '@/app/lib/utils';
 
 /**
@@ -89,7 +91,7 @@ export class UserService {
    */
   async upsertUser(walletAddress: string, userData: Partial<IUser>): Promise<IUser> {
     return this.repository.upsert(
-      { walletAddress: walletAddress }, 
+      { walletAddress }, 
       userData
     );
   }
@@ -114,8 +116,8 @@ export class UserService {
       const user = await this.repository.findById(userId);
       if (!user) return null;
 
-      const currentGroups = user.groups || [];
-      if (!currentGroups.map(g => String(g)).includes(group)) {
+  const currentGroups = user.groups ?? [];
+  if (!currentGroups.map((g) => String(g)).includes(group)) {
         const updatedGroups = [...currentGroups, new Types.ObjectId(group)];
         return await this.repository.update(userId, {
           groups: updatedGroups
@@ -136,8 +138,8 @@ export class UserService {
       const user = await this.repository.findById(userId);
       if (!user) return null;
 
-      const currentGroups = user.groups || [];
-      const updatedGroups = currentGroups.filter(g => String(g) !== group);
+  const currentGroups = user.groups ?? [];
+  const updatedGroups = currentGroups.filter((g) => String(g) !== group);
       
       return await this.repository.update(userId, {
         groups: updatedGroups as unknown as ObjectId[]
@@ -152,7 +154,8 @@ export class UserService {
    * Check whether the supplied user belongs to the given group.
    */
   isUserInGroup(user: IUser, group: string): boolean {
-  return user.groups?.map(g => String(g)).includes(group) || false;
+    const groups = user.groups ?? [];
+    return groups.map((g) => String(g)).includes(group);
   }
 
   /**

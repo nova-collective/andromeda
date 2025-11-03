@@ -1,6 +1,8 @@
-import type { Db, MongoClient } from 'mongodb';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { ensureMongoIndexes } from './mongodbIndexes';
+
+import type { Db, MongoClient } from 'mongodb';
 
 const createIndexesMock = vi.fn();
 const collectionMock = vi.fn(() => ({ createIndexes: createIndexesMock }));

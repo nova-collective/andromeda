@@ -1,6 +1,8 @@
-import { NextResponse } from 'next/server';
-import { describe, expect, it, vi } from 'vitest';
+import { type NextResponse } from 'next/server';
+
 import Joi from 'joi';
+import { describe, expect, it, vi } from 'vitest';
+
 import { validateRequestBody } from './helpers';
 
 vi.mock('next/server', () => ({

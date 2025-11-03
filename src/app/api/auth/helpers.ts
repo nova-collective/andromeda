@@ -1,6 +1,7 @@
-import { NextResponse } from 'next/server';
+import { type NextResponse } from 'next/server';
+
 import { TOKEN_EXPIRATION } from '@/app/lib/config';
-import { AuthResponse, IUser, JWTPayload, Permission } from '@/app/lib/types';
+import { type AuthResponse, type IUser, type JWTPayload, type Permission } from '@/app/lib/types';
 
 export type ApiResponse = NextResponse<AuthResponse>;
 

@@ -1,9 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { comparePassword } from '@/app/lib/utils';
+import { type NextRequest, NextResponse } from 'next/server';
+
+import { buildResponseBody, withAuthHeader, type ApiResponse, normalizePermissions } from '../helpers';
+
 import { generateToken } from '@/app/lib/auth/auth';
 import { UserService } from '@/app/lib/services';
-import { AuthResponse, IUser, JWTPayload, LoginRequest } from '@/app/lib/types';
-import { buildResponseBody, withAuthHeader, ApiResponse, normalizePermissions } from '../helpers';
+import { type AuthResponse, type IUser, type JWTPayload, type LoginRequest } from '@/app/lib/types';
+import { comparePassword } from '@/app/lib/utils';
+
 
 const userService = new UserService();
 

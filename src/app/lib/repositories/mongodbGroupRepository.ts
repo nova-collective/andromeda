@@ -1,7 +1,11 @@
+import { ObjectId } from 'mongodb';
+
 import { BaseRepository } from './baseRepository';
-import { IGroup } from '@/app/lib/types';
+
+import type { IGroup } from '@/app/lib/types';
+import type { Document, Filter, UpdateFilter } from 'mongodb';
+
 import getClient from '@/app/lib/config/mongodb';
-import { ObjectId, Document, Filter, UpdateFilter } from 'mongodb';
 
 /**
  * MongoDB-backed repository for groups.
@@ -24,7 +28,7 @@ export class MongoDBGroupRepository extends BaseRepository<IGroup> {
     const client = await getClient();
     const db = client.db('andromeda');
     const group = await db.collection(this.collectionName).findOne({ 
-      [field]: value as unknown 
+      [field]: value 
     });
     return this.mapGroup(group as Document | null);
   }
@@ -33,8 +37,8 @@ export class MongoDBGroupRepository extends BaseRepository<IGroup> {
   async findAll(query?: Record<string, unknown>): Promise<IGroup[]> {
     const client = await getClient();
     const db = client.db('andromeda');
-    const groups = await db.collection(this.collectionName).find(query || {}).toArray();
-    return groups.map(group => this.mapGroup(group as Document)!).filter(Boolean) as IGroup[];
+  const groups = await db.collection(this.collectionName).find(query ?? {}).toArray();
+    return groups.map(group => this.mapGroup(group as Document)!).filter(Boolean);
   }
 
   /** Create a new group */
@@ -134,7 +138,7 @@ export class MongoDBGroupRepository extends BaseRepository<IGroup> {
     
     const groups = await db.collection(this.collectionName).find({ members: new ObjectId(userId) }).toArray();
 
-    return groups.map(group => this.mapGroup(group as Document)!).filter(Boolean) as IGroup[];
+    return groups.map(group => this.mapGroup(group as Document)!).filter(Boolean);
   }
 
   /**

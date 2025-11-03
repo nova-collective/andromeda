@@ -1,8 +1,11 @@
 import { describe, expect, it } from 'vitest';
+
 import { buildResponseBody, normalizePermissions, withAuthHeader } from './helpers';
-import { TOKEN_EXPIRATION } from '@/app/lib/config';
+
 import type { ApiResponse } from './helpers';
 import type { IUser, Permission } from '@/app/lib/types';
+
+import { TOKEN_EXPIRATION } from '@/app/lib/config';
 
 const createUser = (overrides: Partial<IUser> = {}): IUser => {
 	const base = {
