@@ -1,12 +1,5 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
-import { extractBearerToken } from './guard';
-import {
-  type ApiResponse,
-  buildResponseBody,
-  normalizePermissions,
-  withAuthHeader,
-} from './helpers';
 
 import { generateToken, verifyToken } from '@/app/lib/auth/auth';
 import { UserService } from '@/app/lib/services';
@@ -17,6 +10,14 @@ import {
   type JWTPayload,
 } from '@/app/lib/types';
 import { comparePassword } from '@/app/lib/utils';
+
+import { extractBearerToken } from './guard';
+import {
+  type ApiResponse,
+  buildResponseBody,
+  normalizePermissions,
+  withAuthHeader,
+} from './helpers';
 
 const userService = new UserService();
 

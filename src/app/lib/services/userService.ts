@@ -1,8 +1,7 @@
 import { type ObjectId, Types } from 'mongoose';
 
-import type { IUser, Permission } from '@/app/lib/types';
-
 import { MongoDBUserRepository, MongoDBGroupRepository } from '@/app/lib/repositories';
+import type { IUser, Permission } from '@/app/lib/types';
 import { comparePassword } from '@/app/lib/utils';
 
 /**

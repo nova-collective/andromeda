@@ -1,12 +1,13 @@
 import bcrypt from 'bcryptjs';
 import { ObjectId, MongoServerError } from 'mongodb';
 
+import getClient from '@/app/lib/config/mongodb';
+
 import { BaseRepository } from './baseRepository';
 
 import type { IUser } from '../types';
 import type { Document, Filter } from 'mongodb';
 
-import getClient from '@/app/lib/config/mongodb';
 
 /**
  * MongoDB-backed implementation of the user repository.

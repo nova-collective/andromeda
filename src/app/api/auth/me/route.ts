@@ -1,11 +1,12 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
-import { extractBearerToken } from '../guard';
-import { buildResponseBody, type ApiResponse, normalizePermissions } from '../helpers';
 
 import { verifyToken } from '@/app/lib/auth/auth';
 import { UserService } from '@/app/lib/services';
 import { type AuthResponse } from '@/app/lib/types';
+
+import { extractBearerToken } from '../guard';
+import { buildResponseBody, type ApiResponse, normalizePermissions } from '../helpers';
 
 const userService = new UserService();
 

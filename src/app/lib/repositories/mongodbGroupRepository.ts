@@ -1,11 +1,12 @@
 import { ObjectId } from 'mongodb';
 
+import getClient from '@/app/lib/config/mongodb';
+import type { IGroup } from '@/app/lib/types';
+
 import { BaseRepository } from './baseRepository';
 
-import type { IGroup } from '@/app/lib/types';
 import type { Document, Filter, UpdateFilter } from 'mongodb';
 
-import getClient from '@/app/lib/config/mongodb';
 
 /**
  * MongoDB-backed repository for groups.

@@ -1,11 +1,12 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
-import { type ApiResponse, buildResponseBody, withAuthHeader, normalizePermissions } from '../helpers';
 
 import { generateToken } from '@/app/lib/auth/auth';
 import { UserService } from '@/app/lib/services';
 import { type AuthResponse, type IUser, type JWTPayload } from '@/app/lib/types';
 import { hashPassword, validatePasswordStrength } from '@/app/lib/utils';
+
+import { type ApiResponse, buildResponseBody, withAuthHeader, normalizePermissions } from '../helpers';
 
 const userService = new UserService();
 

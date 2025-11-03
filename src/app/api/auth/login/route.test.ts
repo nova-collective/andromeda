@@ -3,6 +3,7 @@ import type { NextRequest } from 'next/server';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { IUser, Permission } from '@/app/lib/types';
+
 import type { ObjectId } from 'mongoose';
 
 const mocks = vi.hoisted(() => {
