@@ -19,8 +19,6 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test-scripts": "vitest run",
-    "test-scripts:coverage": "vitest run --coverage",
     "duplicated": "npx jscpd",
     "prepare": "husky"
   },
