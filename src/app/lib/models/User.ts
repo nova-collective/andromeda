@@ -71,6 +71,6 @@ const userSchema: Schema<IUser> = new Schema({
  * Mongoose Model for users. Import this default export to interact with the
  * users collection via Mongoose (queries, updates, etc.).
  */
-const User: Model<IUser> = mongoose.models.User ?? mongoose.model<IUser>('User', userSchema);
+const User: Model<IUser> = (mongoose.models.User ?? mongoose.model<IUser>('User', userSchema)) as Model<IUser>;
 
 export default User;

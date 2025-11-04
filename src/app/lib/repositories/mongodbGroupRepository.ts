@@ -25,7 +25,7 @@ export class MongoDBGroupRepository extends BaseRepository<IGroup> {
   }
 
   /** Find a group by a specific field */
-  async findByField(field: keyof IGroup & string, value: unknown): Promise<IGroup | null> {
+  async findByField(field: keyof IGroup, value: unknown): Promise<IGroup | null> {
     const client = await getClient();
     const db = client.db('andromeda');
     const group = await db.collection(this.collectionName).findOne({ 
@@ -150,8 +150,18 @@ export class MongoDBGroupRepository extends BaseRepository<IGroup> {
     if (!group) return null;
     const obj = group as unknown as Record<string, unknown>;
 
+    let groupId: string | undefined;
+    if (obj._id) {
+      const id = obj._id;
+      if (typeof id === 'object' && id !== null && 'toString' in id) {
+        groupId = String((id as { toString(): string }).toString());
+      } else if (typeof id === 'string') {
+        groupId = id;
+      }
+    }
+
     return {
-      id: obj._id ? String(obj._id) : undefined,
+      id: groupId,
       name: obj.name as string,
       description: obj.description as string | undefined,
       createdBy: obj.createdBy as string,

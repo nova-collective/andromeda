@@ -51,6 +51,6 @@ const groupSchema: Schema<IGroup> = new Schema({
  * Mongoose model for groups. Exported as the default so application code
  * can `import Group from '@/app/lib/models/Group'` and use Mongoose model methods.
  */
-const Group: Model<IGroup> = mongoose.models.Group ?? mongoose.model<IGroup>('Group', groupSchema);
+const Group: Model<IGroup> = (mongoose.models.Group ?? mongoose.model<IGroup>('Group', groupSchema)) as Model<IGroup>;
 
 export default Group;

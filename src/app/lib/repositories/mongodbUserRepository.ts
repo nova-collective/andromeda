@@ -65,7 +65,7 @@ export class MongoDBUserRepository extends BaseRepository<IUser> {
   }
 
   /** Find a single user by a field name */
-  async findByField(field: keyof IUser & string, value: unknown): Promise<IUser | null> {
+  async findByField(field: keyof IUser, value: unknown): Promise<IUser | null> {
     const client = await getClient();
     const db = client.db('andromeda');
     const user = await db.collection(this.collectionName).findOne({ 
