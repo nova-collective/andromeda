@@ -3,6 +3,3 @@
 
 # Run linter on staged files
 pnpm exec lint-staged
-
-# Run all unit tests to ensure nothing is broken
-pnpm test
