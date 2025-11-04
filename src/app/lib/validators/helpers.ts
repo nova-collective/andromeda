@@ -14,11 +14,11 @@ export function validateRequestBody<T>(
   validator: JoiValidator<T>,
   body: unknown
 ): { value?: T; errorResponse?: NextResponse } {
-  const { value, error } = validator(body);
-  if (error) {
-    const message = error.details.map((detail) => detail.message).join(', ');
+  const result = validator(body);
+  if (result.error) {
+    const message = result.error.details.map((detail) => detail.message).join(', ');
     return { errorResponse: NextResponse.json({ error: message }, { status: 400 }) };
   }
 
-  return { value };
+  return { value: result.value };
 }

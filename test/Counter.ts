@@ -9,11 +9,11 @@ interface IncrementEvent {
   };
 }
 
-describe("Counter", async function () {
+void describe("Counter", async function () {
   const { viem } = await network.connect();
   const publicClient = await viem.getPublicClient();
 
-  it("Should emit the Increment event when calling the inc() function", async function () {
+  void it("Should emit the Increment event when calling the inc() function", async function () {
     const counter = await viem.deployContract("Counter");
 
     await viem.assertions.emitWithArgs(
@@ -24,7 +24,7 @@ describe("Counter", async function () {
     );
   });
 
-  it("The sum of the Increment events should match the current value", async function () {
+  void it("The sum of the Increment events should match the current value", async function () {
     const counter = await viem.deployContract("Counter");
     const deploymentBlockNumber = await publicClient.getBlockNumber();
 

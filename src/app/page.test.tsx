@@ -1,17 +1,17 @@
 import '@testing-library/jest-dom/vitest';
-import React from 'react';
+import React, { createElement } from 'react';
 
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
 vi.mock('next/image', () => ({
 	__esModule: true,
-	default: (props: React.ComponentProps<'img'>) => React.createElement('img', props),
+	default: (props: React.ComponentProps<'img'>) => createElement('img', props),
 }));
 
 vi.mock('./components/Header', () => ({
 	__esModule: true,
-	default: () => <div data-testid="mock-header">Header</div>,
+	default: () => createElement('div', { 'data-testid': 'mock-header' }, 'Header'),
 }));
 
 vi.mock('./components/UserProfile', () => ({

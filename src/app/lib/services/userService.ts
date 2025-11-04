@@ -115,8 +115,16 @@ export class UserService {
       const user = await this.repository.findById(userId);
       if (!user) return null;
 
-  const currentGroups = user.groups ?? [];
-  if (!currentGroups.map((g) => String(g)).includes(group)) {
+      const currentGroups = user.groups ?? [];
+      const currentGroupIds = currentGroups.map((g) => {
+        if (typeof g === 'string') return g;
+        if (typeof g === 'object' && g !== null && 'toString' in g) {
+          return String((g as { toString(): string }).toString());
+        }
+        return null;
+      }).filter((id): id is string => id !== null);
+
+      if (!currentGroupIds.includes(group)) {
         const updatedGroups = [...currentGroups, new Types.ObjectId(group)];
         return await this.repository.update(userId, {
           groups: updatedGroups
@@ -137,8 +145,14 @@ export class UserService {
       const user = await this.repository.findById(userId);
       if (!user) return null;
 
-  const currentGroups = user.groups ?? [];
-  const updatedGroups = currentGroups.filter((g) => String(g) !== group);
+      const currentGroups = user.groups ?? [];
+      const updatedGroups = currentGroups.filter((g) => {
+        if (typeof g === 'string') return g !== group;
+        if (typeof g === 'object' && g !== null && 'toString' in g) {
+          return String((g as { toString(): string }).toString()) !== group;
+        }
+        return true;
+      });
       
       return await this.repository.update(userId, {
         groups: updatedGroups as unknown as ObjectId[]
@@ -154,7 +168,14 @@ export class UserService {
    */
   isUserInGroup(user: IUser, group: string): boolean {
     const groups = user.groups ?? [];
-    return groups.map((g) => String(g)).includes(group);
+    const groupIds = groups.map((g) => {
+      if (typeof g === 'string') return g;
+      if (typeof g === 'object' && g !== null && 'toString' in g) {
+        return String((g as { toString(): string }).toString());
+      }
+      return null;
+    }).filter((id): id is string => id !== null);
+    return groupIds.includes(group);
   }
 
   /**
@@ -190,7 +211,14 @@ export class UserService {
     const groups = Array.isArray(user.groups) ? user.groups : [];
     for (const g of groups) {
       try {
-        const groupId = typeof g === 'string' ? g : String(g);
+        let groupId: string;
+        if (typeof g === 'string') {
+          groupId = g;
+        } else if (typeof g === 'object' && g !== null && 'toString' in g) {
+          groupId = String((g as { toString(): string }).toString());
+        } else {
+          continue;
+        }
         const group = await this.groupRepository.findById(groupId);
         if (group && Array.isArray(group.permissions)) {
           for (const gp of group.permissions) {

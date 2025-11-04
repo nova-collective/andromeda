@@ -28,7 +28,7 @@ const emailSchema = Joi.string()
 
 const passwordSchema = Joi.string()
 	.trim()
-	.custom((value, helpers) => {
+	.custom((value: string, helpers) => {
 		if (isBcryptHash(value)) {
 			return value;
 		}
@@ -97,11 +97,25 @@ const resolveUserId = (user: UserIdentifier): string | null => {
 	}
 
 	if ('_id' in user && user._id != null) {
-		return String(user._id);
+		const id = user._id;
+		if (typeof id === 'object' && id !== null && 'toString' in id) {
+			return String((id as { toString(): string }).toString());
+		}
+		if (typeof id === 'string') {
+			return id;
+		}
+		return null;
 	}
 
 	if ('id' in user && user.id != null) {
-		return String(user.id);
+		const id = user.id;
+		if (typeof id === 'object' && id !== null && 'toString' in id) {
+			return String((id as { toString(): string }).toString());
+		}
+		if (typeof id === 'string') {
+			return id;
+		}
+		return null;
 	}
 
 	return null;
