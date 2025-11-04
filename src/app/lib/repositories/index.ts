@@ -1,6 +1,6 @@
 import { BaseRepository } from './baseRepository';
-import { MongoDBUserRepository } from './mongodbUserRepository';
 import { MongoDBGroupRepository } from './mongodbGroupRepository';
+import { MongoDBUserRepository } from './mongodbUserRepository';
 
 
 export {

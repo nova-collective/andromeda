@@ -1,5 +1,6 @@
-import type { NextApiResponse } from 'next';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
+import type { NextApiResponse } from 'next';
 
 const ORIGINAL_JWT_SECRET = process.env.JWT_SECRET;
 const ORIGINAL_NODE_ENV = process.env.NODE_ENV;

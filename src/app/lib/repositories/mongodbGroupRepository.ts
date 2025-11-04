@@ -1,7 +1,12 @@
-import { BaseRepository } from './baseRepository';
-import { IGroup } from '@/app/lib/types';
+import { ObjectId } from 'mongodb';
+
 import getClient from '@/app/lib/config/mongodb';
-import { ObjectId, Document, Filter, UpdateFilter } from 'mongodb';
+import type { IGroup } from '@/app/lib/types';
+
+import { BaseRepository } from './baseRepository';
+
+import type { Document, Filter, UpdateFilter } from 'mongodb';
+
 
 /**
  * MongoDB-backed repository for groups.
@@ -20,11 +25,11 @@ export class MongoDBGroupRepository extends BaseRepository<IGroup> {
   }
 
   /** Find a group by a specific field */
-  async findByField(field: keyof IGroup & string, value: unknown): Promise<IGroup | null> {
+  async findByField(field: keyof IGroup, value: unknown): Promise<IGroup | null> {
     const client = await getClient();
     const db = client.db('andromeda');
     const group = await db.collection(this.collectionName).findOne({ 
-      [field]: value as unknown 
+      [field]: value 
     });
     return this.mapGroup(group as Document | null);
   }
@@ -33,8 +38,8 @@ export class MongoDBGroupRepository extends BaseRepository<IGroup> {
   async findAll(query?: Record<string, unknown>): Promise<IGroup[]> {
     const client = await getClient();
     const db = client.db('andromeda');
-    const groups = await db.collection(this.collectionName).find(query || {}).toArray();
-    return groups.map(group => this.mapGroup(group as Document)!).filter(Boolean) as IGroup[];
+  const groups = await db.collection(this.collectionName).find(query ?? {}).toArray();
+    return groups.map(group => this.mapGroup(group as Document)!).filter(Boolean);
   }
 
   /** Create a new group */
@@ -134,7 +139,7 @@ export class MongoDBGroupRepository extends BaseRepository<IGroup> {
     
     const groups = await db.collection(this.collectionName).find({ members: new ObjectId(userId) }).toArray();
 
-    return groups.map(group => this.mapGroup(group as Document)!).filter(Boolean) as IGroup[];
+    return groups.map(group => this.mapGroup(group as Document)!).filter(Boolean);
   }
 
   /**
@@ -145,8 +150,18 @@ export class MongoDBGroupRepository extends BaseRepository<IGroup> {
     if (!group) return null;
     const obj = group as unknown as Record<string, unknown>;
 
+    let groupId: string | undefined;
+    if (obj._id) {
+      const id = obj._id;
+      if (typeof id === 'object' && id !== null && 'toString' in id) {
+        groupId = String((id as { toString(): string }).toString());
+      } else if (typeof id === 'string') {
+        groupId = id;
+      }
+    }
+
     return {
-      id: obj._id ? String(obj._id) : undefined,
+      id: groupId,
       name: obj.name as string,
       description: obj.description as string | undefined,
       createdBy: obj.createdBy as string,

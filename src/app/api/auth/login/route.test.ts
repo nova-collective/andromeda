@@ -1,7 +1,10 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { NextRequest } from 'next/server';
-import type { ObjectId } from 'mongoose';
+
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import type { IUser, Permission } from '@/app/lib/types';
+
+import type { ObjectId } from 'mongoose';
 
 const mocks = vi.hoisted(() => {
 	const createJsonResponse = (body: unknown, init?: { status?: number }) => ({
@@ -36,8 +39,8 @@ const {
 	normalizePermissionsMock,
 } = mocks;
 
-vi.mock('@/app/lib/utils', async (importOriginal) => {
-	const original = await importOriginal<typeof import('@/app/lib/utils')>();
+vi.mock('@/app/lib/utils', async () => {
+	const original = await import('@/app/lib/utils');
 	return {
 		__esModule: true,
 		...original,
@@ -59,8 +62,8 @@ vi.mock('@/app/lib/services', () => ({
 	},
 }));
 
-vi.mock('../helpers', async (importOriginal) => {
-	const original = await importOriginal<typeof import('../helpers')>();
+vi.mock('../helpers', async () => {
+	const original = await import('../helpers');
 	return {
 		__esModule: true,
 		...original,
@@ -83,7 +86,7 @@ type MockedRequest = NextRequest & { json: () => Promise<unknown>; headers: Head
 
 const createRequest = (body: unknown): MockedRequest => ({
 	headers: new Headers(),
-	json: async () => body,
+	json: () => Promise.resolve(body),
 } as unknown as MockedRequest);
 
 const buildUser = (overrides: Partial<IUser> = {}) => ({

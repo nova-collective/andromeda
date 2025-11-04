@@ -1,5 +1,6 @@
-import type { MongoClient } from 'mongodb';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
+import type { MongoClient } from 'mongodb';
 
 let connectMock: ReturnType<typeof vi.fn>;
 let mockClient: MongoClient;

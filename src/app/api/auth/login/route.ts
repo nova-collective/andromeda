@@ -1,9 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { comparePassword } from '@/app/lib/utils';
+import { type NextRequest, NextResponse } from 'next/server';
+
+
 import { generateToken } from '@/app/lib/auth/auth';
 import { UserService } from '@/app/lib/services';
-import { AuthResponse, IUser, JWTPayload, LoginRequest } from '@/app/lib/types';
-import { buildResponseBody, withAuthHeader, ApiResponse, normalizePermissions } from '../helpers';
+import { type AuthResponse, type IUser, type JWTPayload, type LoginRequest } from '@/app/lib/types';
+import { comparePassword } from '@/app/lib/utils';
+
+import { buildResponseBody, withAuthHeader, type ApiResponse, normalizePermissions } from '../helpers';
+
 
 const userService = new UserService();
 
@@ -47,7 +51,18 @@ export async function POST(request: NextRequest): Promise<ApiResponse> {
       );
     }
 
-    const userId = user._id ? String(user._id) : String((user as { id?: string | number }).id);
+    let userId: string;
+    if (user._id) {
+      if (typeof user._id === 'object' && user._id !== null && 'toString' in user._id) {
+        userId = String((user._id as { toString(): string }).toString());
+      } else if (typeof user._id === 'string') {
+        userId = user._id;
+      } else {
+        userId = String((user as { id?: string | number }).id);
+      }
+    } else {
+      userId = String((user as { id?: string | number }).id);
+    }
 
     // Update last login timestamp best-effort.
     try {
@@ -57,7 +72,13 @@ export async function POST(request: NextRequest): Promise<ApiResponse> {
     }
 
     const groups = Array.isArray(user.groups)
-      ? user.groups.map((group) => String(group))
+      ? user.groups.map((group) => {
+          if (typeof group === 'string') return group;
+          if (typeof group === 'object' && group !== null && 'toString' in group) {
+            return String((group as { toString(): string }).toString());
+          }
+          return '';
+        }).filter((id) => id !== '')
       : [];
 
     const rawPermissions = await userService.getUserPermissions(userId);

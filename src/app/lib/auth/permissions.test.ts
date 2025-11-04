@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
+
 import type { User } from '@/app/lib/types';
+
 import { hasGroup, isAdmin, hasAnyGroup, hasAllGroups } from './permissions';
+
 
 const buildUser = (overrides: Partial<User> = {}): User => ({
 	id: 1,

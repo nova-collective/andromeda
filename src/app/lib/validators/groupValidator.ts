@@ -1,4 +1,5 @@
 import Joi from 'joi';
+
 import {
 	objectIdPattern,
 	groupNamePattern,
@@ -55,11 +56,25 @@ const resolveGroupId = (group: GroupIdentifier): string | null => {
 	}
 
 	if ('_id' in group && group._id != null) {
-		return String(group._id);
+		const id = group._id;
+		if (typeof id === 'object' && id !== null && 'toString' in id) {
+			return String((id as { toString(): string }).toString());
+		}
+		if (typeof id === 'string') {
+			return id;
+		}
+		return null;
 	}
 
 	if ('id' in group && group.id != null) {
-		return String(group.id);
+		const id = group.id;
+		if (typeof id === 'object' && id !== null && 'toString' in id) {
+			return String((id as { toString(): string }).toString());
+		}
+		if (typeof id === 'string') {
+			return id;
+		}
+		return null;
 	}
 
 	return null;

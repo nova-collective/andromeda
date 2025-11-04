@@ -1,6 +1,7 @@
-import { NextResponse } from 'next/server';
+import { type NextResponse } from 'next/server';
+
 import { TOKEN_EXPIRATION } from '@/app/lib/config';
-import { AuthResponse, IUser, JWTPayload, Permission } from '@/app/lib/types';
+import { type AuthResponse, type IUser, type JWTPayload, type Permission } from '@/app/lib/types';
 
 export type ApiResponse = NextResponse<AuthResponse>;
 
@@ -10,7 +11,12 @@ export type ApiResponse = NextResponse<AuthResponse>;
  */
 function resolveStringId(user: IUser): string | number | undefined {
   if (user._id) {
-    return String(user._id);
+    if (typeof user._id === 'object' && user._id !== null && 'toString' in user._id) {
+      return String((user._id as { toString(): string }).toString());
+    }
+    if (typeof user._id === 'string') {
+      return user._id;
+    }
   }
   const fallback = (user as unknown as { id?: string | number }).id;
   return fallback;
@@ -31,7 +37,13 @@ export function buildResponseBody(
   const idValue = resolveStringId(user);
   const id = typeof idValue === 'undefined' ? undefined : String(idValue);
   const groups = Array.isArray(user.groups)
-    ? user.groups.map((group) => String(group))
+    ? user.groups.map((group) => {
+        if (typeof group === 'string') return group;
+        if (typeof group === 'object' && group !== null && 'toString' in group) {
+          return String((group as { toString(): string }).toString());
+        }
+        return '';
+      }).filter((id) => id !== '')
     : [];
   const permissions = options.permissions ?? [];
 

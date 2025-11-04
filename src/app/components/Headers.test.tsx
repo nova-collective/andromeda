@@ -1,12 +1,13 @@
 import '@testing-library/jest-dom/vitest';
-import React from 'react';
+import React, { createElement } from 'react';
+
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('next/image', () => ({
 	__esModule: true,
-	default: (props: React.ComponentProps<'img'>) => React.createElement('img', props),
+	default: (props: React.ComponentProps<'img'>) => createElement('img', props),
 }));
 
 import Header from './Header';

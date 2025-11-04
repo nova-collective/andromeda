@@ -1,5 +1,6 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { NextRequest } from 'next/server';
+
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const { verifyTokenMock, jsonMock, createResponse } = vi.hoisted(() => {
 	const baseResponse = (body: unknown, init?: { status?: number }) => ({

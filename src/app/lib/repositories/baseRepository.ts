@@ -1,4 +1,4 @@
-import { Repository } from '@/app/lib/types';
+import type { Repository } from '@/app/lib/types';
 
 /**
  * BaseRepository provides a small abstract contract for data access

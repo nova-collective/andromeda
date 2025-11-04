@@ -1,9 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
+
+
 import { verifyToken } from '@/app/lib/auth/auth';
 import { UserService } from '@/app/lib/services';
-import { AuthResponse } from '@/app/lib/types';
+import { type AuthResponse } from '@/app/lib/types';
+
 import { extractBearerToken } from '../guard';
-import { buildResponseBody, ApiResponse, normalizePermissions } from '../helpers';
+import { buildResponseBody, type ApiResponse, normalizePermissions } from '../helpers';
 
 const userService = new UserService();
 
@@ -42,7 +45,19 @@ export async function GET(request: NextRequest): Promise<ApiResponse> {
       );
     }
 
-    const userId = user._id ? String(user._id) : String((user as { id?: string | number }).id);
+    let userId: string;
+    if (user._id) {
+      if (typeof user._id === 'object' && user._id !== null && 'toString' in user._id) {
+        userId = String((user._id as { toString(): string }).toString());
+      } else if (typeof user._id === 'string') {
+        userId = user._id;
+      } else {
+        userId = String((user as { id?: string | number }).id);
+      }
+    } else {
+      userId = String((user as { id?: string | number }).id);
+    }
+    
     const rawPermissions = await userService.getUserPermissions(userId);
     const permissions = normalizePermissions(rawPermissions);
 

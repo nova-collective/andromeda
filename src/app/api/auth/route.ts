@@ -1,16 +1,19 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { comparePassword } from '@/app/lib/utils';
-import { UserService } from '@/app/lib/services';
+import { type NextRequest, NextResponse } from 'next/server';
+
+
 import { generateToken, verifyToken } from '@/app/lib/auth/auth';
+import { UserService } from '@/app/lib/services';
 import {
-  AuthResponse,
-  LoginRequest,
-  IUser,
-  JWTPayload,
+  type AuthResponse,
+  type LoginRequest,
+  type IUser,
+  type JWTPayload,
 } from '@/app/lib/types';
+import { comparePassword } from '@/app/lib/utils';
+
 import { extractBearerToken } from './guard';
 import {
-  ApiResponse,
+  type ApiResponse,
   buildResponseBody,
   normalizePermissions,
   withAuthHeader,
@@ -60,15 +63,44 @@ export async function POST(request: NextRequest): Promise<ApiResponse> {
 
     // Update last login timestamp best-effort.
     try {
-      const id = user._id ? String(user._id) : String((user as { id?: string | number }).id);
+      let id: string;
+      if (user._id) {
+        if (typeof user._id === 'object' && user._id !== null && 'toString' in user._id) {
+          id = String((user._id as { toString(): string }).toString());
+        } else if (typeof user._id === 'string') {
+          id = user._id;
+        } else {
+          id = String((user as { id?: string | number }).id);
+        }
+      } else {
+        id = String((user as { id?: string | number }).id);
+      }
       await userService.updateUser(id, { lastLogin: new Date() } as Partial<IUser>);
     } catch (error) {
       console.error('Failed to update lastLogin:', error);
     }
 
-    const userId = user._id ? String(user._id) : String((user as { id?: string | number }).id);
+    let userId: string;
+    if (user._id) {
+      if (typeof user._id === 'object' && user._id !== null && 'toString' in user._id) {
+        userId = String((user._id as { toString(): string }).toString());
+      } else if (typeof user._id === 'string') {
+        userId = user._id;
+      } else {
+        userId = String((user as { id?: string | number }).id);
+      }
+    } else {
+      userId = String((user as { id?: string | number }).id);
+    }
+    
     const groups = Array.isArray(user.groups)
-      ? user.groups.map((group) => String(group))
+      ? user.groups.map((group) => {
+          if (typeof group === 'string') return group;
+          if (typeof group === 'object' && group !== null && 'toString' in group) {
+            return String((group as { toString(): string }).toString());
+          }
+          return '';
+        }).filter((id) => id !== '')
       : [];
 
     const rawPermissions = await userService.getUserPermissions(userId);
@@ -130,7 +162,19 @@ export async function GET(request: NextRequest): Promise<ApiResponse> {
       );
     }
 
-    const userId = user._id ? String(user._id) : String((user as { id?: string | number }).id);
+    let userId: string;
+    if (user._id) {
+      if (typeof user._id === 'object' && user._id !== null && 'toString' in user._id) {
+        userId = String((user._id as { toString(): string }).toString());
+      } else if (typeof user._id === 'string') {
+        userId = user._id;
+      } else {
+        userId = String((user as { id?: string | number }).id);
+      }
+    } else {
+      userId = String((user as { id?: string | number }).id);
+    }
+    
     const rawPermissions = await userService.getUserPermissions(userId);
     const permissions = normalizePermissions(rawPermissions);
 

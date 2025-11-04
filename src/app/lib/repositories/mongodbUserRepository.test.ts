@@ -1,7 +1,10 @@
 import { MongoServerError, ObjectId, type Document, type MongoClient } from 'mongodb';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import type { IUser } from '@/app/lib/types';
+
 import { MongoDBUserRepository } from './mongodbUserRepository';
+
 
 type CollectionMock = {
 	findOne: ReturnType<typeof vi.fn>;

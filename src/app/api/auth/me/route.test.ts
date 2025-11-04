@@ -1,7 +1,10 @@
-import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
 import type { NextRequest } from 'next/server';
-import type { ObjectId } from 'mongoose';
+
+import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
+
 import type { IUser, Permission } from '@/app/lib/types';
+
+import type { ObjectId } from 'mongoose';
 
 const mocks = vi.hoisted(() => {
 	const createJsonResponse = (body: unknown, init?: { status?: number }) => ({
@@ -50,8 +53,8 @@ vi.mock('@/app/lib/services', () => ({
 	},
 }));
 
-vi.mock('../helpers', async (importOriginal) => {
-	const original = await importOriginal<typeof import('../helpers')>();
+vi.mock('../helpers', async () => {
+	const original = await import('../helpers');
 	return {
 		__esModule: true,
 		...original,
