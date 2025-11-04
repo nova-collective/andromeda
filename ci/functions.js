@@ -38,7 +38,7 @@ const functions = {
   },
   scriptsUnitTest() {
     try {
-      execSync("npm run test-scripts", execSyncOptions);
+      execSync("npm run test", execSyncOptions);
     } catch (error) {
       console.log(error);
       process.exit(1);
@@ -46,7 +46,7 @@ const functions = {
   },
   scriptsCodeCoverage() {
     try {
-      execSync("npm run test-scripts:coverage", execSyncOptions);
+      execSync("npm run test:coverage", execSyncOptions);
     } catch (error) {
       console.log(error);
       process.exit(1);
