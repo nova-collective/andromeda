@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom/vitest';
-import type React from 'react';
-import { createElement } from 'react';
+import React, { createElement } from 'react';
 
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
