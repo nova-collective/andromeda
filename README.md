@@ -5,7 +5,37 @@
 <p align="center"><em>Your key, your book.</em></p>
 
 ---
-[![codecov](https://codecov.io/gh/nova-collective/andromeda/graph/badge.svg?token=Y9crT7fh7l)](https://codecov.io/gh/nova-collective/andromeda)![main workflow](https://github.com/nova-collective/andromeda/actions/workflows/main.yml/badge.svg) [![built-with openzeppelin](https://img.shields.io/badge/built%20with-OpenZeppelin-3677FF)](https://docs.openzeppelin.com/) [![HitCount](https://hits.dwyl.com/nova-collective/andromeda.svg)](https://hits.dwyl.com/nova-collective/andromeda)
+
+<div align="center">
+
+<!-- Build & Quality -->
+![main workflow](https://github.com/nova-collective/andromeda/actions/workflows/main.yml/badge.svg)
+[![codecov](https://codecov.io/gh/nova-collective/andromeda/graph/badge.svg?token=Y9crT7fh7l)](https://codecov.io/gh/nova-collective/andromeda)
+![Vitest](https://img.shields.io/badge/Tested_with-Vitest-6E9F18?logo=vitest&logoColor=white)
+![ESLint](https://img.shields.io/badge/Code_Style-ESLint-4B32C3?logo=eslint&logoColor=white)
+
+<!-- Tech Stack -->
+![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)
+![React](https://img.shields.io/badge/React-19-61dafb?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178c6?logo=typescript&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248?logo=mongodb&logoColor=white)
+![Hardhat](https://img.shields.io/badge/Hardhat-Solidity-FFF100?logo=hardhat&logoColor=black)
+![Polygon](https://img.shields.io/badge/Polygon-PoS-8247E5?logo=polygon&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
+
+<!-- Project Stats -->
+[![built-with openzeppelin](https://img.shields.io/badge/built%20with-OpenZeppelin-3677FF)](https://docs.openzeppelin.com/)
+![License](https://img.shields.io/badge/License-GPL_v3-blue.svg)
+![Node version](https://img.shields.io/badge/node-22.20.0-339933?logo=node.js&logoColor=white)
+![pnpm](https://img.shields.io/badge/pnpm-10.16-F69220?logo=pnpm&logoColor=white)
+![GitHub contributors](https://img.shields.io/github/contributors/nova-collective/andromeda)
+![GitHub last commit](https://img.shields.io/github/last-commit/nova-collective/andromeda)
+<br />
+[![HitCount](https://hits.dwyl.com/nova-collective/andromeda.svg)](https://hits.dwyl.com/nova-collective/andromeda)
+
+</div>
+
+---
 
 Andromeda is an open-source web3 publishing platform that lets authors mint their works as NFTs and deliver them directly to readers. By coupling a Next.js front-end with Polygon smart contracts and MongoDB persistence, the project aims to redefine the relationship between authors and readers while keeping operational costs low.
 
