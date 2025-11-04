@@ -86,14 +86,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       return auth.response;
     }
 
-    const rawBody = await request.json();
-    const { value, errorResponse } = validateRequestBody(validateUpsertUser, rawBody);
+    const rawBody = (await request.json()) as unknown;
+    const result = validateRequestBody(validateUpsertUser, rawBody);
 
-    if (errorResponse) {
-      return errorResponse;
+    if (result.errorResponse) {
+      return result.errorResponse;
     }
 
-    const body = value as {
+    const body = result.value as {
       walletAddress: string;
       username?: string;
       password?: string;
@@ -147,14 +147,14 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
       return auth.response;
     }
 
-    const rawBody = await request.json();
-    const { value, errorResponse } = validateRequestBody(validateUpdateUser, rawBody);
+    const rawBody = (await request.json()) as unknown;
+    const result = validateRequestBody(validateUpdateUser, rawBody);
 
-    if (errorResponse) {
-      return errorResponse;
+    if (result.errorResponse) {
+      return result.errorResponse;
     }
 
-    const { id, ...updateData } = value as {
+    const { id, ...updateData } = result.value as {
       id: string;
       password?: string;
     } & Record<string, unknown>;

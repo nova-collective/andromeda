@@ -47,7 +47,7 @@ export default function WithAuth<P extends object>(
     const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
-      checkAuth();
+      void checkAuth();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -61,26 +61,28 @@ export default function WithAuth<P extends object>(
       try {
         const response = await fetch('/api/auth/me');
         if (response.ok) {
-          const data = await response.json();
-          setUser(data.user);
+          const data = (await response.json()) as { user?: User };
+          if (data.user) {
+            setUser(data.user);
 
-          if (options.requiredGroups && options.requiredGroups.length > 0) {
-            const userGroups = data.user.groups || [];
-            const hasRequiredGroup = options.requiredGroups.some((group) =>
-              userGroups.includes(group)
-            );
+            if (options.requiredGroups && options.requiredGroups.length > 0) {
+              const userGroups = Array.isArray(data.user.groups) ? data.user.groups : [];
+              const hasRequiredGroup = options.requiredGroups.some((group) =>
+                userGroups.includes(group)
+              );
 
-            if (!hasRequiredGroup) {
-              router.push('/unauthorized');
-              return;
+              if (!hasRequiredGroup) {
+                void router.push('/unauthorized');
+                return;
+              }
             }
           }
         } else {
-          router.push('/login');
+          void router.push('/login');
         }
       } catch (error) {
         console.error('Auth check failed:', error);
-        router.push('/login');
+        void router.push('/login');
       } finally {
         setIsLoading(false);
       }

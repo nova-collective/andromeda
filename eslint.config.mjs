@@ -31,6 +31,7 @@ const baseLanguageOptions = {
     Buffer: 'readonly',
     __dirname: 'readonly',
     __filename: 'readonly',
+    fetch: 'readonly',
   },
 };
 
@@ -155,6 +156,7 @@ export default [
         ...baseLanguageOptions.globals,
         document: 'readonly',
         window: 'readonly',
+        setTimeout: 'readonly',
       },
     },
     rules: {

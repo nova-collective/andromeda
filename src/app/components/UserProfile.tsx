@@ -20,7 +20,7 @@ export default function UserProfile({ walletAddress }: UserProfileProps) {
     const fetchUser = async (): Promise<void> => {
       try {
         const response = await fetch(`/api/users?walletAddress=${walletAddress}`);
-        const userData: IUser = await response.json();
+        const userData = (await response.json()) as IUser;
         setUser(userData);
       } catch (error) {
         console.error('Error fetching user:', error);
@@ -30,7 +30,7 @@ export default function UserProfile({ walletAddress }: UserProfileProps) {
     };
 
     if (walletAddress) {
-      fetchUser();
+      void fetchUser();
     }
   }, [walletAddress]);
 
@@ -46,7 +46,7 @@ export default function UserProfile({ walletAddress }: UserProfileProps) {
           settings: newSettings,
         }),
       });
-      const updatedUser: IUser = await response.json();
+      const updatedUser = (await response.json()) as IUser;
       setUser(updatedUser);
     } catch (error) {
       console.error('Error updating user:', error);
@@ -61,7 +61,7 @@ export default function UserProfile({ walletAddress }: UserProfileProps) {
       <h2>User Profile</h2>
       <p>Wallet: {user.walletAddress}</p>
       <p>Theme: {user.settings?.theme}</p>
-      <button onClick={() => updateUserSettings({ theme: 'dark', notifications: true })}>
+      <button onClick={() => void updateUserSettings({ theme: 'dark', notifications: true })}>
         Switch to Dark Mode
       </button>
     </div>
