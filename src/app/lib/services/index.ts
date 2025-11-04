@@ -1,4 +1,4 @@
-import { UserService } from './userService';
 import { GroupService } from './groupService';
+import { UserService } from './userService';
 
 export { UserService, GroupService };

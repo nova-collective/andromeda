@@ -1,6 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
+
 import { verifyToken } from '@/app/lib/auth/auth';
-import { JWTPayload, Permission } from '@/app/lib/types';
+import { type JWTPayload, type Permission } from '@/app/lib/types';
 
 export type CrudAction = keyof Permission['crud'];
 

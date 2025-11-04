@@ -1,7 +1,9 @@
 // app/api/users/route.ts
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
+
+import { authorizeRequest } from '@/app/api/auth/guard';
 import { UserService } from '@/app/lib/services';
-import { IUser } from '@/app/lib/types';
+import { type IUser } from '@/app/lib/types';
 import { hashPassword, isBcryptHash } from '@/app/lib/utils/passwordUtil';
 import {
   validateUpsertUser,
@@ -10,7 +12,6 @@ import {
   ensureCreateUserUniqueness,
   ensureUpdateUserUniqueness,
 } from '@/app/lib/validators';
-import { authorizeRequest } from '@/app/api/auth/guard';
 
 const userService = new UserService();
 
@@ -85,14 +86,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       return auth.response;
     }
 
-    const rawBody = await request.json();
-    const { value, errorResponse } = validateRequestBody(validateUpsertUser, rawBody);
+    const rawBody = (await request.json()) as unknown;
+    const result = validateRequestBody(validateUpsertUser, rawBody);
 
-    if (errorResponse) {
-      return errorResponse;
+    if (result.errorResponse) {
+      return result.errorResponse;
     }
 
-    const body = value as {
+    const body = result.value as {
       walletAddress: string;
       username?: string;
       password?: string;
@@ -146,14 +147,14 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
       return auth.response;
     }
 
-    const rawBody = await request.json();
-    const { value, errorResponse } = validateRequestBody(validateUpdateUser, rawBody);
+    const rawBody = (await request.json()) as unknown;
+    const result = validateRequestBody(validateUpdateUser, rawBody);
 
-    if (errorResponse) {
-      return errorResponse;
+    if (result.errorResponse) {
+      return result.errorResponse;
     }
 
-    const { id, ...updateData } = value as {
+    const { id, ...updateData } = result.value as {
       id: string;
       password?: string;
     } & Record<string, unknown>;

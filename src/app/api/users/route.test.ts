@@ -1,7 +1,10 @@
-import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
 import type { NextRequest } from 'next/server';
-import type { ObjectId } from 'mongoose';
+
+import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
+
 import type { IUser } from '@/app/lib/types';
+
+import type { ObjectId } from 'mongoose';
 
 const mocks = vi.hoisted(() => {
 	const createJsonResponse = (body: unknown, init?: { status?: number }) => ({
@@ -74,11 +77,11 @@ vi.mock('@/app/lib/utils/passwordUtil', () => ({
 	isBcryptHash: isBcryptHashMock,
 }));
 
-vi.mock('@/app/lib/validators', async (importOriginal) => {
-	const original = await importOriginal<typeof import('@/app/lib/validators')>();
+vi.mock('@/app/lib/validators', async () => {
+	const validators = await import('@/app/lib/validators');
 	return {
 		__esModule: true,
-		...original,
+		...validators,
 		validateUpsertUser: validateUpsertUserMock,
 		validateUpdateUser: validateUpdateUserMock,
 		validateRequestBody: validateRequestBodyMock,
@@ -107,7 +110,7 @@ const createRequest = (options: {
 	return {
 		url,
 		headers: new Headers(headers),
-		json: async () => body,
+		json: () => Promise.resolve(body),
 	} as unknown as MockedNextRequest;
 };
 

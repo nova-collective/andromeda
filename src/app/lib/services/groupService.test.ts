@@ -1,7 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+
+import { type MongoDBGroupRepository } from '@/app/lib/repositories';
 import type { IGroup } from '@/app/lib/types';
-import { MongoDBGroupRepository } from '@/app/lib/repositories';
+
 import { GroupService } from './groupService';
+
+
 
 const { repositoryMock, MongoDBGroupRepositoryMock } = vi.hoisted(() => {
 		const repo = {

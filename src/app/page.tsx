@@ -1,7 +1,9 @@
 import React from 'react';
+
 import Image from 'next/image';
-import UserProfile from './components/UserProfile';
+
 import Header from './components/Header';
+import UserProfile from './components/UserProfile';
 
 const demoWalletAddress = "0x75C3d1F328d5Ce9fCFC29Dac48C8Ca64D1E745E1";
 

@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { isBcryptHash } from '@/app/lib/utils/passwordUtil';
+
 import {
 	objectIdPattern,
 	usernamePattern,
@@ -7,6 +7,7 @@ import {
 	passwordPattern,
 	walletPattern,
 } from '@/app/lib/utils';
+import { isBcryptHash } from '@/app/lib/utils/passwordUtil';
 import { permissionSchema } from '@/app/lib/validators';
 
 /** Joi schema for optional user settings metadata. */
@@ -27,7 +28,7 @@ const emailSchema = Joi.string()
 
 const passwordSchema = Joi.string()
 	.trim()
-	.custom((value, helpers) => {
+	.custom((value: string, helpers) => {
 		if (isBcryptHash(value)) {
 			return value;
 		}
@@ -96,11 +97,25 @@ const resolveUserId = (user: UserIdentifier): string | null => {
 	}
 
 	if ('_id' in user && user._id != null) {
-		return String(user._id);
+		const id = user._id;
+		if (typeof id === 'object' && id !== null && 'toString' in id) {
+			return String((id as { toString(): string }).toString());
+		}
+		if (typeof id === 'string') {
+			return id;
+		}
+		return null;
 	}
 
 	if ('id' in user && user.id != null) {
-		return String(user.id);
+		const id = user.id;
+		if (typeof id === 'object' && id !== null && 'toString' in id) {
+			return String((id as { toString(): string }).toString());
+		}
+		if (typeof id === 'string') {
+			return id;
+		}
+		return null;
 	}
 
 	return null;

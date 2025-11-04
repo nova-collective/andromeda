@@ -1,7 +1,10 @@
 import { ObjectId, type Document, type MongoClient } from 'mongodb';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import type { IGroup } from '@/app/lib/types';
+
 import { MongoDBGroupRepository } from './mongodbGroupRepository';
+
 
 type CollectionMock = {
   findOne: ReturnType<typeof vi.fn>;

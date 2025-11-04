@@ -1,8 +1,11 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { Types } from 'mongoose';
-import type { IGroup, IUser, Permission } from '../types';
-import type { MongoDBGroupRepository, MongoDBUserRepository } from '../repositories';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { UserService } from './userService';
+
+import type { MongoDBGroupRepository, MongoDBUserRepository } from '../repositories';
+import type { IGroup, IUser, Permission } from '../types';
+
 
 const comparePasswordMock = vi.hoisted(() => vi.fn());
 

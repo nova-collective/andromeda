@@ -31,8 +31,8 @@ describe('Group schema', () => {
 	});
 
 	it('limits permission names to allowed values', () => {
-		const permissionArrayPath = Group.schema.path('permissions') as mongoose.Schema.Types.DocumentArray;
-		const namePath = permissionArrayPath.schema.path('name') as mongoose.Schema.Types.String & { enumValues: string[] };
+		const permissionArrayPath = Group.schema.path('permissions');
+		const namePath = permissionArrayPath.schema.path('name');
 
 		expect(namePath.enumValues).toEqual(['users', 'groups']);
 	});

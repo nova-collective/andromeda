@@ -1,8 +1,10 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { generateToken, setTokenCookie } from './auth';
 import { MongoDBUserRepository } from '../repositories';
 import { comparePassword } from '../utils';
-import { LoginRequest, AuthResponse, IUser, JWTPayload } from '../types';
+
+import { generateToken, setTokenCookie } from './auth';
+
+import type { AuthResponse, IUser, JWTPayload } from '../types';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 /**
  * POST /api/auth/login
@@ -19,7 +21,9 @@ export default async function handler(
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  const { username, password }: LoginRequest = req.body;
+  const body = req.body as Record<string, unknown>;
+  const username = body.username as string | undefined;
+  const password = body.password as string | undefined;
 
   try {
     if (!username || !password) {
@@ -42,7 +46,7 @@ export default async function handler(
       return res.status(401).json({ message: 'Invalid credentials' });
     }
     // Validate password hash (user.password is expected to be a hash)
-    const isValidPassword = await comparePassword(password, dbUser.password || '');
+  const isValidPassword = await comparePassword(password, dbUser.password ?? '');
     if (!isValidPassword) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
@@ -56,8 +60,14 @@ export default async function handler(
 
     const jwtPayload = {
       userId: dbUser._id ? (typeof dbUser._id === 'string' ? dbUser._id : dbUser._id.toString()) : String(dbUser.id),
-      username: dbUser.username || '',
-      groups: dbUser.groups ? dbUser.groups.map((g) => String(g)) : [],
+      username: dbUser.username ?? '',
+      groups: dbUser.groups ? dbUser.groups.map((g) => {
+        if (typeof g === 'string') return g;
+        if (typeof g === 'object' && g !== null && 'toString' in g) {
+          return String((g as { toString(): string }).toString());
+        }
+        return '';
+      }).filter((id) => id !== '') : [],
     } as unknown as JWTPayload;
 
     const token = generateToken(jwtPayload);
@@ -67,10 +77,16 @@ export default async function handler(
     res.status(200).json({
       message: 'Login successful',
       user: {
-        id: dbUser._id ? (typeof dbUser._id === 'string' ? dbUser._id : dbUser._id.toString()) : dbUser.id,
+        id: dbUser._id ? (typeof dbUser._id === 'string' ? dbUser._id : dbUser._id.toString()) : (dbUser.id ? String(dbUser.id) : undefined),
         username: dbUser.username,
         email: dbUser.email,
-        groups: dbUser.groups ? dbUser.groups.map((g) => String(g)) : [],
+        groups: dbUser.groups ? dbUser.groups.map((g) => {
+          if (typeof g === 'string') return g;
+          if (typeof g === 'object' && g !== null && 'toString' in g) {
+            return String((g as { toString(): string }).toString());
+          }
+          return '';
+        }).filter((id) => id !== '') : [],
         lastLogin: dbUser.lastLogin,
       },
     } as unknown as AuthResponse);

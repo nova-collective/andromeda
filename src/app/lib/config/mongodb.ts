@@ -1,11 +1,15 @@
-import { MongoClient, MongoClientOptions } from 'mongodb';
 import { attachDatabasePool } from '@vercel/functions';
+import { MongoClient } from 'mongodb';
+
 import data from '../config/mainConfig.json';
+
 import { ensureMongoIndexes } from './mongodbIndexes';
 
-const options: MongoClientOptions = data.databases.mongodb || {};
+import type { MongoClientOptions } from 'mongodb';
 
-const client = new MongoClient(process.env.MONGODB_URI || '', options);
+const options: MongoClientOptions = data.databases.mongodb ?? {};
+
+const client = new MongoClient(process.env.MONGODB_URI ?? '', options);
 attachDatabasePool(client);
 
 let isConnected = false;

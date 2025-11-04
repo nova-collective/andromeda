@@ -1,7 +1,10 @@
-import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
 import type { NextRequest } from 'next/server';
-import type { ObjectId } from 'mongoose';
+
+import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
+
 import type { IUser, Permission } from '@/app/lib/types';
+
+import type { ObjectId } from 'mongoose';
 
 const mocks = vi.hoisted(() => {
 	const createJsonResponse = (body: unknown, init?: { status?: number }) => ({
@@ -57,12 +60,14 @@ vi.mock('./guard', () => ({
 	extractBearerToken: vi.fn(),
 }));
 
-vi.mock('./helpers', async (importOriginal) => {
-	const helpers = await importOriginal<typeof import('./helpers')>();
+vi.mock('./helpers', async () => {
+	const helpers = await import('./helpers');
 	return {
 		__esModule: true,
 		...helpers,
-		withAuthHeader: vi.fn((response, token) => helpers.withAuthHeader(response, token)),
+		withAuthHeader: vi.fn((response: Parameters<typeof helpers.withAuthHeader>[0], token: string) => 
+			helpers.withAuthHeader(response, token)
+		),
 	};
 });
 
@@ -87,7 +92,7 @@ const createRequest = (options: {
 	const { body, headers = {} } = options;
 	return {
 		headers: new Headers(headers),
-		json: async () => body,
+		json: () => Promise.resolve(body),
 	} as unknown as MockedNextRequest;
 };
 

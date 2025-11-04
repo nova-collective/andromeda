@@ -1,4 +1,4 @@
-import { User } from '@/app/lib/types';
+import { type User } from '@/app/lib/types';
 
 /**
  * Check whether a user belongs to a specific group.

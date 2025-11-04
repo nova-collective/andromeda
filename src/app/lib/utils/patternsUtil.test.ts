@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import {
 	emailPattern,
 	groupNamePattern,
@@ -50,6 +51,6 @@ describe('patternsUtil', () => {
 		expect(groupNamePattern.test('Group_001')).toBe(true);
 		expect(groupNamePattern.test(' gInvalid')).toBe(false);
 		expect(groupNamePattern.test('AB')).toBe(false);
-		expect(groupNamePattern.test('A' + 'x'.repeat(64))).toBe(false);
+		expect(groupNamePattern.test(`A${  'x'.repeat(64)}`)).toBe(false);
 	});
 });
