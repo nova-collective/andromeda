@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
 
 import { TOKEN_EXPIRATION } from '../config';
 import { type JWTPayload } from '../types/auth';
@@ -60,7 +60,7 @@ export const TOKEN_MAX_AGE_SECONDS = resolveTokenMaxAge(TOKEN_EXPIRATION);
  * @returns A signed JWT string with configured expiry.
  */
 export function generateToken(payload: JWTPayload): string {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+  return sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
 }
 
 /**
@@ -74,7 +74,7 @@ export function generateToken(payload: JWTPayload): string {
  */
 export function verifyToken(token: string): JWTPayload | null {
   try {
-    return jwt.verify(token, JWT_SECRET) as JWTPayload;
+    return verify(token, JWT_SECRET) as JWTPayload;
   } catch (error) {
     console.warn('Token verification failed:', error);
     return null;

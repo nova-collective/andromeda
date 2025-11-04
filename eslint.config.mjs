@@ -151,6 +151,11 @@ export default [
         project: [projectTsConfig],
         tsconfigRootDir: __dirname,
       },
+      globals: {
+        ...baseLanguageOptions.globals,
+        document: 'readonly',
+        window: 'readonly',
+      },
     },
     rules: {
       '@typescript-eslint/no-unsafe-assignment': 'off',
