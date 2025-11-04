@@ -84,12 +84,27 @@ export async function POST(request: NextRequest): Promise<ApiResponse> {
 
     const createdUser = await userService.createUser(userPayload);
 
-    const userId = createdUser._id
-      ? String(createdUser._id)
-      : String((createdUser as unknown as { id?: string | number }).id);
+    let userId: string;
+    if (createdUser._id) {
+      if (typeof createdUser._id === 'object' && createdUser._id !== null && 'toString' in createdUser._id) {
+        userId = String((createdUser._id as { toString(): string }).toString());
+      } else if (typeof createdUser._id === 'string') {
+        userId = createdUser._id;
+      } else {
+        userId = String((createdUser as unknown as { id?: string | number }).id);
+      }
+    } else {
+      userId = String((createdUser as unknown as { id?: string | number }).id);
+    }
 
     const groups = Array.isArray(createdUser.groups)
-      ? createdUser.groups.map((group) => String(group))
+      ? createdUser.groups.map((group) => {
+          if (typeof group === 'string') return group;
+          if (typeof group === 'object' && group !== null && 'toString' in group) {
+            return String((group as { toString(): string }).toString());
+          }
+          return '';
+        }).filter((id) => id !== '')
       : [];
 
     const rawPermissions = await userService.getUserPermissions(userId);

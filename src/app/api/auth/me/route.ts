@@ -45,7 +45,19 @@ export async function GET(request: NextRequest): Promise<ApiResponse> {
       );
     }
 
-    const userId = user._id ? String(user._id) : String((user as { id?: string | number }).id);
+    let userId: string;
+    if (user._id) {
+      if (typeof user._id === 'object' && user._id !== null && 'toString' in user._id) {
+        userId = String((user._id as { toString(): string }).toString());
+      } else if (typeof user._id === 'string') {
+        userId = user._id;
+      } else {
+        userId = String((user as { id?: string | number }).id);
+      }
+    } else {
+      userId = String((user as { id?: string | number }).id);
+    }
+    
     const rawPermissions = await userService.getUserPermissions(userId);
     const permissions = normalizePermissions(rawPermissions);
 

@@ -34,14 +34,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       return auth.response;
     }
 
-    const rawBody = await request.json();
-    const { value, errorResponse } = validateRequestBody(validateCreateGroup, rawBody);
+    const rawBody = (await request.json()) as unknown;
+    const result = validateRequestBody(validateCreateGroup, rawBody);
 
-    if (errorResponse) {
-      return errorResponse;
+    if (result.errorResponse) {
+      return result.errorResponse;
     }
 
-    const body = value as {
+    const body = result.value as {
       name: string;
       createdBy: string;
     } & Record<string, unknown>;
@@ -94,10 +94,30 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           const memberDetails = await Promise.all(
             group.members.map(async (memberId) => {
               try {
-                const user = await userService.getUserById(String(memberId));
+                let memberIdStr: string;
+                if (typeof memberId === 'string') {
+                  memberIdStr = memberId;
+                } else if (typeof memberId === 'object' && memberId !== null && 'toString' in memberId) {
+                  memberIdStr = String((memberId as { toString(): string }).toString());
+                } else {
+                  return null;
+                }
+                
+                const user = await userService.getUserById(memberIdStr);
                 if (user) {
+                  let userId: string | undefined;
+                  if (user.id) {
+                    userId = typeof user.id === 'string' ? user.id : String(user.id);
+                  } else if (user._id) {
+                    if (typeof user._id === 'object' && user._id !== null && 'toString' in user._id) {
+                      userId = String((user._id as { toString(): string }).toString());
+                    } else if (typeof user._id === 'string') {
+                      userId = user._id;
+                    }
+                  }
+                  
                   return {
-                    id: user.id || String(user._id),
+                    id: userId,
                     walletAddress: user.walletAddress,
                     username: user.username,
                   };
@@ -147,14 +167,14 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
       return auth.response;
     }
 
-    const rawBody = await request.json();
-    const { value, errorResponse } = validateRequestBody(validateUpdateGroup, rawBody);
+    const rawBody = (await request.json()) as unknown;
+    const result = validateRequestBody(validateUpdateGroup, rawBody);
 
-    if (errorResponse) {
-      return errorResponse;
+    if (result.errorResponse) {
+      return result.errorResponse;
     }
 
-    const { id, ...updateData } = value as {
+    const { id, ...updateData } = result.value as {
       id: string;
       name?: string;
     } & Record<string, unknown>;

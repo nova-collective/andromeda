@@ -53,8 +53,8 @@ vi.mock('@/app/lib/services', () => ({
 	},
 }));
 
-vi.mock('../helpers', async (importOriginal) => {
-	const original = await importOriginal<typeof import('../helpers')>();
+vi.mock('../helpers', async () => {
+	const original = await import('../helpers');
 	return {
 		__esModule: true,
 		...original,

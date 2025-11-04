@@ -65,11 +65,11 @@ vi.mock('@/app/lib/services', () => ({
 	},
 }));
 
-vi.mock('@/app/lib/validators', async (importOriginal) => {
-	const original = await importOriginal<typeof import('@/app/lib/validators')>();
+vi.mock('@/app/lib/validators', async () => {
+	const validators = await import('@/app/lib/validators');
 	return {
 		__esModule: true,
-		...original,
+		...validators,
 		validateCreateGroup: validateCreateGroupMock,
 		validateUpdateGroup: validateUpdateGroupMock,
 		validateRequestBody: validateRequestBodyMock,
@@ -97,7 +97,7 @@ const createRequest = (options: {
 	return {
 		url,
 		headers: new Headers(headers),
-		json: async () => body,
+		json: () => Promise.resolve(body),
 	} as unknown as MockedRequest;
 };
 
