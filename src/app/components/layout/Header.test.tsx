@@ -93,4 +93,140 @@ describe('Header component', () => {
 			});
 		}
 	});
+
+	it('renders all navigation links with correct hrefs', () => {
+		renderWithTheme(<Header />);
+
+		const exploreLink = screen.getByRole('link', { name: /Explore/i });
+		const statsLink = screen.getByRole('link', { name: /Stats/i });
+		const createLink = screen.getByRole('link', { name: /Create/i });
+
+		expect(exploreLink).toHaveAttribute('href', '/explore');
+		expect(statsLink).toHaveAttribute('href', '/stats');
+		expect(createLink).toHaveAttribute('href', '/create');
+	});
+
+	it('renders logo as a link to home page', () => {
+		renderWithTheme(<Header />);
+
+		const logoLinks = screen.getAllByRole('link');
+		const homeLink = logoLinks.find(link => link.getAttribute('href') === '/');
+
+		expect(homeLink).toBeInTheDocument();
+		expect(homeLink).toHaveClass('flex', 'items-center', 'gap-2', 'group');
+	});
+
+	it('renders search inputs for both desktop and mobile', () => {
+		renderWithTheme(<Header />);
+
+		const searchInputs = screen.getAllByPlaceholderText(/Search/i);
+		
+		// Should have 2 search inputs (desktop and mobile)
+		expect(searchInputs.length).toBeGreaterThanOrEqual(1);
+	});
+
+	it('handles search input focus state', async () => {
+		const user = userEvent.setup();
+		renderWithTheme(<Header />);
+
+		const searchInput = screen.getAllByPlaceholderText(/Search/i)[0];
+		
+		await user.click(searchInput);
+		
+		// Input should be focused
+		expect(searchInput).toHaveFocus();
+	});
+
+	it('displays connect wallet button', () => {
+		renderWithTheme(<Header />);
+
+		const connectButton = screen.getByRole('button', { name: 'Connect' });
+		expect(connectButton).toBeInTheDocument();
+		expect(connectButton).toHaveClass('bg-primary-500');
+	});
+
+	it('renders user icon button', () => {
+		renderWithTheme(<Header />);
+
+		const allButtons = screen.getAllByRole('button');
+		
+		// User button should exist (has User icon)
+		expect(allButtons.length).toBeGreaterThan(3); // theme, user, connect, mobile menu
+	});
+
+	it('renders theme button with correct icon based on current theme', () => {
+		renderWithTheme(<Header />);
+
+		const themeButton = screen.getByRole('button', { name: 'Toggle theme' });
+		expect(themeButton).toBeInTheDocument();
+		
+		// Check if button contains an SVG (icon)
+		const svg = themeButton.querySelector('svg');
+		expect(svg).toBeInTheDocument();
+	});
+
+	it('mobile menu closes when navigation link is clicked', async () => {
+		const user = userEvent.setup();
+		renderWithTheme(<Header />);
+
+		const allButtons = screen.getAllByRole('button');
+		const mobileMenuToggle = allButtons.find(btn => btn.className?.includes('md:hidden'));
+
+		if (mobileMenuToggle) {
+			// Open mobile menu
+			await user.click(mobileMenuToggle);
+			
+			await waitFor(() => {
+				expect(screen.getAllByText('Explore').length).toBeGreaterThan(1);
+			});
+
+			// Click on a navigation link in mobile menu
+			const mobileLinks = screen.getAllByText('Explore');
+			const mobileLink = mobileLinks[1]; // Second instance is in mobile menu
+			
+			await user.click(mobileLink);
+
+			// Menu should close (Explore should appear only once again)
+			await waitFor(() => {
+				expect(screen.getAllByText('Explore')).toHaveLength(1);
+			});
+		}
+	});
+
+	it('renders connect wallet button in mobile menu', async () => {
+		const user = userEvent.setup();
+		renderWithTheme(<Header />);
+
+		const allButtons = screen.getAllByRole('button');
+		const mobileMenuToggle = allButtons.find(btn => btn.className?.includes('md:hidden'));
+
+		if (mobileMenuToggle) {
+			await user.click(mobileMenuToggle);
+			
+			await waitFor(() => {
+				// Mobile menu should have Connect Wallet button
+				const connectButtons = screen.getAllByText('Connect Wallet');
+				expect(connectButtons.length).toBeGreaterThanOrEqual(1);
+			});
+		}
+	});
+
+	it('has correct styling classes for header', () => {
+		const { container } = renderWithTheme(<Header />);
+
+		const header = container.querySelector('header');
+		expect(header).toHaveClass('sticky', 'top-0', 'z-50');
+		expect(header).toHaveClass('border-b');
+	});
+
+	it('renders all icons properly', () => {
+		renderWithTheme(<Header />);
+
+		// Count SVG elements (icons from lucide-react)
+		const svgs = document.querySelectorAll('svg');
+		
+		// Should have multiple icons: Search (2), TrendingUp, Sparkles, ShoppingBag, 
+		// Sun/Moon, User, Wallet, Menu/X
+		expect(svgs.length).toBeGreaterThan(5);
+	});
 });

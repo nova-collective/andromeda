@@ -92,4 +92,86 @@ describe('UserProfile component', () => {
 			expect(screen.getByText('Theme: dark')).toBeInTheDocument();
 		});
 	});
+
+	it('handles fetch errors gracefully', async () => {
+		const walletAddress = '0xerror123';
+		const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+		fetchMock.mockRejectedValueOnce(new Error('Network error'));
+
+		render(<UserProfile walletAddress={walletAddress} />);
+
+		await waitFor(() => {
+			expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+		});
+
+		consoleSpy.mockRestore();
+	});
+
+	it('renders with different wallet addresses', async () => {
+		const addresses = ['0xaaa', '0xbbb', '0xccc'];
+
+		for (const address of addresses) {
+			const mockUser: MockUser = {
+				walletAddress: address,
+				settings: { theme: 'light', notifications: true },
+			};
+
+			fetchMock.mockResolvedValueOnce(createFetchResponse(mockUser));
+
+			const { unmount } = render(<UserProfile walletAddress={address} />);
+
+			await screen.findByText(`Wallet: ${address}`);
+
+			expect(fetchMock).toHaveBeenCalledWith(`/api/users?walletAddress=${address}`);
+
+			unmount();
+			fetchMock.mockClear();
+		}
+	});
+
+	it('shows loading state initially', () => {
+		fetchMock.mockImplementationOnce(() => new Promise(() => {})); // Never resolves
+
+		render(<UserProfile walletAddress="0xloading" />);
+
+		expect(screen.getByText('Loading...')).toBeInTheDocument();
+		expect(screen.queryByText('User Profile')).not.toBeInTheDocument();
+	});
+
+	it('displays user settings correctly', async () => {
+		const mockUser: MockUser = {
+			walletAddress: '0xtest',
+			settings: { theme: 'dark', notifications: true },
+		};
+
+		fetchMock.mockResolvedValueOnce(createFetchResponse(mockUser));
+
+		render(<UserProfile walletAddress="0xtest" />);
+
+		await screen.findByText('Theme: dark');
+		expect(screen.getByText('User Profile')).toBeInTheDocument();
+		expect(screen.getByText('Wallet: 0xtest')).toBeInTheDocument();
+	});
+
+	it('makes correct API call with wallet address parameter', async () => {
+		const walletAddress = '0x123456789abcdef';
+		const mockUser: MockUser = {
+			walletAddress,
+			settings: { theme: 'light', notifications: true },
+		};
+
+		fetchMock.mockResolvedValueOnce(createFetchResponse(mockUser));
+
+		render(<UserProfile walletAddress={walletAddress} />);
+
+		await waitFor(() => {
+			expect(fetchMock).toHaveBeenCalledTimes(1);
+		});
+
+		const callUrl = fetchMock.mock.calls[0][0] as string;
+		expect(callUrl).toContain(walletAddress);
+		expect(callUrl).toContain('/api/users');
+		expect(callUrl).toContain('walletAddress=');
+	});
 });
