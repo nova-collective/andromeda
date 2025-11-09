@@ -1,7 +1,7 @@
 import React from 'react';
 
-import WithAuth from '../components/WithAuth';
-import { type User } from '../lib/types';
+import { WithAuth } from '@/app/components/services';
+import { type User } from '@/app/lib/types';
 
 /**
  * Admin dashboard page.

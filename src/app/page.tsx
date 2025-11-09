@@ -2,12 +2,34 @@ import React from 'react';
 
 import Image from 'next/image';
 
-import Header from './components/Header';
-import UserProfile from './components/UserProfile';
+import { Wallet, ArrowRight, BookOpen, Heart } from 'lucide-react';
+
+import { 
+  Button,
+  Card,
+  GridLayout,
+  Header,
+  UserProfile,
+} from '@/app/components';
+
+
 
 const demoWalletAddress = "0x75C3d1F328d5Ce9fCFC29Dac48C8Ca64D1E745E1";
 
 export default function Home() {
+  const mockItems = [
+    {
+      id: 1,
+      image: '/placeholder-1.jpg',
+      title: 'Cosmic Explorer #1234',
+      price: '2.5 ETH',
+      lastPrice: '2.1 ETH',
+      collection: 'Cosmic Collection',
+      likes: 142,
+    },
+    // Add more mock items...
+  ];
+
   return (
     <>
       <Header />
@@ -28,9 +50,34 @@ export default function Home() {
               />
             </span>
           </h1>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
             A Web3 bookstore, from authors to readers
           </p>
+
+          {/* Button Examples */}
+          <div className="flex flex-wrap items-center justify-center gap-4 mt-8">
+            <Button 
+              variant="gradient" 
+              size="lg"
+              leftIcon={<Wallet size={20} />}
+            >
+              Connect Wallet
+            </Button>
+            <Button 
+              variant="primary" 
+              size="lg"
+              leftIcon={<BookOpen size={20} />}
+              rightIcon={<ArrowRight size={20} />}
+            >
+              Explore Books
+            </Button>
+            <Button 
+              variant="outline" 
+              size="lg"
+            >
+              Learn More
+            </Button>
+          </div>
         </div>
 
         <div className="relative mb-12 max-w-4xl mx-auto">
@@ -54,8 +101,74 @@ export default function Home() {
               Testing db connection
             </p>
             <UserProfile walletAddress={demoWalletAddress} />
+
+            {/* Button Component Examples */}
+            <div className="mt-8 pt-8 border-t border-white/20">
+              <h3 className="text-xl font-semibold text-white mb-4 text-center">
+                Button Component Showcase
+              </h3>
+              
+              {/* Variants */}
+              <div className="mb-6">
+                <p className="text-sm text-gray-400 mb-3">Variants:</p>
+                <div className="flex flex-wrap gap-3">
+                  <Button variant="primary" size="sm">Primary</Button>
+                  <Button variant="secondary" size="sm">Secondary</Button>
+                  <Button variant="outline" size="sm">Outline</Button>
+                  <Button variant="ghost" size="sm">Ghost</Button>
+                  <Button variant="danger" size="sm">Danger</Button>
+                  <Button variant="gradient" size="sm">Gradient</Button>
+                </div>
+              </div>
+
+              {/* With Icons */}
+              <div className="mb-6">
+                <p className="text-sm text-gray-400 mb-3">With Icons:</p>
+                <div className="flex flex-wrap gap-3">
+                  <Button variant="primary" leftIcon={<Heart size={16} />}>
+                    Like
+                  </Button>
+                  <Button variant="secondary" rightIcon={<ArrowRight size={16} />}>
+                    Next
+                  </Button>
+                  <Button variant="gradient" leftIcon={<Wallet size={16} />}>
+                    Connect
+                  </Button>
+                </div>
+              </div>
+
+              {/* States */}
+              <div>
+                <p className="text-sm text-gray-400 mb-3">States:</p>
+                <div className="flex flex-wrap gap-3">
+                  <Button variant="primary">Normal</Button>
+                  <Button variant="primary" disabled>Disabled</Button>
+                  <Button variant="primary" loading>Loading</Button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+
+        {/* Hero Section */}
+        <section className="mb-12 text-center py-16">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary-500 to-purple-600 bg-clip-text text-transparent">
+            Discover, Collect, and Sell
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Explore the world&apos;s leading NFT marketplace
+          </p>
+        </section>
+
+        {/* Items Grid */}
+        <section>
+          <h2 className="text-3xl font-bold mb-8">Trending Items</h2>
+          <GridLayout>
+            {mockItems.map((item) => (
+              <Card key={item.id} {...item} />
+            ))}
+          </GridLayout>
+        </section>
 
         <footer className="mt-16 text-center">
           <p className="text-gray-400">

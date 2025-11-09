@@ -55,6 +55,8 @@ Andromeda is an open-source web3 publishing platform that lets authors mint thei
 - [Continuous Integration](#continuous-integration)
 - [Documentation](#documentation)
 - [Deployment \& Environments](#deployment--environments)
+- [Design System](#design-system)
+  - [Atomic Design Principles](#atomic-design-principles)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -118,6 +120,7 @@ Configure MongoDB:
 
 ```bash
 # Development (recommended during active work)
+pnpm dev
 
 
 # Production build & serve
@@ -179,6 +182,21 @@ Add contract testing and application-specific test scripts as the project mature
 
 CI/CD pipelines leverage Vercel Deploy Hooks; additional automation (tests, audits) will roll out as the codebase stabilizes.
 
+## Design System
+
+### Atomic Design Principles
+
+This project follows [Brad Frost's Atomic Design methodology](https://atomicdesign.bradfrost.com/chapter-2/), organizing components into five distinct hierarchical levels. This approach ensures consistency, reusability, and scalability.
+
+```
+components/
+├── atoms/           # Basic building blocks (Buttons, Inputs, Icons)
+├── molecules/       # Simple component groups (SearchBar, PriceDisplay)
+├── organisms/       # Complex UI sections (Header, Card, Footer)
+├── templates/       # Page-level layouts
+└── providers/       # Context & state management
+```
+
 ## Contributing
 
 1. Fork or clone the repository.
@@ -192,3 +210,14 @@ Security issues should be reported privately to `nova.web3.collective@gmail.com`
 ## License
 
 Distributed under the terms of the **GNU General Public License v3.0**. See [LICENSE](LICENSE) for details.
+
+```typescript
+// Named import (recommended)
+import { Card } from '@/app/components/ui/Card';
+
+// Default import
+import Card from '@/app/components/ui/Card';
+
+// Type import
+import type { CardProps } from '@/app/components/ui/Card';
+```
