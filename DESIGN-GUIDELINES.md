@@ -1,8 +1,7 @@
 # 🎨 Andromeda Design System
 
 **Version:** 1.0.0  
-**Last Updated:** November 2025  
-**Design Inspiration:** OpenSea NFT Marketplace
+**Last Updated:** November 2025
 
 ---
 
@@ -23,7 +22,7 @@
 
 ## Overview
 
-Andromeda's design system is built to create a modern, clean, and accessible Web3 publishing platform. Inspired by OpenSea's elegant interface, our design language emphasizes clarity, sophistication, and seamless user experience across light and dark themes.
+Andromeda's design system is built to create a modern, clean, and accessible Web3 publishing platform. Our design language emphasizes clarity, sophistication, and seamless user experience across light and dark themes.
 
 ### Key Principles
 
@@ -65,7 +64,7 @@ Andromeda's design system is built to create a modern, clean, and accessible Web
 #### Primary Palette
 
 ```css
-/* OpenSea Blue - Primary Brand Color */
+/* Ocean Blue - Primary Brand Color */
 --primary-50:  #f0f9ff;
 --primary-100: #e0f2fe;
 --primary-200: #bae6fd;
@@ -873,7 +872,6 @@ When creating new components:
 - **Lighthouse:** Performance auditing
 
 ### References
-- [OpenSea Design](https://opensea.io/)
 - [Tailwind CSS Docs](https://tailwindcss.com/)
 - [WCAG Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
 - [Material Design](https://material.io/)
