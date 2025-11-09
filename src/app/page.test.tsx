@@ -9,12 +9,12 @@ vi.mock('next/image', () => ({
 	default: (props: React.ComponentProps<'img'>) => createElement('img', props),
 }));
 
-vi.mock('./components/Header', () => ({
+vi.mock('./components/layout/Header', () => ({
 	__esModule: true,
 	default: () => createElement('div', { 'data-testid': 'mock-header' }, 'Header'),
 }));
 
-vi.mock('./components/UserProfile', () => ({
+vi.mock('./components/pages/UserProfile', () => ({
 	__esModule: true,
 	default: ({ walletAddress }: { walletAddress: string }) => (
 		<div data-testid="mock-user-profile">{walletAddress}</div>

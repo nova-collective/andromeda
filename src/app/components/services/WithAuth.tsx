@@ -1,3 +1,4 @@
+'use client';
 import React, { type ComponentType, useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
@@ -116,7 +117,7 @@ export default function WithAuth<P extends object>(
     import withAuth from '../components/withAuth';
 
     function ProfilePage({ user }) {
-      // Qualsiasi utente autenticato può vedere questa pagina
+      // Any authenticated user can access this page
       return (
         <div>
           <h1>User Profile</h1>

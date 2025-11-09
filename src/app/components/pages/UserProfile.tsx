@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 
-import { type IUser } from '../lib/types';
+import { type IUser } from '../../lib/types';
 
 interface UserProfileProps {
   walletAddress: string;

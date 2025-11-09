@@ -2,12 +2,25 @@ import React from 'react';
 
 import Image from 'next/image';
 
-import Header from './components/Header';
-import UserProfile from './components/UserProfile';
+import { Card, UserProfile, Header, GridLayout } from '@/app/components';
+
 
 const demoWalletAddress = "0x75C3d1F328d5Ce9fCFC29Dac48C8Ca64D1E745E1";
 
 export default function Home() {
+  const mockItems = [
+    {
+      id: 1,
+      image: '/placeholder-1.jpg',
+      title: 'Cosmic Explorer #1234',
+      price: '2.5 ETH',
+      lastPrice: '2.1 ETH',
+      collection: 'Cosmic Collection',
+      likes: 142,
+    },
+    // Add more mock items...
+  ];
+
   return (
     <>
       <Header />
@@ -56,6 +69,26 @@ export default function Home() {
             <UserProfile walletAddress={demoWalletAddress} />
           </div>
         </div>
+
+        {/* Hero Section */}
+        <section className="mb-12 text-center py-16">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary-500 to-purple-600 bg-clip-text text-transparent">
+            Discover, Collect, and Sell
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Explore the world&apos;s leading NFT marketplace
+          </p>
+        </section>
+
+        {/* Items Grid */}
+        <section>
+          <h2 className="text-3xl font-bold mb-8">Trending Items</h2>
+          <GridLayout>
+            {mockItems.map((item) => (
+              <Card key={item.id} {...item} />
+            ))}
+          </GridLayout>
+        </section>
 
         <footer className="mt-16 text-center">
           <p className="text-gray-400">
