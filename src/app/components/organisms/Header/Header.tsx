@@ -18,7 +18,7 @@ import {
   Sparkles
 } from 'lucide-react';
 
-import { useTheme } from '../providers/ThemeProvider';
+import { useTheme } from '@/app/components/providers/ThemeProvider/ThemeProvider';
 
 /**
  * Header Component

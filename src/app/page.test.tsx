@@ -9,7 +9,7 @@ vi.mock('next/image', () => ({
 	default: (props: React.ComponentProps<'img'>) => createElement('img', props),
 }));
 
-vi.mock('./components/layout/Header', () => ({
+vi.mock('./components/organisms/Header', () => ({
 	__esModule: true,
 	default: () => createElement('div', { 'data-testid': 'mock-header' }, 'Header'),
 }));
@@ -20,17 +20,22 @@ vi.mock('./components/organisms/UserProfile', () => ({
 		createElement('div', { 'data-testid': 'mock-user-profile' }, walletAddress),
 }));
 
-vi.mock('./components/molecules/Button', () => ({
+vi.mock('./components/atoms/Button', () => ({
 	Button: ({ children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement> & { children?: React.ReactNode }) =>
 		createElement('button', { ...props, tabIndex: 0 }, children),
 }));
 
-vi.mock('./components/molecules/Card', () => ({
+vi.mock('./components/organisms/Card', () => ({
 	Card: (props: Record<string, unknown>) => 
+		createElement('div', { 'data-testid': 'mock-card' }, JSON.stringify(props)),
+	__esModule: true,
+	default: (props: Record<string, unknown>) => 
 		createElement('div', { 'data-testid': 'mock-card' }, JSON.stringify(props)),
 }));
 
-vi.mock('./components/layout/GridLayout', () => ({
+vi.mock('./components/templates/GridLayout', () => ({
+	GridLayout: ({ children }: { children: React.ReactNode }) => 
+		createElement('div', { 'data-testid': 'mock-grid-layout' }, children),
 	__esModule: true,
 	default: ({ children }: { children: React.ReactNode }) => 
 		createElement('div', { 'data-testid': 'mock-grid-layout' }, children),

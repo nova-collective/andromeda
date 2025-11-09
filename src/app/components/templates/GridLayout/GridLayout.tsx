@@ -6,7 +6,7 @@ import type { ReactNode } from 'react';
 /**
  * Props for the GridLayout component
  */
-interface GridLayoutProps {
+export interface GridLayoutProps {
   /** Child elements to be rendered within the grid */
   children: ReactNode;
   /** Responsive grid column configuration for different breakpoints */
@@ -50,7 +50,7 @@ interface GridLayoutProps {
  * @param props.cols - Responsive column configuration (defaults to 1/2/3/4 for sm/md/lg/xl)
  * @returns A responsive grid container with fade-in animation
  */
-export default function GridLayout({ 
+export function GridLayout({ 
   children, 
   cols = { sm: 1, md: 2, lg: 3, xl: 4 } 
 }: GridLayoutProps) {
@@ -62,3 +62,5 @@ export default function GridLayout({
     </div>
   );
 }
+
+export default GridLayout;

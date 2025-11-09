@@ -7,9 +7,10 @@ import { Wallet, ArrowRight, BookOpen, Heart } from 'lucide-react';
 import { 
   Button,
   Card,
-  UserProfile,
+  GridLayout,
   Header,
-  GridLayout } from '@/app/components';
+  UserProfile,
+} from '@/app/components';
 
 
 

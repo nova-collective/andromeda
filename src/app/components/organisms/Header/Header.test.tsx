@@ -18,7 +18,7 @@ vi.mock('framer-motion', () => ({
 	},
 }));
 
-import { ThemeProvider } from '../providers/ThemeProvider';
+import { ThemeProvider } from '@/app/components/providers/ThemeProvider/ThemeProvider';
 
 import Header from './Header';
 

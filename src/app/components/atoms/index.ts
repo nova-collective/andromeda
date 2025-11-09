@@ -1,0 +1,32 @@
+/**
+ * Atoms Component Barrel Export
+ * 
+ * Atoms are the basic building blocks of the design system.
+ * They are the smallest, most fundamental components that cannot be broken down further
+ * without losing their meaning. Atoms include basic HTML elements styled with Tailwind CSS.
+ * 
+ * Examples: Button, Input, Badge, Avatar, Icon, Spinner
+ * 
+ * Characteristics:
+ * - Single responsibility
+ * - No business logic
+ * - Highly reusable
+ * - Design system foundation
+ * - Pure UI components
+ * 
+ * @example
+ * ```tsx
+ * // Import individual atoms
+ * import { Button } from '@/app/components/atoms';
+ * 
+ * // Import with types
+ * import { Button, type ButtonProps, type ButtonVariant } from '@/app/components/atoms';
+ * 
+ * // Import from specific atom
+ * import { Button } from '@/app/components/atoms/Button';
+ * ```
+ */
+
+// Button Atom
+export { Button, default as ButtonDefault } from './Button';
+export type { ButtonProps, ButtonVariant, ButtonSize } from './Button';

@@ -1,12 +1,12 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 
-import { type IUser } from '../../lib/types';
+import { type IUser } from '../../../lib/types';
 
 /**
  * Props for the UserProfile component
  */
-interface UserProfileProps {
+export interface UserProfileProps {
   /** Ethereum wallet address of the user to display */
   walletAddress: string;
 }
@@ -14,7 +14,7 @@ interface UserProfileProps {
 /**
  * User settings configuration
  */
-interface UserSettings {
+export interface UserSettings {
   /** Theme preference (e.g., 'light', 'dark') */
   theme: string;
   /** Whether notifications are enabled */
@@ -45,7 +45,7 @@ interface UserSettings {
  * @param props.walletAddress - Ethereum wallet address to fetch user data for
  * @returns User profile display with settings controls
  */
-export default function UserProfile({ walletAddress }: UserProfileProps) {
+export function UserProfile({ walletAddress }: UserProfileProps) {
   const [user, setUser] = useState<IUser | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -109,3 +109,5 @@ export default function UserProfile({ walletAddress }: UserProfileProps) {
     </div>
   );
 }
+
+export default UserProfile;

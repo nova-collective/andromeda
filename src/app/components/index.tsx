@@ -1,10 +1,8 @@
-import GridLayout from './layout/GridLayout';
-import Header from './layout/Header';
-import { Button } from './molecules/Button';
-import { Card } from './molecules/Card';
-import UserProfile from './organisms/UserProfile';
-import { ThemeProvider, useTheme } from './providers/ThemeProvider';
-import WithAuth from './services/WithAuth';
+import { Button } from './atoms';
+import { Card, Header, UserProfile } from './organisms';
+import { ThemeProvider, useTheme } from './providers';
+import { WithAuth } from './services';
+import { GridLayout } from './templates';
 
 export {
     Button,
