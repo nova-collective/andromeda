@@ -2,16 +2,50 @@
 
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 
+/** Supported theme modes */
 type Theme = 'light' | 'dark';
 
+/**
+ * Context value shape for theme management
+ */
 interface ThemeContextType {
+  /** Current active theme */
   theme: Theme;
+  /** Toggle between light and dark themes */
   toggleTheme: () => void;
+  /** Set a specific theme */
   setTheme: (theme: Theme) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+/**
+ * ThemeProvider Component
+ * 
+ * Provides theme management functionality throughout the application.
+ * Handles light/dark mode switching with persistence to localStorage
+ * and respects system preferences. Safe for SSR environments.
+ * 
+ * @component
+ * @example
+ * ```tsx
+ * // Wrap your app with ThemeProvider
+ * <ThemeProvider>
+ *   <App />
+ * </ThemeProvider>
+ * ```
+ * 
+ * Features:
+ * - SSR-safe initialization
+ * - Persists theme preference to localStorage
+ * - Respects system color scheme preference
+ * - Applies theme class to document root
+ * - Safe for test environments
+ * 
+ * @param props - Component props
+ * @param props.children - Child components to wrap with theme context
+ * @returns Theme context provider wrapping children
+ */
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   // Initialize theme state with SSR-safe lazy initialization
   const [theme, setThemeState] = useState<Theme>(() => {
@@ -51,6 +85,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
   }, [theme]);
 
+  /**
+   * Sets a specific theme and persists to localStorage
+   * @param newTheme - The theme to apply ('light' or 'dark')
+   */
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
     if (typeof window !== 'undefined') {
@@ -59,6 +97,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  /**
+   * Toggles between light and dark themes
+   */
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
@@ -70,6 +111,28 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
+/**
+ * useTheme Hook
+ * 
+ * Custom hook to access theme context values and methods.
+ * Must be used within a ThemeProvider component.
+ * 
+ * @example
+ * ```tsx
+ * function MyComponent() {
+ *   const { theme, toggleTheme, setTheme } = useTheme();
+ *   
+ *   return (
+ *     <button onClick={toggleTheme}>
+ *       Current theme: {theme}
+ *     </button>
+ *   );
+ * }
+ * ```
+ * 
+ * @throws {Error} If used outside of ThemeProvider
+ * @returns Theme context containing current theme and methods to update it
+ */
 export function useTheme() {
   const context = useContext(ThemeContext);
   if (context === undefined) {

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { type User } from '@/app/lib/types';
 
 /**
- * Props injected into a component wrapped with `withAuth`.
+ * Props injected into a component wrapped with `withAuth`
  */
 interface WithAuthProps {
   /** Currently authenticated user (guaranteed when component renders) */
@@ -14,34 +14,80 @@ interface WithAuthProps {
 }
 
 /**
- * Options for the `withAuth` HOC.
- * - `requiredGroups`: when provided the HOC will redirect users who are not
- *   members of any of the listed groups to `/unauthorized`.
+ * Configuration options for the `withAuth` HOC
  */
 interface WithAuthOptions {
+  /** 
+   * Array of group names that the user must belong to.
+   * If provided, users not in any of these groups will be redirected to `/unauthorized`.
+   * If omitted or empty, only authentication is required.
+   */
   requiredGroups?: string[];
 }
 
 /**
- * Higher-order component that ensures a page or component is rendered only for
- * authenticated users. It fetches the current user from `/api/auth/me` and
- * optionally enforces group membership.
- *
- * Usage:
+ * WithAuth - Higher Order Component (HOC)
+ * 
+ * Protects pages and components by ensuring they are only rendered for authenticated users.
+ * Optionally enforces group-based authorization by checking user membership in required groups.
+ * 
+ * @component
+ * @example
  * ```tsx
- * export default withAuth(MyComponent, { requiredGroups: ['admin'] });
+ * // Basic authentication (any authenticated user)
+ * import withAuth from '@/components/services/WithAuth';
+ * 
+ * function ProfilePage({ user }: { user: User }) {
+ *   return <div>Welcome, {user.username}</div>;
+ * }
+ * 
+ * export default withAuth(ProfilePage);
  * ```
- *
- * The wrapped component receives an additional `user` prop containing the
- * authenticated user's data.
- *
- * @param WrappedComponent - Component to wrap. It will receive the injected `user` prop.
- * @param options - Optional behavior flags (e.g. requiredGroups).
+ * 
+ * @example
+ * ```tsx
+ * // With group authorization (admin only)
+ * import withAuth from '@/components/services/WithAuth';
+ * 
+ * function AdminPanel({ user }: { user: User }) {
+ *   return <div>Admin Panel - {user.username}</div>;
+ * }
+ * 
+ * export default withAuth(AdminPanel, { requiredGroups: ['admin'] });
+ * ```
+ * 
+ * @example
+ * ```tsx
+ * // Multiple allowed groups (admin or moderator)
+ * export default withAuth(ModerationPage, { 
+ *   requiredGroups: ['admin', 'moderator'] 
+ * });
+ * ```
+ * 
+ * Features:
+ * - Automatic authentication verification via `/api/auth/me`
+ * - Group-based authorization with flexible configuration
+ * - Redirects unauthenticated users to `/login`
+ * - Redirects unauthorized users to `/unauthorized`
+ * - Loading state during authentication check
+ * - Type-safe user prop injection
+ * 
+ * @template P - Props type of the wrapped component
+ * @param WrappedComponent - Component to protect. Will receive injected `user` prop
+ * @param options - Configuration options for authentication and authorization
+ * @param options.requiredGroups - Optional array of group names for authorization
+ * @returns Protected component that only renders for authenticated (and authorized) users
  */
 export default function WithAuth<P extends object>(
   WrappedComponent: ComponentType<P & WithAuthProps>,
   options: WithAuthOptions = {}
 ) {
+  /**
+   * Authenticated Component Wrapper
+   * 
+   * Handles authentication state, loading states, and conditional rendering
+   * based on authentication and authorization status.
+   */
   return function AuthenticatedComponent(props: P) {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -53,10 +99,15 @@ export default function WithAuth<P extends object>(
     }, []);
 
     /**
-     * Check authentication by calling the `/api/auth/me` endpoint. On success
-     * the user is stored in state; on failure the user is redirected to
-     * `/login`. If `options.requiredGroups` is specified users lacking the
-     * required membership are redirected to `/unauthorized`.
+     * Verifies user authentication and authorization
+     * 
+     * Calls `/api/auth/me` to fetch current user data. Handles three scenarios:
+     * 1. User not authenticated → redirect to `/login`
+     * 2. User authenticated but lacks required groups → redirect to `/unauthorized`
+     * 3. User authenticated and authorized → proceed to render wrapped component
+     * 
+     * @async
+     * @returns Promise that resolves when authentication check is complete
      */
     const checkAuth = async (): Promise<void> => {
       try {
@@ -66,6 +117,7 @@ export default function WithAuth<P extends object>(
           if (data.user) {
             setUser(data.user);
 
+            // Check group membership if requiredGroups is specified
             if (options.requiredGroups && options.requiredGroups.length > 0) {
               const userGroups = Array.isArray(data.user.groups) ? data.user.groups : [];
               const hasRequiredGroup = options.requiredGroups.some((group) =>
@@ -89,6 +141,7 @@ export default function WithAuth<P extends object>(
       }
     };
 
+    // Show loading state while checking authentication
     if (isLoading) {
       return (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center">
@@ -97,35 +150,12 @@ export default function WithAuth<P extends object>(
       );
     }
 
+    // Don't render anything if user is not authenticated (redirect in progress)
     if (!user) {
       return null;
     }
 
+    // Render wrapped component with injected user prop
     return <WrappedComponent {...props} user={user} />;
   };
 }
-
-/**
- * 
- * How to use: 
- * 
- * 1. pages under authentication: see admin page
- * 
- * 2. basic page protection:
- * 
- *  // pages/profile.tsx
-    import withAuth from '../components/withAuth';
-
-    function ProfilePage({ user }) {
-      // Any authenticated user can access this page
-      return (
-        <div>
-          <h1>User Profile</h1>
-          <p>Welcome, {user.username}</p>
-        </div>
-      );
-    }
-
-    export default withAuth(ProfilePage);
- * 
- */

@@ -20,6 +20,30 @@ import {
 
 import { useTheme } from '../providers/ThemeProvider';
 
+/**
+ * Header Component
+ * 
+ * Main navigation header for the application with responsive design.
+ * Features include theme toggle, search functionality, navigation links,
+ * user authentication, and mobile menu. Follows OpenSea's modern design aesthetic.
+ * 
+ * @component
+ * @example
+ * ```tsx
+ * // Basic usage
+ * <Header />
+ * ```
+ * 
+ * Features:
+ * - Responsive navigation with mobile menu
+ * - Theme toggle (light/dark mode)
+ * - Search bar (desktop and mobile versions)
+ * - Wallet connection button
+ * - User profile access
+ * - Sticky positioning with backdrop blur
+ * 
+ * @returns The application header with navigation and user controls
+ */
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);

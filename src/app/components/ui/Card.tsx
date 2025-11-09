@@ -7,16 +7,65 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Heart, MoreVertical } from 'lucide-react';
 
+/**
+ * Props for the Card component
+ */
 interface CardProps {
+  /** Image URL for the card thumbnail */
   image: string;
+  /** Title/name of the item displayed on the card */
   title: string;
+  /** Current price of the item (e.g., "2.5 ETH") */
   price: string;
+  /** Optional last sale price for comparison */
   lastPrice?: string;
+  /** Optional collection name the item belongs to */
   collection?: string;
+  /** Initial like count for the item */
   likes?: number;
+  /** Link URL when card is clicked (defaults to "#") */
   href?: string;
 }
 
+/**
+ * Card Component
+ * 
+ * A feature-rich, interactive card component for displaying NFT/marketplace items.
+ * Includes image preview, pricing information, like functionality, and hover effects.
+ * Inspired by OpenSea's card design with smooth animations and dark mode support.
+ * 
+ * @component
+ * @example
+ * ```tsx
+ * // Basic usage
+ * <Card
+ *   image="/nft-image.jpg"
+ *   title="Cosmic Explorer #1234"
+ *   price="2.5 ETH"
+ * />
+ * 
+ * // Full features
+ * <Card
+ *   image="/nft-image.jpg"
+ *   title="Cosmic Explorer #1234"
+ *   price="2.5 ETH"
+ *   lastPrice="2.1 ETH"
+ *   collection="Cosmic Collection"
+ *   likes={142}
+ *   href="/item/1234"
+ * />
+ * ```
+ * 
+ * @param props - Component props
+ * @param props.image - URL of the card image
+ * @param props.title - Item title displayed on the card
+ * @param props.price - Current price string
+ * @param props.lastPrice - Optional previous sale price
+ * @param props.collection - Optional collection name
+ * @param props.likes - Initial like count (defaults to 0)
+ * @param props.href - Card link destination (defaults to "#")
+ * @returns An interactive card with image, pricing, and like functionality
+ */
 export default function Card({
   image,
   title,
@@ -29,6 +78,11 @@ export default function Card({
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(likes);
 
+  /**
+   * Handles like button click
+   * Prevents navigation and toggles like state
+   * @param e - Mouse event from button click
+   */
   const handleLike = (e: React.MouseEvent) => {
     e.preventDefault();
     setIsLiked(!isLiked);
