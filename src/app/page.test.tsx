@@ -14,11 +14,26 @@ vi.mock('./components/layout/Header', () => ({
 	default: () => createElement('div', { 'data-testid': 'mock-header' }, 'Header'),
 }));
 
-vi.mock('./components/pages/UserProfile', () => ({
+vi.mock('./components/organisms/UserProfile', () => ({
 	__esModule: true,
-	default: ({ walletAddress }: { walletAddress: string }) => (
-		<div data-testid="mock-user-profile">{walletAddress}</div>
-	),
+	default: ({ walletAddress }: { walletAddress: string }) =>
+		createElement('div', { 'data-testid': 'mock-user-profile' }, walletAddress),
+}));
+
+vi.mock('./components/molecules/Button', () => ({
+	Button: ({ children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement> & { children?: React.ReactNode }) =>
+		createElement('button', { ...props, tabIndex: 0 }, children),
+}));
+
+vi.mock('./components/molecules/Card', () => ({
+	Card: (props: Record<string, unknown>) => 
+		createElement('div', { 'data-testid': 'mock-card' }, JSON.stringify(props)),
+}));
+
+vi.mock('./components/layout/GridLayout', () => ({
+	__esModule: true,
+	default: ({ children }: { children: React.ReactNode }) => 
+		createElement('div', { 'data-testid': 'mock-grid-layout' }, children),
 }));
 
 import Home from './page';
