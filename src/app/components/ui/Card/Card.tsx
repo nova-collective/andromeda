@@ -10,7 +10,7 @@ import { Heart, MoreVertical } from 'lucide-react';
 /**
  * Props for the Card component
  */
-interface CardProps {
+export interface CardProps {
   /** Image URL for the card thumbnail */
   image: string;
   /** Title/name of the item displayed on the card */
@@ -66,7 +66,7 @@ interface CardProps {
  * @param props.href - Card link destination (defaults to "#")
  * @returns An interactive card with image, pricing, and like functionality
  */
-export default function Card({
+export function Card({
   image,
   title,
   price,
@@ -178,3 +178,5 @@ export default function Card({
     </motion.a>
   );
 }
+
+export default Card;

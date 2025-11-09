@@ -3,8 +3,8 @@ import Header from './layout/Header';
 import UserProfile from './pages/UserProfile';
 import { ThemeProvider, useTheme } from './providers/ThemeProvider';
 import WithAuth from './services/WithAuth';
-import { Button } from './ui/Button/Button';
-import Card from './ui/Card/Card';
+import { Button } from './ui/Button';
+import { Card } from './ui/Card';
 
 export {
     Button,

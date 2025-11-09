@@ -4,8 +4,13 @@ import Image from 'next/image';
 
 import { Wallet, ArrowRight, BookOpen, Heart } from 'lucide-react';
 
-import { Card, UserProfile, Header, GridLayout } from '@/app/components';
-import { Button } from '@/app/components/ui/Button';
+import { 
+  Button,
+  Card,
+  UserProfile,
+  Header,
+  GridLayout } from '@/app/components';
+
 
 
 const demoWalletAddress = "0x75C3d1F328d5Ce9fCFC29Dac48C8Ca64D1E745E1";
