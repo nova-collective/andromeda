@@ -12,14 +12,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        // OpenSea-inspired color palette
         primary: {
           50: '#f0f9ff',
           100: '#e0f2fe',
           200: '#bae6fd',
           300: '#7dd3fc',
           400: '#38bdf8',
-          500: '#2081e2', // OpenSea blue
+          500: '#2081e2',
           600: '#1a6bc4',
           700: '#1554a3',
           800: '#134482',
@@ -33,7 +32,7 @@ export default {
           400: '#94a3b8',
           500: '#64748b',
           600: '#475569',
-          700: '#353840', // OpenSea dark background
+          700: '#353840',
           800: '#262b2f',
           900: '#1a1d1f',
         },
