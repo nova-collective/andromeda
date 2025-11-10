@@ -1,0 +1,34 @@
+/* Dark Theme */
+.dark {
+  /* Primary Color Palette - Brighter for dark backgrounds */
+  --color-primary-50: #1e3a5f;
+  --color-primary-100: #234873;
+  --color-primary-200: #2a5a8c;
+  --color-primary-300: #3b7dc4;
+  --color-primary-400: #4d9de8;
+  --color-primary-500: #5eb3ff;
+  --color-primary-600: #7ac2ff;
+  --color-primary-700: #96d1ff;
+  --color-primary-800: #b2e0ff;
+  --color-primary-900: #d4edff;
+
+  /* Background & Surface Colors - True dark theme */
+  --color-background: #0a0e14;
+  --color-surface: #1a1f2e;
+  --color-surface-hover: #252b3d;
+  
+  /* Text Colors - High contrast for readability */
+  --color-text-primary: #e8eaed;
+  --color-text-secondary: #a8b0c1;
+  --color-text-tertiary: #6b7280;
+  
+  /* Border Colors - Subtle but visible */
+  --color-border: #2d3748;
+  --color-border-hover: #3d4758;
+  
+  /* Semantic Colors - Adjusted for dark backgrounds */
+  --color-success: #34d399;
+  --color-warning: #fbbf24;
+  --color-error: #f87171;
+  --color-info: #5eb3ff;
+}

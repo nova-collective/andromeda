@@ -50,37 +50,35 @@ describe('Button component', () => {
 		it('renders secondary variant', () => {
 			render(<Button variant="secondary">Secondary</Button>);
 			const button = screen.getByRole('button');
-			expect(button).toHaveClass('bg-gray-200');
-			expect(button).toHaveClass('dark:bg-dark-700');
+			expect(button).toHaveClass('bg-surface');
+			expect(button).toHaveClass('hover:bg-surface-hover');
 		});
 
 		it('renders outline variant', () => {
 			render(<Button variant="outline">Outline</Button>);
 			const button = screen.getByRole('button');
 			expect(button).toHaveClass('bg-transparent');
-			expect(button).toHaveClass('border-gray-300');
+			expect(button).toHaveClass('border-default');
 		});
 
 		it('renders ghost variant', () => {
 			render(<Button variant="ghost">Ghost</Button>);
 			const button = screen.getByRole('button');
 			expect(button).toHaveClass('bg-transparent');
-			expect(button).toHaveClass('hover:bg-gray-100');
+			expect(button).toHaveClass('hover:bg-surface');
 		});
 
 		it('renders danger variant', () => {
 			render(<Button variant="danger">Delete</Button>);
 			const button = screen.getByRole('button');
-			expect(button).toHaveClass('bg-red-500');
-			expect(button).toHaveClass('hover:bg-red-600');
+			expect(button).toHaveClass('bg-primary-800');
+			expect(button).toHaveClass('hover:bg-primary-900');
 		});
 
 		it('renders gradient variant', () => {
 			render(<Button variant="gradient">Gradient</Button>);
 			const button = screen.getByRole('button');
-			expect(button).toHaveClass('bg-gradient-to-r');
-			expect(button).toHaveClass('from-primary-500');
-			expect(button).toHaveClass('to-purple-600');
+			expect(button).toHaveClass('bg-gradient-primary');
 		});
 	});
 
@@ -315,7 +313,7 @@ describe('Button component', () => {
 		it('combines small size with danger variant', () => {
 			render(<Button variant="danger" size="sm">Delete</Button>);
 			const button = screen.getByRole('button');
-			expect(button).toHaveClass('bg-red-500');
+			expect(button).toHaveClass('bg-primary-800');
 			expect(button).toHaveClass('px-3');
 			expect(button).toHaveClass('text-sm');
 		});
@@ -323,7 +321,7 @@ describe('Button component', () => {
 		it('combines large size with gradient variant', () => {
 			render(<Button variant="gradient" size="lg">Get Started</Button>);
 			const button = screen.getByRole('button');
-			expect(button).toHaveClass('bg-gradient-to-r');
+			expect(button).toHaveClass('bg-gradient-primary');
 			expect(button).toHaveClass('px-6');
 			expect(button).toHaveClass('text-lg');
 		});
@@ -331,14 +329,14 @@ describe('Button component', () => {
 		it('combines full width with outline variant', () => {
 			render(<Button variant="outline" fullWidth>Full Width Outline</Button>);
 			const button = screen.getByRole('button');
-			expect(button).toHaveClass('border-gray-300');
+			expect(button).toHaveClass('border-default');
 			expect(button).toHaveClass('w-full');
 		});
 
 		it('combines loading with secondary variant', () => {
 			render(<Button variant="secondary" loading>Loading</Button>);
 			const button = screen.getByRole('button');
-			expect(button).toHaveClass('bg-gray-200');
+			expect(button).toHaveClass('bg-surface');
 			expect(button).toBeDisabled();
 			expect(screen.getByTestId('loader-icon')).toBeInTheDocument();
 		});

@@ -130,15 +130,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         primary:
           'bg-primary-500 hover:bg-primary-600 text-white border-transparent shadow-sm hover:shadow-md dark:shadow-primary-500/20',
         secondary:
-          'bg-gray-200 hover:bg-gray-300 dark:bg-dark-700 dark:hover:bg-dark-600 text-gray-900 dark:text-white border-transparent',
+          'bg-surface hover:bg-surface-hover text-primary border-default',
         outline:
-          'bg-transparent hover:bg-gray-50 dark:hover:bg-dark-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600',
+          'bg-transparent hover:bg-surface text-primary border-default hover:border-hover',
         ghost:
-          'bg-transparent hover:bg-gray-100 dark:hover:bg-dark-700 text-gray-700 dark:text-gray-300 border-transparent',
+          'bg-transparent hover:bg-surface text-secondary hover:text-primary border-transparent',
         danger:
-          'bg-red-500 hover:bg-red-600 text-white border-transparent shadow-sm hover:shadow-md dark:shadow-red-500/20',
+          'bg-primary-800 hover:bg-primary-900 text-white border-transparent shadow-sm hover:shadow-md dark:shadow-primary-800/20',
         gradient:
-          'bg-gradient-to-r from-primary-500 to-purple-600 hover:from-primary-600 hover:to-purple-700 text-white border-transparent shadow-md hover:shadow-lg',
+          'bg-gradient-primary hover:shadow-lg text-white border-transparent shadow-md',
       };
       return variants[variant];
     };
@@ -172,7 +172,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const isDisabled = disabled || loading;
 
     const baseClasses =
-      'inline-flex items-center justify-center font-medium transition-all duration-200 border focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-dark-800 disabled:opacity-50 disabled:cursor-not-allowed';
+      'inline-flex items-center justify-center font-medium transition-all duration-200 border focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-[var(--color-background)] disabled:opacity-50 disabled:cursor-not-allowed';
 
     const widthClass = fullWidth ? 'w-full' : '';
 

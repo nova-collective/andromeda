@@ -108,9 +108,66 @@ export default function Home() {
                 Button Component Showcase
               </h3>
               
+              {/* Theme Comparison */}
+              <div className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Light Theme */}
+                <div className="bg-white rounded-lg p-6">
+                  <p className="text-sm font-semibold text-gray-900 mb-4 text-center">
+                    ☀️ Light Theme
+                  </p>
+                  <div className="space-y-4">
+                    <div className="flex flex-wrap gap-2 justify-center">
+                      <Button variant="primary" size="sm">Primary</Button>
+                      <Button variant="secondary" size="sm">Secondary</Button>
+                      <Button variant="outline" size="sm">Outline</Button>
+                    </div>
+                    <div className="flex flex-wrap gap-2 justify-center">
+                      <Button variant="ghost" size="sm">Ghost</Button>
+                      <Button variant="danger" size="sm">Danger</Button>
+                      <Button variant="gradient" size="sm">Gradient</Button>
+                    </div>
+                    <div className="flex flex-wrap gap-2 justify-center">
+                      <Button variant="primary" size="sm" leftIcon={<Heart size={14} />}>
+                        Like
+                      </Button>
+                      <Button variant="primary" size="sm" loading>
+                        Loading
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Dark Theme */}
+                <div className="dark bg-[#0a0e14] rounded-lg p-6">
+                  <p className="text-sm font-semibold text-gray-100 mb-4 text-center">
+                    🌙 Dark Theme
+                  </p>
+                  <div className="space-y-4">
+                    <div className="flex flex-wrap gap-2 justify-center">
+                      <Button variant="primary" size="sm">Primary</Button>
+                      <Button variant="secondary" size="sm">Secondary</Button>
+                      <Button variant="outline" size="sm">Outline</Button>
+                    </div>
+                    <div className="flex flex-wrap gap-2 justify-center">
+                      <Button variant="ghost" size="sm">Ghost</Button>
+                      <Button variant="danger" size="sm">Danger</Button>
+                      <Button variant="gradient" size="sm">Gradient</Button>
+                    </div>
+                    <div className="flex flex-wrap gap-2 justify-center">
+                      <Button variant="primary" size="sm" leftIcon={<Heart size={14} />}>
+                        Like
+                      </Button>
+                      <Button variant="primary" size="sm" loading>
+                        Loading
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
               {/* Variants */}
               <div className="mb-6">
-                <p className="text-sm text-gray-400 mb-3">Variants:</p>
+                <p className="text-sm text-gray-400 mb-3">All Variants:</p>
                 <div className="flex flex-wrap gap-3">
                   <Button variant="primary" size="sm">Primary</Button>
                   <Button variant="secondary" size="sm">Secondary</Button>
