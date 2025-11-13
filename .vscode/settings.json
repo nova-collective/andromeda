@@ -8,5 +8,12 @@
     "typescript",
     "typescriptreact"
   ],
-  "eslint.format.enable": true
+  "eslint.format.enable": true,
+   "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "tailwindCSS.includeLanguages": {
+    "plaintext": "html",
+    "postcss": "css"
+  }
 }
