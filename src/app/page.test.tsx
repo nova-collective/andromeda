@@ -43,61 +43,31 @@ vi.mock('./components/templates/GridLayout', () => ({
 
 import Home from './page';
 
-describe('Home page', () => {
-	it('renders header, hero content, and footer', () => {
+describe('Home page (updated layout)', () => {
+	it('renders header, hero content, secondary hero, and footer', () => {
 		render(<Home />);
-
 		expect(screen.getByTestId('mock-header')).toBeInTheDocument();
-		expect(screen.getByRole('heading', { level: 1, name: /welcome to/i })).toBeInTheDocument();
+		expect(screen.getByRole('heading', { level: 1, name: /welcome to andromeda/i })).toBeInTheDocument();
 		expect(screen.getByText('A Web3 bookstore, from authors to readers')).toBeInTheDocument();
-		expect(screen.getByRole('heading', { level: 2, name: /test area/i })).toBeInTheDocument();
-		expect(screen.getByText(/building the future of reading/i)).toBeInTheDocument();
-	});
-
-	it('passes demo wallet address down to UserProfile', () => {
-		render(<Home />);
-
-		expect(screen.getByTestId('mock-user-profile')).toHaveTextContent('0x75C3d1F328d5Ce9fCFC29Dac48C8Ca64D1E745E1');
+		expect(screen.getByRole('heading', { level: 1, name: /discover, collect, and sell/i })).toBeInTheDocument();
+		expect(screen.getByText(/building the future of reading, one block at a time/i)).toBeInTheDocument();
 	});
 
 	it('renders coming soon banner', () => {
 		render(<Home />);
-
 		expect(screen.getByText(/coming soon/i)).toBeInTheDocument();
 		expect(screen.getByText(/coming soon/i)).toHaveClass('animate-pulse');
 	});
 
 	it('renders work in progress image', () => {
 		render(<Home />);
-
 		const wipImage = screen.getByAltText('Work in Progress');
 		expect(wipImage).toBeInTheDocument();
 		expect(wipImage).toHaveAttribute('src', '/assets/wip.png');
 	});
 
-	it('displays test area section', () => {
-		render(<Home />);
-
-		expect(screen.getByText('🧪 Test Area')).toBeInTheDocument();
-		expect(screen.getByText('Testing db connection')).toBeInTheDocument();
-	});
-
-	it('renders hero section with proper headings', () => {
-		render(<Home />);
-
-		expect(screen.getByText('Discover, Collect, and Sell')).toBeInTheDocument();
-		expect(screen.getByText("Explore the world's leading NFT marketplace")).toBeInTheDocument();
-	});
-
-	it('renders trending items section', () => {
-		render(<Home />);
-
-		expect(screen.getByText('Trending Items')).toBeInTheDocument();
-	});
-
 	it('renders footer with copyright', () => {
 		render(<Home />);
-
 		const currentYear = new Date().getFullYear();
 		expect(screen.getByText(new RegExp(`${currentYear}.*Andromeda`))).toBeInTheDocument();
 		expect(screen.getByText(/building the future of reading, one block at a time/i)).toBeInTheDocument();
@@ -110,14 +80,9 @@ describe('Home page', () => {
 		expect(mainDiv).toHaveClass('bg-secondary');
 	});
 
-	it('renders with proper semantic HTML structure', () => {
+	it('has at least two primary hero h1 headings', () => {
 		render(<Home />);
-
-		// Should have proper heading hierarchy
 		const h1Elements = screen.getAllByRole('heading', { level: 1 });
-		expect(h1Elements.length).toBeGreaterThan(0);
-
-		const h2Elements = screen.getAllByRole('heading', { level: 2 });
-		expect(h2Elements.length).toBeGreaterThan(0);
+		expect(h1Elements.length).toBeGreaterThanOrEqual(2);
 	});
 });

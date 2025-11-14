@@ -94,7 +94,7 @@ export function Card({
       href={href}
       whileHover={{ y: -4 }}
       transition={{ duration: 0.2 }}
-      className="group block"
+      className="group block cursor-pointer"
     >
   <div className="relative overflow-hidden rounded-2xl border border-color bg-primary shadow-card hover:shadow-card-hover transition-all duration-300 focus-within:ring-2 focus-within:ring-[var(--text-primary)] focus-within:ring-offset-2 focus-within:ring-offset-[var(--bg-primary)]">
         {/* Image Container */}
@@ -114,7 +114,7 @@ export function Card({
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={handleLike}
-              className={`p-2 rounded-lg backdrop-blur-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--text-primary)] focus:ring-offset-2 focus:ring-offset-[var(--bg-primary)] ${
+              className={`p-2 rounded-lg cursor-pointer backdrop-blur-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--text-primary)] focus:ring-offset-2 focus:ring-offset-[var(--bg-primary)] ${
                 isLiked
                   ? 'bg-red-500 text-white'
                   : 'bg-primary/90 text-secondary'
@@ -122,7 +122,7 @@ export function Card({
             >
               <Heart size={18} fill={isLiked ? 'currentColor' : 'none'} />
             </motion.button>
-            <button className="p-2 rounded-lg bg-primary/90 backdrop-blur-sm text-secondary hover:bg-secondary transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--text-primary)] focus:ring-offset-2 focus:ring-offset-[var(--bg-primary)]">
+            <button className="p-2 rounded-lg cursor-pointer bg-primary/90 backdrop-blur-sm text-secondary hover:bg-secondary transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--text-primary)] focus:ring-offset-2 focus:ring-offset-[var(--bg-primary)]">
               <MoreVertical size={18} />
             </button>
           </div>

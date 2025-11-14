@@ -15,7 +15,8 @@ import {
   User,
   ShoppingBag,
   TrendingUp,
-  Sparkles
+  Sparkles,
+  LayoutGrid
 } from 'lucide-react';
 
 import { useTheme } from '@/app/components/providers/ThemeProvider/ThemeProvider';
@@ -53,6 +54,8 @@ export default function Header() {
     { name: 'Explore', href: '/explore', icon: TrendingUp },
     { name: 'Stats', href: '/stats', icon: Sparkles },
     { name: 'Create', href: '/create', icon: ShoppingBag },
+    // Visual Design System page link
+    { name: 'VDS', href: '/vds', icon: LayoutGrid },
   ];
 
   return (
@@ -60,7 +63,7 @@ export default function Header() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link href="/" className="flex items-center gap-2 group cursor-pointer">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center group-hover:scale-105 transition-transform">
               <span className="text-[var(--bg-primary)] font-bold text-xl">A</span>
             </div>
@@ -75,7 +78,7 @@ export default function Header() {
               <Link
                 key={link.name}
                 href={link.href}
-                className="px-4 py-2 rounded-lg text-secondary hover:bg-secondary hover:text-primary transition-colors flex items-center gap-2"
+                className="px-4 py-2 rounded-lg text-secondary hover:bg-secondary hover:text-primary transition-colors flex items-center gap-2 cursor-pointer"
               >
                 <link.icon size={18} />
                 <span>{link.name}</span>
@@ -105,7 +108,7 @@ export default function Header() {
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg hover:bg-secondary transition-colors"
+              className="p-2 rounded-lg hover:bg-secondary transition-colors cursor-pointer"
               aria-label="Toggle theme"
             >
               {theme === 'light' ? (
@@ -116,12 +119,12 @@ export default function Header() {
             </button>
 
             {/* User Menu */}
-            <button className="hidden md:flex items-center gap-2 p-2 rounded-lg hover:bg-secondary transition-colors">
+            <button className="hidden md:flex items-center gap-2 p-2 rounded-lg hover:bg-secondary transition-colors cursor-pointer">
               <User size={20} className="text-secondary" />
             </button>
 
             {/* Connect Wallet Button */}
-            <button className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl bg-[var(--text-primary)] hover:opacity-95 active:opacity-90 text-[var(--bg-primary)] font-medium transition-colors">
+            <button className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl bg-[var(--text-primary)] hover:opacity-95 active:opacity-90 text-[var(--bg-primary)] font-medium transition-colors cursor-pointer">
               <Wallet size={18} />
               <span>Connect</span>
             </button>
@@ -129,7 +132,7 @@ export default function Header() {
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-secondary transition-colors"
+              className="md:hidden p-2 rounded-lg hover:bg-secondary transition-colors cursor-pointer"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -166,13 +169,13 @@ export default function Header() {
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsMenuOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-secondary transition-colors"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-secondary transition-colors cursor-pointer"
               >
                 <link.icon size={20} />
                 <span className="font-medium">{link.name}</span>
               </Link>
             ))}
-            <button className="flex items-center gap-3 px-4 py-3 mt-2 rounded-xl bg-[var(--text-primary)] hover:opacity-95 active:opacity-90 text-[var(--bg-primary)] font-medium transition-colors justify-center">
+            <button className="flex items-center gap-3 px-4 py-3 mt-2 rounded-xl bg-[var(--text-primary)] hover:opacity-95 active:opacity-90 text-[var(--bg-primary)] font-medium transition-colors justify-center cursor-pointer">
               <Wallet size={20} />
               <span>Connect Wallet</span>
             </button>
