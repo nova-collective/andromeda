@@ -142,7 +142,7 @@ describe('Header component', () => {
 
 		const connectButton = screen.getByRole('button', { name: 'Connect' });
 		expect(connectButton).toBeInTheDocument();
-		expect(connectButton).toHaveClass('bg-primary-500');
+		expect(connectButton).toHaveClass('bg-[var(--text-primary)]');
 	});
 
 	it('renders user icon button', () => {

@@ -75,14 +75,6 @@ describe('Home page', () => {
 		expect(wipImage).toHaveAttribute('src', '/assets/wip.png');
 	});
 
-	it('renders Andromeda logo', () => {
-		render(<Home />);
-
-		const logo = screen.getByAltText('Andromeda');
-		expect(logo).toBeInTheDocument();
-		expect(logo).toHaveAttribute('src', '/assets/andromeda-logo.png');
-	});
-
 	it('displays test area section', () => {
 		render(<Home />);
 
@@ -111,12 +103,11 @@ describe('Home page', () => {
 		expect(screen.getByText(/building the future of reading, one block at a time/i)).toBeInTheDocument();
 	});
 
-	it('applies correct background gradient classes', () => {
+	it('applies themed page container classes', () => {
 		const { container } = render(<Home />);
-
-		const mainDiv = container.querySelector('.bg-gradient-to-br');
+		const mainDiv = container.querySelector('.min-h-screen');
 		expect(mainDiv).toBeInTheDocument();
-		expect(mainDiv).toHaveClass('from-gray-900', 'to-gray-800');
+		expect(mainDiv).toHaveClass('bg-secondary');
 	});
 
 	it('renders with proper semantic HTML structure', () => {

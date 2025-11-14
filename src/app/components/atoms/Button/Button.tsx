@@ -128,17 +128,17 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const getVariantClasses = (): string => {
       const variants: Record<ButtonVariant, string> = {
         primary:
-          'bg-primary-500 hover:bg-primary-600 text-white border-transparent shadow-sm hover:shadow-md dark:shadow-primary-500/20',
+          'bg-[var(--text-primary)] hover:opacity-95 active:opacity-90 text-[var(--bg-primary)] border-transparent shadow-sm hover:shadow-md',
         secondary:
-          'bg-surface hover:bg-surface-hover text-primary border-default',
+          'bg-secondary hover:opacity-95 text-primary border-color shadow-sm',
         outline:
-          'bg-transparent hover:bg-surface text-primary border-default hover:border-hover',
+          'bg-transparent hover:bg-secondary text-primary border-color',
         ghost:
-          'bg-transparent hover:bg-surface text-secondary hover:text-primary border-transparent',
+          'bg-transparent hover:bg-secondary text-secondary hover:text-primary border-transparent',
         danger:
-          'bg-primary-800 hover:bg-primary-900 text-white border-transparent shadow-sm hover:shadow-md dark:shadow-primary-800/20',
+          'bg-red-600 hover:bg-red-700 text-white border-transparent shadow-sm hover:shadow-md',
         gradient:
-          'bg-gradient-primary hover:shadow-lg text-white border-transparent shadow-md',
+          'bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white border-transparent shadow-md hover:shadow-lg',
       };
       return variants[variant];
     };
@@ -172,7 +172,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const isDisabled = disabled || loading;
 
     const baseClasses =
-      'inline-flex items-center justify-center font-medium transition-all duration-200 border focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-[var(--color-background)] disabled:opacity-50 disabled:cursor-not-allowed';
+      'inline-flex items-center justify-center font-medium transition-all duration-200 border border-color focus:outline-none focus:ring-2 focus:ring-[var(--text-primary)] focus:ring-offset-2 focus:ring-offset-[var(--bg-primary)] disabled:opacity-50 disabled:cursor-not-allowed';
 
     const widthClass = fullWidth ? 'w-full' : '';
 

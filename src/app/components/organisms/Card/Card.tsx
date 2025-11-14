@@ -96,9 +96,9 @@ export function Card({
       transition={{ duration: 0.2 }}
       className="group block"
     >
-      <div className="relative overflow-hidden rounded-2xl border border-gray-200 dark:border-dark-600 bg-white dark:bg-dark-800 shadow-card hover:shadow-card-hover dark:shadow-dark-card dark:hover:shadow-dark-card-hover transition-all duration-300">
+  <div className="relative overflow-hidden rounded-2xl border border-color bg-primary shadow-card hover:shadow-card-hover transition-all duration-300 focus-within:ring-2 focus-within:ring-[var(--text-primary)] focus-within:ring-offset-2 focus-within:ring-offset-[var(--bg-primary)]">
         {/* Image Container */}
-        <div className="relative aspect-square overflow-hidden bg-gray-100 dark:bg-dark-700">
+  <div className="relative aspect-square overflow-hidden bg-secondary">
           <Image
             src={image}
             alt={title}
@@ -114,24 +114,24 @@ export function Card({
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={handleLike}
-              className={`p-2 rounded-lg backdrop-blur-sm transition-colors ${
+              className={`p-2 rounded-lg backdrop-blur-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--text-primary)] focus:ring-offset-2 focus:ring-offset-[var(--bg-primary)] ${
                 isLiked
                   ? 'bg-red-500 text-white'
-                  : 'bg-white/90 dark:bg-dark-800/90 text-gray-700 dark:text-gray-300'
+                  : 'bg-primary/90 text-secondary'
               }`}
             >
               <Heart size={18} fill={isLiked ? 'currentColor' : 'none'} />
             </motion.button>
-            <button className="p-2 rounded-lg bg-white/90 dark:bg-dark-800/90 backdrop-blur-sm text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-dark-700 transition-colors">
+            <button className="p-2 rounded-lg bg-primary/90 backdrop-blur-sm text-secondary hover:bg-secondary transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--text-primary)] focus:ring-offset-2 focus:ring-offset-[var(--bg-primary)]">
               <MoreVertical size={18} />
             </button>
           </div>
 
           {/* Like Count Badge */}
           {likeCount > 0 && (
-            <div className="absolute bottom-3 right-3 px-2.5 py-1 rounded-lg bg-white/90 dark:bg-dark-800/90 backdrop-blur-sm flex items-center gap-1.5">
-              <Heart size={14} className="text-gray-600 dark:text-gray-400" />
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <div className="absolute bottom-3 right-3 px-2.5 py-1 rounded-lg bg-primary/90 backdrop-blur-sm flex items-center gap-1.5">
+              <Heart size={14} className="text-secondary" />
+              <span className="text-sm font-medium text-secondary">
                 {likeCount}
               </span>
             </div>
@@ -139,35 +139,35 @@ export function Card({
         </div>
 
         {/* Card Content */}
-        <div className="p-4">
+  <div className="p-4">
           {/* Collection Name */}
           {collection && (
-            <p className="text-sm text-primary-500 dark:text-primary-400 font-medium mb-1">
+            <p className="text-sm text-[var(--text-primary)] font-medium mb-1">
               {collection}
             </p>
           )}
 
           {/* Title */}
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 truncate">
+          <h3 className="text-lg font-semibold text-primary mb-3 truncate">
             {title}
           </h3>
 
           {/* Price Section */}
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">
+              <p className="text-xs text-secondary mb-1">
                 Current Price
               </p>
-              <p className="text-base font-bold text-gray-900 dark:text-white">
+              <p className="text-base font-bold text-primary">
                 {price}
               </p>
             </div>
             {lastPrice && (
               <div className="text-right">
-                <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">
+                <p className="text-xs text-secondary mb-1">
                   Last Sale
                 </p>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
+                <p className="text-sm text-secondary">
                   {lastPrice}
                 </p>
               </div>
