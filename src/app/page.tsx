@@ -93,76 +93,7 @@ export default function Home() {
             </p>
             <UserProfile walletAddress={demoWalletAddress} />
 
-            {/* Button Component Examples */}
-            <div className="mt-8 pt-8 border-t border-color">
-              <h3 className="text-xl font-semibold text-primary mb-4 text-center">
-                Button Component Showcase
-              </h3>
-              
-              <div className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-primary rounded-lg p-6 border border-color">
-                  <div className="space-y-4">
-                    <div className="flex flex-wrap gap-2 justify-center">
-                      <Button variant="primary" size="sm">Primary</Button>
-                      <Button variant="secondary" size="sm">Secondary</Button>
-                      <Button variant="outline" size="sm">Outline</Button>
-                    </div>
-                    <div className="flex flex-wrap gap-2 justify-center">
-                      <Button variant="ghost" size="sm">Ghost</Button>
-                      <Button variant="danger" size="sm">Danger</Button>
-                      <Button variant="gradient" size="sm">Gradient</Button>
-                    </div>
-                    <div className="flex flex-wrap gap-2 justify-center">
-                      <Button variant="primary" size="sm" leftIcon={<Heart size={14} />}>
-                        Like
-                      </Button>
-                      <Button variant="primary" size="sm" loading>
-                        Loading
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Variants */}
-              <div className="mb-6">
-                <p className="text-sm text-secondary mb-3">All Variants:</p>
-                <div className="flex flex-wrap gap-3">
-                  <Button variant="primary" size="sm">Primary</Button>
-                  <Button variant="secondary" size="sm">Secondary</Button>
-                  <Button variant="outline" size="sm">Outline</Button>
-                  <Button variant="ghost" size="sm">Ghost</Button>
-                  <Button variant="danger" size="sm">Danger</Button>
-                  <Button variant="gradient" size="sm">Gradient</Button>
-                </div>
-              </div>
-
-              {/* With Icons */}
-              <div className="mb-6">
-                <p className="text-sm text-secondary mb-3">With Icons:</p>
-                <div className="flex flex-wrap gap-3">
-                  <Button variant="primary" leftIcon={<Heart size={16} />}>
-                    Like
-                  </Button>
-                  <Button variant="secondary" rightIcon={<ArrowRight size={16} />}>
-                    Next
-                  </Button>
-                  <Button variant="gradient" leftIcon={<Wallet size={16} />}>
-                    Connect
-                  </Button>
-                </div>
-              </div>
-
-              {/* States */}
-              <div>
-                <p className="text-sm text-secondary mb-3">States:</p>
-                <div className="flex flex-wrap gap-3">
-                  <Button variant="primary">Normal</Button>
-                  <Button variant="primary" disabled>Disabled</Button>
-                  <Button variant="primary" loading>Loading</Button>
-                </div>
-              </div>
-            </div>
+            {/* Design system showcases moved to /vds page */}
           </div>
         </div>
 

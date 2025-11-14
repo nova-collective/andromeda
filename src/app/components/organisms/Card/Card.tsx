@@ -148,7 +148,7 @@ export function Card({
           )}
 
           {/* Title */}
-          <h3 className="text-lg font-semibold text-primary mb-3 truncate">
+          <h3 className="text-lg font-semibold font-serif text-primary mb-3 truncate">
             {title}
           </h3>
 

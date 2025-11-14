@@ -99,8 +99,8 @@ export function UserProfile({ walletAddress }: UserProfileProps) {
   if (!user) return <div>User not found</div>;
 
   return (
-    <div>
-      <h2>User Profile</h2>
+    <div className="font-sans">
+      <h2 className="font-serif font-bold">User Profile</h2>
       <p>Wallet: {user.walletAddress}</p>
       <p>Theme: {user.settings?.theme}</p>
       <button onClick={() => void updateUserSettings({ theme: 'dark', notifications: true })}>
