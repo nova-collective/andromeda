@@ -172,7 +172,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const isDisabled = disabled || loading;
 
     const baseClasses =
-      'inline-flex items-center justify-center font-medium transition-all duration-200 border border-color focus:outline-none focus:ring-2 focus:ring-[var(--text-primary)] focus:ring-offset-2 focus:ring-offset-[var(--bg-primary)] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed';
+      'inline-flex items-center justify-center font-medium transition-all duration-200 border focus:outline-none focus:ring-2 focus:ring-[var(--text-primary)] focus:ring-offset-2 focus:ring-offset-[var(--bg-primary)] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed';
 
     const widthClass = fullWidth ? 'w-full' : '';
 
