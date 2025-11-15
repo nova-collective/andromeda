@@ -32,7 +32,7 @@ describe('Admin page', () => {
 	it('renders dashboard content for admin users', async () => {
 		fetchMock.mockResolvedValueOnce(mockFetchResponse(['admin']));
 
-		const AdminPage = (await import('./admin')).default;
+		const AdminPage = (await import('./page')).default;
 		render(<AdminPage />);
 
 		await waitFor(() => {
@@ -45,7 +45,7 @@ describe('Admin page', () => {
 	it('redirects non-admin users to unauthorized', async () => {
 		fetchMock.mockResolvedValueOnce(mockFetchResponse(['member']));
 
-		const AdminPage = (await import('./admin')).default;
+		const AdminPage = (await import('./page')).default;
 		render(<AdminPage />);
 
 		await waitFor(() => {
