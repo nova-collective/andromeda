@@ -32,8 +32,8 @@ describe('Admin page', () => {
 	it('renders dashboard content for admin users', async () => {
 		fetchMock.mockResolvedValueOnce(mockFetchResponse(['admin']));
 
-		const AdminPage = (await import('./page')).default;
-		render(<AdminPage />);
+		const AdminClient = (await import('./AdminClient')).default;
+		render(<AdminClient />);
 
 		await waitFor(() => {
 			expect(screen.getByText('Admin Dashboard')).toBeInTheDocument();
@@ -45,8 +45,8 @@ describe('Admin page', () => {
 	it('redirects non-admin users to unauthorized', async () => {
 		fetchMock.mockResolvedValueOnce(mockFetchResponse(['member']));
 
-		const AdminPage = (await import('./page')).default;
-		render(<AdminPage />);
+		const AdminClient = (await import('./AdminClient')).default;
+		render(<AdminClient />);
 
 		await waitFor(() => {
 			expect(pushMock).toHaveBeenCalledWith('/unauthorized');
