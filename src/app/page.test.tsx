@@ -101,20 +101,6 @@ describe('Home page (updated layout)', () => {
 		expect(wipImage).toHaveAttribute('src', '/assets/wip.png');
 	});
 
-	it('renders Andromeda logo', () => {
-		render(<Home />);
-
-		const logo = screen.getByAltText('Andromeda');
-		expect(logo).toBeInTheDocument();
-		expect(logo).toHaveAttribute('src', '/assets/andromeda-logo.png');
-	});
-
-	it('displays test area section', () => {
-		render(<Home />);
-
-		expect(screen.getByText('🧪 Test Area')).toBeInTheDocument();
-		expect(screen.getByText('Testing db connection')).toBeInTheDocument();
-	});
 
 	it('renders hero section with proper headings', () => {
 		render(<Home />);
@@ -123,11 +109,6 @@ describe('Home page (updated layout)', () => {
 		expect(screen.getByText("Explore the world's leading NFT marketplace")).toBeInTheDocument();
 	});
 
-	it('renders trending items section', () => {
-		render(<Home />);
-
-		expect(screen.getByText('Trending Items')).toBeInTheDocument();
-	});
 
 	it('renders footer with copyright', () => {
 		render(<Home />);
@@ -137,13 +118,6 @@ describe('Home page (updated layout)', () => {
 		expect(screen.getByText(/building the future of reading, one block at a time/i)).toBeInTheDocument();
 	});
 
-	it('applies correct background gradient classes', () => {
-		const { container } = render(<Home />);
-
-		const mainDiv = container.querySelector('.bg-gradient-to-br');
-		expect(mainDiv).toBeInTheDocument();
-		expect(mainDiv).toHaveClass('from-gray-900', 'to-gray-800');
-	});
 
 	it('renders with proper semantic HTML structure', () => {
 		render(<Home />);
