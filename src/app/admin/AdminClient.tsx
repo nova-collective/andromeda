@@ -13,8 +13,8 @@ function AdminView({ user }: { user: User }) {
   return (
     <main className="min-h-screen bg-surfaceAlt px-gutter py-section">
       <div className="max-w-4xl mx-auto space-y-component">
-  <Heading level={1} className="text-3xl font-bold text-textBase">Admin Dashboard</Heading>
-  <Paragraph muted>Welcome, {user.username} (Admin)</Paragraph>
+        <Heading level={1} className="text-3xl font-bold text-textBase">Admin Dashboard</Heading>
+        <Paragraph muted>Welcome, {user.username} (Admin)</Paragraph>
       </div>
     </main>
   );
