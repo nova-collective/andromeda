@@ -43,11 +43,11 @@ describe('Caption', () => {
 		expect(el.tagName).toBe('FIGCAPTION');
 	});
 
-		it('supports onPrimary contrast for readability over colored backgrounds', () => {
-			render(<Caption contrast="onPrimary">On primary</Caption>);
-			const el = screen.getByText('On primary');
-			expect(el).toHaveClass('text-white');
-			expect(el.className).toMatch(/dark:text-black/);
-		});
+	it('supports onPrimary contrast for readability over colored backgrounds', () => {
+		render(<Caption contrast="onPrimary">On primary</Caption>);
+		const el = screen.getByText('On primary');
+		expect(el).toHaveClass('text-white');
+		expect(el.className).toMatch(/dark:text-black/);
+	});
 });
 
