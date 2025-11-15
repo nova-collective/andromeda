@@ -42,3 +42,7 @@ export type { ParagraphProps, ParagraphSize, ParagraphAlign } from './Paragraph/
 // Label Atom
 export { Label } from './Label/Label';
 export type { LabelProps, LabelSeverity, LabelVariant, LabelSize } from './Label/Label';
+
+// Caption Atom
+export { Caption } from './Caption/Caption';
+export type { CaptionProps, CaptionSize, CaptionAlign, CaptionContrast } from './Caption/Caption';

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Wallet, ArrowRight, Heart } from 'lucide-react';
 
-import { Button, Header, Card, Heading, Paragraph, Label } from '@/app/components';
+import { Button, Header, Card, Heading, Paragraph, Label, Caption } from '@/app/components';
 
 /**
  * Visual Design System Page
@@ -147,6 +147,23 @@ export default function VDSPage() {
                       <Label severity="danger" variant="ghost" pill>Danger</Label>
                     </div>
                   </div>
+                </div>
+              </div>
+
+              {/* Captions Panel */}
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold text-primary">Captions</Heading>
+                </header>
+                <div className="space-y-4">
+                  <Caption className="text-primary" size="xs">Tiny caption size (xs)</Caption>
+                  <Caption className="text-primary" align="center">Centered caption</Caption>
+                  <Caption className="text-primary" align="right" muted={false}>Right-aligned, not muted</Caption>
+                  <figure className="space-y-2">
+                    {/* Example figure/figcaption pairing */}
+                    <div className="w-full h-32 bg-[color:var(--border)] rounded-lg" />
+                    <Caption className="text-primary" as="figcaption" align="center">Figure 1 – Placeholder image with figcaption</Caption>
+                  </figure>
                 </div>
               </div>
             </div>
