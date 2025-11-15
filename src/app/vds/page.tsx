@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Wallet, ArrowRight, Heart } from 'lucide-react';
 
-import { Button, Header, Card, Heading } from '@/app/components';
+import { Button, Header, Card, Heading, Paragraph } from '@/app/components';
 
 /**
  * Visual Design System Page
@@ -18,10 +18,10 @@ export default function VDSPage() {
           {/* Intro */}
           <section className="text-center mb-16 space-y-3">
             <Heading level={1} align="center" className="text-4xl md:text-5xl font-bold text-primary tracking-tight">Visual Design System</Heading>
-            <p className="text-secondary text-lg max-w-3xl mx-auto leading-relaxed">
+            <Paragraph size="lg" align="center" className="text-secondary max-w-3xl mx-auto leading-relaxed">
               A living reference for Andromeda’s visual language: components, states, and typography. Keep interfaces
               consistent, accessible, and theme-aware.
-            </p>
+            </Paragraph>
           </section>
 
           {/* Two-column layout for components + typography */}
@@ -46,7 +46,7 @@ export default function VDSPage() {
 
                 {/* Icon examples */}
                 <div className="space-y-2">
-                  <p className="text-xs text-secondary">Icons</p>
+                  <Paragraph size="sm" muted className="text-secondary text-xs">Icons</Paragraph>
                   <div className="flex flex-wrap gap-3">
                     <Button variant="primary" leftIcon={<Heart size={16} />}>Like</Button>
                     <Button variant="secondary" rightIcon={<ArrowRight size={16} />}>Next</Button>
@@ -56,7 +56,7 @@ export default function VDSPage() {
 
                 {/* States */}
                 <div className="space-y-2">
-                  <p className="text-xs text-secondary">States</p>
+                  <Paragraph size="sm" muted className="text-secondary text-xs">States</Paragraph>
                   <div className="flex flex-wrap gap-3">
                     <Button variant="primary">Normal</Button>
                     <Button variant="primary" disabled>Disabled</Button>
@@ -84,19 +84,19 @@ export default function VDSPage() {
                 </div>
                 {/* Paragraph Samples */}
                 <div className="space-y-4 font-sans text-secondary leading-relaxed">
-                  <p>
+                  <Paragraph>
                     Andromeda is a decentralized bookstore where every title is a tokenized asset. Explore limited
                     editions, unlock exclusive author content, and build a collection that travels with you across the
                     Web3 universe.
-                  </p>
-                  <p>
+                  </Paragraph>
+                  <Paragraph>
                     Fonts: Headings use <span className="font-serif text-primary">Merriweather (serif)</span>. Body text uses
                     <span className="font-sans text-primary"> Inter (sans-serif)</span> for clean, readable UI.
-                  </p>
-                  <p>
+                  </Paragraph>
+                  <Paragraph>
                     This pairing balances immersive storytelling with accessible interface patterns—ideal for
                     discovery and long-form reading.
-                  </p>
+                  </Paragraph>
                 </div>
               </div>
             </div>
@@ -109,10 +109,10 @@ export default function VDSPage() {
               <span className="text-xs uppercase tracking-wider text-secondary">Component</span>
             </header>
             <div className="space-y-8">
-              <p className="text-secondary text-sm leading-relaxed max-w-3xl">
+              <Paragraph size="sm" muted className="text-secondary leading-relaxed max-w-3xl">
                 Cards display NFT or book items with image, collection, pricing and interaction affordances. They support
                 hover elevation, like toggling, and optional previous sale price. Below are common usage patterns.
-              </p>
+              </Paragraph>
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 <Card
                   image="/placeholder-1.jpg"
@@ -141,7 +141,7 @@ export default function VDSPage() {
                 />
               </div>
               <div className="space-y-4">
-                <p className="text-xs text-secondary">State Notes</p>
+                <Paragraph size="sm" muted className="text-secondary text-xs">State Notes</Paragraph>
                 <ul className="list-disc pl-5 space-y-1 text-secondary text-sm">
                   <li><span className="text-primary font-medium">Likes</span> increment locally; initial count provided via props.</li>
                   <li><span className="text-primary font-medium">Hover</span> scales image and reveals action buttons (like, more).</li>

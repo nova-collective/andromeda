@@ -34,3 +34,7 @@ export type { ButtonProps, ButtonVariant, ButtonSize } from './Button';
 // Heading Atom
 export { Heading } from './Heading/Heading';
 export type { HeadingProps, HeadingAlign, HeadingLevel } from './Heading/Heading';
+
+// Paragraph Atom
+export { Paragraph } from './Paragraph/Paragraph';
+export type { ParagraphProps, ParagraphSize, ParagraphAlign } from './Paragraph/Paragraph';

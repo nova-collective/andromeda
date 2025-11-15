@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { 
   Header,
   Heading,
+  Paragraph,
 } from '@/app/components';
 
 
@@ -23,9 +24,9 @@ export default function Home() {
           <Heading level={1} align="center" className="font-bold text-primary mb-4 flex items-center justify-center gap-3">
             Welcome to Andromeda
           </Heading>
-          <p className="text-xl text-secondary max-w-2xl mx-auto mb-8">
+          <Paragraph size="xl" align="center" className="text-secondary max-w-2xl mx-auto mb-8">
             A Web3 bookstore, from authors to readers
-          </p>
+          </Paragraph>
         </div>
 
         <div className="relative mb-12 max-w-4xl mx-auto">
@@ -45,18 +46,14 @@ export default function Home() {
           <Heading level={1} align="center" className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-indigo-500 to-purple-500 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
             Discover, Collect, and Sell
           </Heading>
-          <p className="text-xl text-secondary max-w-2xl mx-auto">
+          <Paragraph size="xl" align="center" className="text-secondary max-w-2xl mx-auto">
             Explore the world&apos;s leading NFT marketplace
-          </p>
+          </Paragraph>
         </section>
 
         <footer className="mt-16 text-center">
-          <p className="text-secondary">
-            &copy; {new Date().getFullYear()} Andromeda - All rights reserved
-          </p>
-          <p className="text-secondary text-sm mt-2">
-            Building the future of reading, one block at a time
-          </p>
+          <Paragraph className="text-secondary">&copy; {new Date().getFullYear()} Andromeda - All rights reserved</Paragraph>
+          <Paragraph size="sm" muted className="text-secondary text-sm mt-2">Building the future of reading, one block at a time</Paragraph>
         </footer>
       </div>
     </>
