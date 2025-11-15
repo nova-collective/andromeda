@@ -210,14 +210,3 @@ Security issues should be reported privately to `nova.web3.collective@gmail.com`
 ## License
 
 Distributed under the terms of the **GNU General Public License v3.0**. See [LICENSE](LICENSE) for details.
-
-```typescript
-// Named import (recommended)
-import { Card } from '@/app/components/ui/Card';
-
-// Default import
-import Card from '@/app/components/ui/Card';
-
-// Type import
-import type { CardProps } from '@/app/components/ui/Card';
-```
