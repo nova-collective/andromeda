@@ -21,7 +21,7 @@ vi.mock('framer-motion', () => ({
 	},
 }));
 
-import Card from './Card';
+import { Card } from './Card';
 
 describe('Card component', () => {
 	const defaultProps = {
@@ -240,11 +240,11 @@ describe('Card component', () => {
 		expect(screen.getByText('9.25 ETH')).toBeInTheDocument();
 	});
 
-	it('renders with collection name in correct color', () => {
+	it('renders collection name using theme text color', () => {
 		render(<Card {...defaultProps} collection="Premium Collection" />);
 
 		const collection = screen.getByText('Premium Collection');
-		expect(collection).toHaveClass('text-primary-500');
+		expect(collection).toHaveClass('text-[var(--text-primary)]');
 	});
 
 	it('works with zero likes initially', async () => {

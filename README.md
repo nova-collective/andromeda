@@ -1,6 +1,6 @@
-<p align="center">
-  <img src="./asset/andromeda-logo.png" alt="Andromeda logo" width="240" />
-</p>
+<h1 align="center">
+  Andromeda
+</h1>
 
 <p align="center"><em>Your key, your book.</em></p>
 

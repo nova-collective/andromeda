@@ -128,17 +128,17 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const getVariantClasses = (): string => {
       const variants: Record<ButtonVariant, string> = {
         primary:
-          'bg-primary-500 hover:bg-primary-600 text-white border-transparent shadow-sm hover:shadow-md dark:shadow-primary-500/20',
+          'bg-[var(--text-primary)] hover:opacity-95 active:opacity-90 text-[var(--bg-primary)] border-transparent shadow-sm hover:shadow-md',
         secondary:
-          'bg-gray-200 hover:bg-gray-300 dark:bg-dark-700 dark:hover:bg-dark-600 text-gray-900 dark:text-white border-transparent',
+          'bg-secondary hover:opacity-95 text-primary border-color shadow-sm',
         outline:
-          'bg-transparent hover:bg-gray-50 dark:hover:bg-dark-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600',
+          'bg-transparent hover:bg-secondary text-primary border-color',
         ghost:
-          'bg-transparent hover:bg-gray-100 dark:hover:bg-dark-700 text-gray-700 dark:text-gray-300 border-transparent',
+          'bg-transparent hover:bg-secondary text-secondary hover:text-primary border-transparent',
         danger:
-          'bg-red-500 hover:bg-red-600 text-white border-transparent shadow-sm hover:shadow-md dark:shadow-red-500/20',
+          'bg-red-600 hover:bg-red-700 text-white border-transparent shadow-sm hover:shadow-md',
         gradient:
-          'bg-gradient-to-r from-primary-500 to-purple-600 hover:from-primary-600 hover:to-purple-700 text-white border-transparent shadow-md hover:shadow-lg',
+          'bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white border-transparent shadow-md hover:shadow-lg',
       };
       return variants[variant];
     };
@@ -172,7 +172,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const isDisabled = disabled || loading;
 
     const baseClasses =
-      'inline-flex items-center justify-center font-medium transition-all duration-200 border focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-dark-800 disabled:opacity-50 disabled:cursor-not-allowed';
+      'inline-flex items-center justify-center font-medium transition-all duration-200 border focus:outline-none focus:ring-2 focus:ring-[var(--text-primary)] focus:ring-offset-2 focus:ring-offset-[var(--bg-primary)] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed';
 
     const widthClass = fullWidth ? 'w-full' : '';
 
