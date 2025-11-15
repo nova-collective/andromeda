@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Wallet, ArrowRight, Heart } from 'lucide-react';
 
-import { Button, Header, Card, Heading, Paragraph } from '@/app/components';
+import { Button, Header, Card, Heading, Paragraph, Label } from '@/app/components';
 
 /**
  * Visual Design System Page
@@ -97,6 +97,54 @@ export default function VDSPage() {
                     This pairing balances immersive storytelling with accessible interface patterns—ideal for
                     discovery and long-form reading.
                   </Paragraph>
+                </div>
+              </div>
+            </div>
+            {/* Labels Panel */}
+            <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+              <header className="flex items-center justify-between">
+                <Heading level={2} className="text-lg font-serif font-semibold text-primary">Labels</Heading>
+                <span className="text-xs uppercase tracking-wider text-secondary">Atoms</span>
+              </header>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Paragraph size="sm" muted className="text-secondary text-xs">Solid</Paragraph>
+                  <div className="flex flex-wrap gap-2">
+                    <Label severity="neutral" variant="solid">Neutral</Label>
+                    <Label severity="info" variant="solid">Info</Label>
+                    <Label severity="success" variant="solid">Success</Label>
+                    <Label severity="warning" variant="solid">Warning</Label>
+                    <Label severity="danger" variant="solid">Danger</Label>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Paragraph size="sm" muted className="text-secondary text-xs">Soft</Paragraph>
+                  <div className="flex flex-wrap gap-2">
+                    <Label severity="neutral" variant="soft">Neutral</Label>
+                    <Label severity="info" variant="soft">Info</Label>
+                    <Label severity="success" variant="soft">Success</Label>
+                    <Label severity="warning" variant="soft">Warning</Label>
+                    <Label severity="danger" variant="soft">Danger</Label>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Paragraph size="sm" muted className="text-secondary text-xs">Outline</Paragraph>
+                  <div className="flex flex-wrap gap-2">
+                    <Label severity="neutral" variant="outline">Neutral</Label>
+                    <Label severity="info" variant="outline">Info</Label>
+                    <Label severity="success" variant="outline">Success</Label>
+                    <Label severity="warning" variant="outline">Warning</Label>
+                    <Label severity="danger" variant="outline">Danger</Label>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Paragraph size="sm" muted className="text-secondary text-xs">Ghost & Pill</Paragraph>
+                  <div className="flex flex-wrap gap-2">
+                    <Label severity="info" variant="ghost">Info</Label>
+                    <Label severity="success" variant="ghost">Success</Label>
+                    <Label severity="warning" variant="ghost" pill>Warning</Label>
+                    <Label severity="danger" variant="ghost" pill>Danger</Label>
+                  </div>
                 </div>
               </div>
             </div>

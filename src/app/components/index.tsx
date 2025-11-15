@@ -1,4 +1,4 @@
-import { Button, Heading, Paragraph } from './atoms';
+import { Button, Heading, Paragraph, Label } from './atoms';
 import { Card, Header, UserProfile } from './organisms';
 import { ThemeProvider, useTheme } from './providers';
 import { WithAuth } from './services';
@@ -10,6 +10,7 @@ export {
     Card,
     GridLayout,
     Header,
+    Label,
     Paragraph,
     ThemeProvider,
     UserProfile,
