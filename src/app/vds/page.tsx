@@ -75,7 +75,7 @@ export default function VDSPage() {
               <div className="grid gap-8">
                 {/* Headings */}
                 <div className="space-y-3">
-                  <h1 className="font-serif text-3xl md:text-4xl">Heading One – Discover New Worlds</h1>
+                  <p className="font-serif text-3xl md:text-4xl">Heading One – Discover New Worlds</p>
                   <h2 className="font-serif text-2xl md:text-3xl">Heading Two – Curated Collections</h2>
                   <h3 className="font-serif text-xl md:text-2xl">Heading Three – Author Spotlights</h3>
                   <h4 className="font-serif text-lg">Heading Four – Weekly Picks</h4>
