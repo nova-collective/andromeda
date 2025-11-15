@@ -11,7 +11,37 @@ export default {
   ],
   theme: {
     extend: {
+      /**
+       * Spacing tokens for consistent layout rhythm across the design system
+       */
+      /**
+       * Spacing tokens for consistent layout rhythm across the design system
+       * section: vertical spacing between major sections
+       * gutter: default horizontal padding for containers/cards
+       * component: internal padding standard for interactive components
+       */
+      spacing: {
+        section: '4rem',
+        gutter: '1.5rem',
+        component: '0.75rem',
+      },
+      /**
+       * Container configuration for centered content widths
+       */
+      container: {
+        center: true,
+        padding: '1rem',
+        screens: {
+          '2xl': '72rem',
+        },
+      },
       colors: {
+        /** Semantic aliases mapped to CSS variables */
+        surface: 'var(--bg-primary)',
+        surfaceAlt: 'var(--bg-secondary)',
+        textBase: 'var(--text-primary)',
+        textMuted: 'var(--text-secondary)',
+        border: 'var(--border-color)',
         primary: {
           50: '#f0f9ff',
           100: '#e0f2fe',
@@ -91,20 +121,37 @@ export default {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         serif: ['Merriweather', 'Georgia', 'serif'],
       },
+      /**
+       * Additional typography tuning
+       */
+      letterSpacing: {
+        tighter: '-0.01em',
+        wide: '0.04em',
+        wider: '0.08em',
+      },
+      lineHeight: {
+        tight: '1.15',
+        snug: '1.25',
+      },
       borderRadius: {
         '2xl': '1rem',
         '3xl': '1.5rem',
+        pill: '9999px',
       },
       boxShadow: {
         'card': '0 0 0 1px rgba(0,0,0,.05), 0 4px 8px rgba(0,0,0,.1)',
         'card-hover': '0 0 0 1px rgba(0,0,0,.05), 0 8px 16px rgba(0,0,0,.15)',
         'dark-card': '0 0 0 1px rgba(255,255,255,.05), 0 4px 8px rgba(0,0,0,.3)',
         'dark-card-hover': '0 0 0 1px rgba(255,255,255,.08), 0 8px 16px rgba(0,0,0,.4)',
+        focus: '0 0 0 2px var(--text-primary) inset',
+        elevated: '0 6px 20px -2px rgba(0,0,0,0.18)',
       },
       animation: {
         'fade-in': 'fadeIn 0.3s ease-in-out',
         'slide-up': 'slideUp 0.3s ease-out',
         'scale-in': 'scaleIn 0.2s ease-out',
+        shimmer: 'shimmer 2s linear infinite',
+        pulseSoft: 'pulseSoft 3s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -119,6 +166,36 @@ export default {
           '0%': { transform: 'scale(0.95)', opacity: '0' },
           '100%': { transform: 'scale(1)', opacity: '1' },
         },
+        shimmer: {
+          '0%': { backgroundPosition: '-1000px 0' },
+          '100%': { backgroundPosition: '1000px 0' },
+        },
+        pulseSoft: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '.4' },
+        },
+      },
+      /**
+       * Timing & easing utilities for consistent micro-interactions
+       */
+      transitionTimingFunction: {
+        soft: 'cubic-bezier(0.4,0,0.2,1)',
+        emphasized: 'cubic-bezier(.2,.8,.2,1)',
+        bounceSoft: 'cubic-bezier(.34,1.56,.64,1)',
+      },
+      transitionDuration: {
+        fast: '120ms',
+        normal: '200ms',
+        slow: '320ms',
+      },
+      /**
+       * Layering helpers for consistent z-index usage
+       */
+      zIndex: {
+        header: '50',
+        overlay: '60',
+        modal: '70',
+        popover: '80',
       },
     },
   },
