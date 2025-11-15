@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Wallet, ArrowRight, Heart } from 'lucide-react';
 
-import { Button, Header, Card } from '@/app/components';
+import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link } from '@/app/components';
 
 /**
  * Visual Design System Page
@@ -17,137 +17,226 @@ export default function VDSPage() {
         <div className="mx-auto max-w-6xl px-6 pb-24">
           {/* Intro */}
           <section className="text-center mb-16 space-y-3">
-            <h1 className="text-4xl md:text-5xl font-bold text-primary tracking-tight">Visual Design System</h1>
-            <p className="text-secondary text-lg max-w-3xl mx-auto leading-relaxed">
+            <Heading level={1} align="center" className="text-4xl md:text-5xl font-bold text-primary tracking-tight">Visual Design System</Heading>
+            <Paragraph size="lg" align="center" className="text-secondary max-w-3xl mx-auto leading-relaxed">
               A living reference for Andromeda’s visual language: components, states, and typography. Keep interfaces
               consistent, accessible, and theme-aware.
-            </p>
+            </Paragraph>
           </section>
-
-          {/* Two-column layout for components + typography */}
-          <section className="grid gap-10 lg:grid-cols-2">
-            {/* Buttons Panel */}
-            <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-8 shadow-card">
-              <header className="flex items-center justify-between">
-                <h2 className="text-lg font-serif font-semibold text-primary">Buttons</h2>
-                <span className="text-xs uppercase tracking-wider text-secondary">Component</span>
-              </header>
-
-              {/* Core variants grouped */}
-              <div className="space-y-6">
-                <div className="flex flex-wrap gap-3">
-                  <Button variant="primary" size="sm">Primary</Button>
-                  <Button variant="secondary" size="sm">Secondary</Button>
-                  <Button variant="outline" size="sm">Outline</Button>
-                  <Button variant="ghost" size="sm">Ghost</Button>
-                  <Button variant="danger" size="sm">Danger</Button>
-                  <Button variant="gradient" size="sm">Gradient</Button>
-                </div>
-
-                {/* Icon examples */}
-                <div className="space-y-2">
-                  <p className="text-xs text-secondary">Icons</p>
-                  <div className="flex flex-wrap gap-3">
-                    <Button variant="primary" leftIcon={<Heart size={16} />}>Like</Button>
-                    <Button variant="secondary" rightIcon={<ArrowRight size={16} />}>Next</Button>
-                    <Button variant="gradient" leftIcon={<Wallet size={16} />}>Connect</Button>
+          {/* Atoms Section */}
+          <section className="space-y-6 mb-12">
+            <Heading level={2} className="text-xl font-semibold text-primary">Atoms</Heading>
+            <Paragraph muted className="text-secondary max-w-3xl">Smallest building blocks such as: typography, buttons, labels, icons.</Paragraph>
+            <div className="grid gap-10 lg:grid-cols-2">
+              {/* Typography Panel */}
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-8 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold text-primary">Typography</Heading>
+                </header>
+                <div className="grid gap-8">
+                  {/* Headings */}
+                  <div className="space-y-3">
+                    <Heading level={1}>Heading One – Discover New Worlds</Heading>
+                    <Heading level={2}>Heading Two – Curated Collections</Heading>
+                    <Heading level={3}>Heading Three – Author Spotlights</Heading>
+                    <Heading level={4}>Heading Four – Weekly Picks</Heading>
+                    <Heading level={5}>Heading Five – Reading Lists</Heading>
+                    <Heading level={6}>Heading Six – Footnotes</Heading>
                   </div>
-                </div>
-
-                {/* States */}
-                <div className="space-y-2">
-                  <p className="text-xs text-secondary">States</p>
-                  <div className="flex flex-wrap gap-3">
-                    <Button variant="primary">Normal</Button>
-                    <Button variant="primary" disabled>Disabled</Button>
-                    <Button variant="primary" loading>Loading</Button>
+                  {/* Paragraph Samples */}
+                  <div className="space-y-4 font-sans text-secondary leading-relaxed">
+                    <Paragraph>
+                      Andromeda is a decentralized bookstore where every title is a tokenized asset. Explore limited
+                      editions, unlock exclusive author content, and build a collection that travels with you across the
+                      Web3 universe.
+                    </Paragraph>
+                    <Paragraph>
+                      Fonts: Headings use <span className="font-serif text-primary">Merriweather (serif)</span>. Body text uses 
+                      <span className="font-sans text-primary"> Inter (sans-serif)</span> for clean, readable UI.
+                    </Paragraph>
+                    <Paragraph>
+                      This pairing balances immersive storytelling with accessible interface patterns—ideal for
+                      discovery and long-form reading.
+                    </Paragraph>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Typography Panel */}
-            <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-8 shadow-card">
-              <header className="flex items-center justify-between">
-                <h2 className="text-lg font-serif font-semibold text-primary">Typography</h2>
-                <span className="text-xs uppercase tracking-wider text-secondary">Foundations</span>
-              </header>
-              <div className="grid gap-8">
-                {/* Headings */}
-                <div className="space-y-3">
-                  <p className="font-serif text-3xl md:text-4xl">Heading One – Discover New Worlds</p>
-                  <h2 className="font-serif text-2xl md:text-3xl">Heading Two – Curated Collections</h2>
-                  <h3 className="font-serif text-xl md:text-2xl">Heading Three – Author Spotlights</h3>
-                  <h4 className="font-serif text-lg">Heading Four – Weekly Picks</h4>
-                  <h5 className="font-serif text-base">Heading Five – Reading Lists</h5>
-                  <h6 className="font-serif text-sm tracking-wide uppercase">Heading Six – Footnotes</h6>
+              {/* Links Panel */}
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold text-primary">Links</Heading>
+                </header>
+                <div className="space-y-4">
+                  <Paragraph size="sm" muted className="text-secondary">Inline links with underline behavior and theme-aware color.</Paragraph>
+                  <Paragraph>
+                    Browse our <Link href="#">catalog</Link> or read <Link href="#" underline="always">the docs</Link>.
+                  </Paragraph>
+                  <Paragraph>
+                    Subtle tone: <Link href="#" muted>muted link</Link>
+                  </Paragraph>
+                  <Paragraph>
+                    External: <Link href="https://example.com">example.com</Link>
+                  </Paragraph>
                 </div>
-                {/* Paragraph Samples */}
-                <div className="space-y-4 font-sans text-secondary leading-relaxed">
-                  <p>
-                    Andromeda is a decentralized bookstore where every title is a tokenized asset. Explore limited
-                    editions, unlock exclusive author content, and build a collection that travels with you across the
-                    Web3 universe.
-                  </p>
-                  <p>
-                    Fonts: Headings use <span className="font-serif text-primary">Merriweather (serif)</span>. Body text uses
-                    <span className="font-sans text-primary"> Inter (sans-serif)</span> for clean, readable UI.
-                  </p>
-                  <p>
-                    This pairing balances immersive storytelling with accessible interface patterns—ideal for
-                    discovery and long-form reading.
-                  </p>
+              </div>
+
+              {/* Buttons Panel */}
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-8 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold text-primary">Buttons</Heading>
+                </header>
+
+                {/* Core variants grouped */}
+                <div className="space-y-6">
+                  <div className="flex flex-wrap gap-3">
+                    <Button variant="primary" size="sm">Primary</Button>
+                    <Button variant="secondary" size="sm">Secondary</Button>
+                    <Button variant="outline" size="sm">Outline</Button>
+                    <Button variant="ghost" size="sm">Ghost</Button>
+                    <Button variant="danger" size="sm">Danger</Button>
+                    <Button variant="gradient" size="sm">Gradient</Button>
+                  </div>
+
+                  {/* Icon examples */}
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Icons</Paragraph>
+                    <div className="flex flex-wrap gap-3">
+                      <Button variant="primary" leftIcon={<Heart size={16} />}>Like</Button>
+                      <Button variant="secondary" rightIcon={<ArrowRight size={16} />}>Next</Button>
+                      <Button variant="gradient" leftIcon={<Wallet size={16} />}>Connect</Button>
+                    </div>
+                  </div>
+
+                  {/* States */}
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">States</Paragraph>
+                    <div className="flex flex-wrap gap-3">
+                      <Button variant="primary">Normal</Button>
+                      <Button variant="primary" disabled>Disabled</Button>
+                      <Button variant="primary" loading>Loading</Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Labels Panel */}
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card lg:col-span-2">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold text-primary">Labels</Heading>
+                </header>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Solid</Paragraph>
+                    <div className="flex flex-wrap gap-2">
+                      <Label severity="neutral" variant="solid">Neutral</Label>
+                      <Label severity="info" variant="solid">Info</Label>
+                      <Label severity="success" variant="solid">Success</Label>
+                      <Label severity="warning" variant="solid">Warning</Label>
+                      <Label severity="danger" variant="solid">Danger</Label>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Soft</Paragraph>
+                    <div className="flex flex-wrap gap-2">
+                      <Label severity="neutral" variant="soft">Neutral</Label>
+                      <Label severity="info" variant="soft">Info</Label>
+                      <Label severity="success" variant="soft">Success</Label>
+                      <Label severity="warning" variant="soft">Warning</Label>
+                      <Label severity="danger" variant="soft">Danger</Label>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Outline</Paragraph>
+                    <div className="flex flex-wrap gap-2">
+                      <Label severity="neutral" variant="outline">Neutral</Label>
+                      <Label severity="info" variant="outline">Info</Label>
+                      <Label severity="success" variant="outline">Success</Label>
+                      <Label severity="warning" variant="outline">Warning</Label>
+                      <Label severity="danger" variant="outline">Danger</Label>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Ghost & Pill</Paragraph>
+                    <div className="flex flex-wrap gap-2">
+                      <Label severity="info" variant="ghost">Info</Label>
+                      <Label severity="success" variant="ghost">Success</Label>
+                      <Label severity="warning" variant="ghost" pill>Warning</Label>
+                      <Label severity="danger" variant="ghost" pill>Danger</Label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Captions Panel */}
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold text-primary">Captions</Heading>
+                </header>
+                <div className="space-y-4">
+                  <Caption className="text-primary" size="xs">Tiny caption size (xs)</Caption>
+                  <Caption className="text-primary" align="center">Centered caption</Caption>
+                  <Caption className="text-primary" align="right" muted={false}>Right-aligned, not muted</Caption>
+                  <figure className="space-y-2">
+                    {/* Example figure/figcaption pairing */}
+                    <div className="w-full h-32 bg-[color:var(--border)] rounded-lg" />
+                    <Caption className="text-primary" as="figcaption" align="center">Figure 1 – Placeholder image with figcaption</Caption>
+                  </figure>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* Cards Showcase */}
-          <section className="rounded-2xl bg-primary border border-color p-6 shadow-card">
-            <header className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-serif font-semibold text-primary">Cards</h2>
-              <span className="text-xs uppercase tracking-wider text-secondary">Component</span>
-            </header>
-            <div className="space-y-8">
-              <p className="text-secondary text-sm leading-relaxed max-w-3xl">
-                Cards display NFT or book items with image, collection, pricing and interaction affordances. They support
-                hover elevation, like toggling, and optional previous sale price. Below are common usage patterns.
-              </p>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                <Card
-                  image="/placeholder-1.jpg"
-                  title="Cosmic Explorer #1234"
-                  price="2.5 ETH"
-                  lastPrice="2.1 ETH"
-                  collection="Cosmic Collection"
-                  likes={142}
-                  href="#"
-                />
-                <Card
-                  image="/placeholder-1.jpg"
-                  title="Nebula Chronicle #77"
-                  price="0.85 ETH"
-                  collection="Nebula Series"
-                  likes={12}
-                  href="#"
-                />
-                <Card
-                  image="/placeholder-1.jpg"
-                  title="Galactic Archive Vol. 3"
-                  price="5.0 ETH"
-                  lastPrice="4.4 ETH"
-                  likes={0}
-                  href="#"
-                />
-              </div>
-              <div className="space-y-4">
-                <p className="text-xs text-secondary">State Notes</p>
-                <ul className="list-disc pl-5 space-y-1 text-secondary text-sm">
-                  <li><span className="text-primary font-medium">Likes</span> increment locally; initial count provided via props.</li>
-                  <li><span className="text-primary font-medium">Hover</span> scales image and reveals action buttons (like, more).</li>
-                  <li><span className="text-primary font-medium">Focus</span> ring applied when card receives keyboard focus.</li>
-                  <li><span className="text-primary font-medium">Last Sale</span> appears only when <code className="font-mono text-xs">lastPrice</code> is provided.</li>
-                </ul>
+          {/* Molecules Section */}
+          <section className="space-y-6">
+            <Heading level={2} className="text-xl font-semibold text-primary">Molecules</Heading>
+            <Paragraph muted className="text-secondary max-w-3xl">Compound building blocks composed of multiple atoms.</Paragraph>
+            <div className="rounded-2xl bg-primary border border-color p-6 shadow-card">
+              <header className="flex items-center justify-between mb-6">
+                <Heading level={2} className="text-lg font-serif font-semibold text-primary">Cards</Heading>
+              </header>
+              <div className="space-y-8">
+                {/* Card description */}
+                <Paragraph size="sm" muted className="text-secondary leading-relaxed max-w-3xl">
+                  Cards display NFT or book items with image, collection, pricing and interaction affordances. They support
+                  hover elevation, like toggling, and optional previous sale price. Below are common usage patterns.
+                </Paragraph>
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  <Card
+                    image="/placeholder-1.jpg"
+                    title="Cosmic Explorer #1234"
+                    price="2.5 ETH"
+                    lastPrice="2.1 ETH"
+                    collection="Cosmic Collection"
+                    likes={142}
+                    href="#"
+                  />
+                  <Card
+                    image="/placeholder-1.jpg"
+                    title="Nebula Chronicle #77"
+                    price="0.85 ETH"
+                    collection="Nebula Series"
+                    likes={12}
+                    href="#"
+                  />
+                  <Card
+                    image="/placeholder-1.jpg"
+                    title="Galactic Archive Vol. 3"
+                    price="5.0 ETH"
+                    lastPrice="4.4 ETH"
+                    likes={0}
+                    href="#"
+                  />
+                </div>
+                <div className="space-y-4">
+                  <Paragraph size="sm" muted className="text-secondary text-xs">State Notes</Paragraph>
+                  <ul className="list-disc pl-5 space-y-1 text-secondary text-sm">
+                    <li><span className="text-primary font-medium">Likes</span> increment locally; initial count provided via props.</li>
+                    <li><span className="text-primary font-medium">Hover</span> scales image and reveals action buttons (like, more).</li>
+                    <li><span className="text-primary font-medium">Focus</span> ring applied when card receives keyboard focus.</li>
+                    <li><span className="text-primary font-medium">Last Sale</span> appears only when <code className="font-mono text-xs">lastPrice</code> is provided.</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </section>

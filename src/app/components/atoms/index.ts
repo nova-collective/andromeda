@@ -30,3 +30,23 @@
 // Button Atom
 export { Button, default as ButtonDefault } from './Button';
 export type { ButtonProps, ButtonVariant, ButtonSize } from './Button';
+
+// Heading Atom
+export { Heading } from './Heading/Heading';
+export type { HeadingProps, HeadingAlign, HeadingLevel } from './Heading/Heading';
+
+// Paragraph Atom
+export { Paragraph } from './Paragraph/Paragraph';
+export type { ParagraphProps, ParagraphSize, ParagraphAlign } from './Paragraph/Paragraph';
+
+// Label Atom
+export { Label } from './Label/Label';
+export type { LabelProps, LabelSeverity, LabelVariant, LabelSize } from './Label/Label';
+
+// Caption Atom
+export { Caption } from './Caption/Caption';
+export type { CaptionProps, CaptionSize, CaptionAlign, CaptionContrast } from './Caption/Caption';
+
+// Link Atom
+export { Link } from './Link/Link';
+export type { LinkProps, LinkUnderline, LinkContrast, LinkSize } from './Link/Link';
