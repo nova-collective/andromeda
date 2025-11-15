@@ -41,9 +41,9 @@ export default function Home() {
 
         {/* Hero Section */}
         <section className="mb-12 text-center py-16">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-indigo-500 to-purple-500 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+          <h2 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-indigo-500 to-purple-500 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
             Discover, Collect, and Sell
-          </h1>
+          </h2>
           <p className="text-xl text-secondary max-w-2xl mx-auto">
             Explore the world&apos;s leading NFT marketplace
           </p>
