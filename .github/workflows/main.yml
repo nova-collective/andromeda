@@ -57,6 +57,12 @@ jobs:
         token: ${{ secrets.CODECOV_TOKEN }}
         slug: nova-collective/andromeda
     
+    - name: Configure Git
+      if: github.event.pull_request.base.ref == 'main'
+      run: |
+        git config user.email "nova.web3.collective@gmail.com"
+        git config user.name "Nova Collective"
+    
     - name: Tag version
       if: github.event.pull_request.base.ref == 'main'
       run: node ci --function tagRelease
