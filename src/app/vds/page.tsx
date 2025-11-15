@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Wallet, ArrowRight, Heart } from 'lucide-react';
 
-import { Button, Header, Card } from '@/app/components';
+import { Button, Header, Card, Heading } from '@/app/components';
 
 /**
  * Visual Design System Page
@@ -17,7 +17,7 @@ export default function VDSPage() {
         <div className="mx-auto max-w-6xl px-6 pb-24">
           {/* Intro */}
           <section className="text-center mb-16 space-y-3">
-            <h1 className="text-4xl md:text-5xl font-bold text-primary tracking-tight">Visual Design System</h1>
+            <Heading level={1} align="center" className="text-4xl md:text-5xl font-bold text-primary tracking-tight">Visual Design System</Heading>
             <p className="text-secondary text-lg max-w-3xl mx-auto leading-relaxed">
               A living reference for Andromeda’s visual language: components, states, and typography. Keep interfaces
               consistent, accessible, and theme-aware.
@@ -29,7 +29,7 @@ export default function VDSPage() {
             {/* Buttons Panel */}
             <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-8 shadow-card">
               <header className="flex items-center justify-between">
-                <h2 className="text-lg font-serif font-semibold text-primary">Buttons</h2>
+                <Heading level={2} className="text-lg font-serif font-semibold text-primary">Buttons</Heading>
                 <span className="text-xs uppercase tracking-wider text-secondary">Component</span>
               </header>
 
@@ -69,18 +69,18 @@ export default function VDSPage() {
             {/* Typography Panel */}
             <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-8 shadow-card">
               <header className="flex items-center justify-between">
-                <h2 className="text-lg font-serif font-semibold text-primary">Typography</h2>
+                <Heading level={2} className="text-lg font-serif font-semibold text-primary">Typography</Heading>
                 <span className="text-xs uppercase tracking-wider text-secondary">Foundations</span>
               </header>
               <div className="grid gap-8">
                 {/* Headings */}
                 <div className="space-y-3">
-                  <h1 className="font-serif text-3xl md:text-4xl">Heading One – Discover New Worlds</h1>
-                  <h2 className="font-serif text-2xl md:text-3xl">Heading Two – Curated Collections</h2>
-                  <h3 className="font-serif text-xl md:text-2xl">Heading Three – Author Spotlights</h3>
-                  <h4 className="font-serif text-lg">Heading Four – Weekly Picks</h4>
-                  <h5 className="font-serif text-base">Heading Five – Reading Lists</h5>
-                  <h6 className="font-serif text-sm tracking-wide uppercase">Heading Six – Footnotes</h6>
+                  <Heading level={1}>Heading One – Discover New Worlds</Heading>
+                  <Heading level={2}>Heading Two – Curated Collections</Heading>
+                  <Heading level={3}>Heading Three – Author Spotlights</Heading>
+                  <Heading level={4}>Heading Four – Weekly Picks</Heading>
+                  <Heading level={5}>Heading Five – Reading Lists</Heading>
+                  <Heading level={6}>Heading Six – Footnotes</Heading>
                 </div>
                 {/* Paragraph Samples */}
                 <div className="space-y-4 font-sans text-secondary leading-relaxed">
@@ -105,7 +105,7 @@ export default function VDSPage() {
           {/* Cards Showcase */}
           <section className="rounded-2xl bg-primary border border-color p-6 shadow-card">
             <header className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-serif font-semibold text-primary">Cards</h2>
+              <Heading level={2} className="text-lg font-serif font-semibold text-primary">Cards</Heading>
               <span className="text-xs uppercase tracking-wider text-secondary">Component</span>
             </header>
             <div className="space-y-8">

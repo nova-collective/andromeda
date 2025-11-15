@@ -30,3 +30,7 @@
 // Button Atom
 export { Button, default as ButtonDefault } from './Button';
 export type { ButtonProps, ButtonVariant, ButtonSize } from './Button';
+
+// Heading Atom
+export { Heading } from './Heading/Heading';
+export type { HeadingProps, HeadingAlign, HeadingLevel } from './Heading/Heading';

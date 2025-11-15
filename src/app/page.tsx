@@ -4,6 +4,7 @@ import Image from 'next/image';
 
 import { 
   Header,
+  Heading,
 } from '@/app/components';
 
 
@@ -19,9 +20,9 @@ export default function Home() {
           <div className="inline-block bg-yellow-500 text-yellow-900 dark:bg-yellow-600 dark:text-yellow-50 px-6 py-3 rounded-full font-semibold text-lg mb-8 animate-pulse">
             🚧 coming soon... 🚧
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold text-primary mb-4 flex items-center justify-center gap-3">
-            <span>Welcome to Andromeda</span>
-          </h1>
+          <Heading level={1} align="center" className="font-bold text-primary mb-4 flex items-center justify-center gap-3">
+            Welcome to Andromeda
+          </Heading>
           <p className="text-xl text-secondary max-w-2xl mx-auto mb-8">
             A Web3 bookstore, from authors to readers
           </p>
@@ -41,9 +42,9 @@ export default function Home() {
 
         {/* Hero Section */}
         <section className="mb-12 text-center py-16">
-          <h2 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-indigo-500 to-purple-500 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+          <Heading level={1} align="center" className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-indigo-500 to-purple-500 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
             Discover, Collect, and Sell
-          </h2>
+          </Heading>
           <p className="text-xl text-secondary max-w-2xl mx-auto">
             Explore the world&apos;s leading NFT marketplace
           </p>
