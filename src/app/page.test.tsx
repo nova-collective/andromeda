@@ -85,4 +85,74 @@ describe('Home page (updated layout)', () => {
 		const h1Elements = screen.getAllByRole('heading', { level: 1 });
 		expect(h1Elements.length).toBeGreaterThanOrEqual(1);
 	});
+
+	it('renders coming soon banner', () => {
+		render(<Home />);
+
+		expect(screen.getByText(/coming soon/i)).toBeInTheDocument();
+		expect(screen.getByText(/coming soon/i)).toHaveClass('animate-pulse');
+	});
+
+	it('renders work in progress image', () => {
+		render(<Home />);
+
+		const wipImage = screen.getByAltText('Work in Progress');
+		expect(wipImage).toBeInTheDocument();
+		expect(wipImage).toHaveAttribute('src', '/assets/wip.png');
+	});
+
+	it('renders Andromeda logo', () => {
+		render(<Home />);
+
+		const logo = screen.getByAltText('Andromeda');
+		expect(logo).toBeInTheDocument();
+		expect(logo).toHaveAttribute('src', '/assets/andromeda-logo.png');
+	});
+
+	it('displays test area section', () => {
+		render(<Home />);
+
+		expect(screen.getByText('🧪 Test Area')).toBeInTheDocument();
+		expect(screen.getByText('Testing db connection')).toBeInTheDocument();
+	});
+
+	it('renders hero section with proper headings', () => {
+		render(<Home />);
+
+		expect(screen.getByText('Discover, Collect, and Sell')).toBeInTheDocument();
+		expect(screen.getByText("Explore the world's leading NFT marketplace")).toBeInTheDocument();
+	});
+
+	it('renders trending items section', () => {
+		render(<Home />);
+
+		expect(screen.getByText('Trending Items')).toBeInTheDocument();
+	});
+
+	it('renders footer with copyright', () => {
+		render(<Home />);
+
+		const currentYear = new Date().getFullYear();
+		expect(screen.getByText(new RegExp(`${currentYear}.*Andromeda`))).toBeInTheDocument();
+		expect(screen.getByText(/building the future of reading, one block at a time/i)).toBeInTheDocument();
+	});
+
+	it('applies correct background gradient classes', () => {
+		const { container } = render(<Home />);
+
+		const mainDiv = container.querySelector('.bg-gradient-to-br');
+		expect(mainDiv).toBeInTheDocument();
+		expect(mainDiv).toHaveClass('from-gray-900', 'to-gray-800');
+	});
+
+	it('renders with proper semantic HTML structure', () => {
+		render(<Home />);
+
+		// Should have proper heading hierarchy
+		const h1Elements = screen.getAllByRole('heading', { level: 1 });
+		expect(h1Elements.length).toBeGreaterThan(0);
+
+		const h2Elements = screen.getAllByRole('heading', { level: 2 });
+		expect(h2Elements.length).toBeGreaterThan(0);
+	});
 });
