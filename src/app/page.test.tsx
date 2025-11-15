@@ -49,7 +49,7 @@ describe('Home page (updated layout)', () => {
 		expect(screen.getByTestId('mock-header')).toBeInTheDocument();
 		expect(screen.getByRole('heading', { level: 1, name: /welcome to andromeda/i })).toBeInTheDocument();
 		expect(screen.getByText('A Web3 bookstore, from authors to readers')).toBeInTheDocument();
-		expect(screen.getByRole('heading', { level: 1, name: /discover, collect, and sell/i })).toBeInTheDocument();
+		expect(screen.getByRole('heading', { level: 2, name: /discover, collect, and sell/i })).toBeInTheDocument();
 		expect(screen.getByText(/building the future of reading, one block at a time/i)).toBeInTheDocument();
 	});
 
@@ -80,9 +80,9 @@ describe('Home page (updated layout)', () => {
 		expect(mainDiv).toHaveClass('bg-secondary');
 	});
 
-	it('has at least two primary hero h1 headings', () => {
+	it('has at least one primary hero h1 heading', () => {
 		render(<Home />);
 		const h1Elements = screen.getAllByRole('heading', { level: 1 });
-		expect(h1Elements.length).toBeGreaterThanOrEqual(2);
+		expect(h1Elements.length).toBeGreaterThanOrEqual(1);
 	});
 });
