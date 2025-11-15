@@ -13,6 +13,8 @@
   --text-primary: #0f172a;
   --text-secondary: #475569;
   --border-color: #e2e8f0;
+  /* Brand / accent link color (violet for light theme) */
+  --link-color: #7c3aed; /* violet-600 */
 }
 
 .dark {
@@ -21,6 +23,8 @@
   --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;
   --border-color: #334155;
+  /* Dark theme link color (slightly lighter violet for contrast) */
+  --link-color: #a78bfa; /* violet-300 */
 }
 
 .bg-primary { background-color: var(--bg-primary); }
@@ -28,6 +32,7 @@
 .text-primary { color: var(--text-primary); }
 .text-secondary { color: var(--text-secondary); }
 .border-color { border-color: var(--border-color); }
+.text-link { color: var(--link-color); }
 
 @layer base {
   * {

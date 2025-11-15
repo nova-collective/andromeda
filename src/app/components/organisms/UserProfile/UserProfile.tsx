@@ -1,6 +1,8 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 
+import { Paragraph } from '@/app/components';
+
 import { type IUser } from '../../../lib/types';
 
 /**
@@ -101,8 +103,8 @@ export function UserProfile({ walletAddress }: UserProfileProps) {
   return (
     <div className="font-sans">
       <h2 className="font-serif font-bold">User Profile</h2>
-      <p>Wallet: {user.walletAddress}</p>
-      <p>Theme: {user.settings?.theme}</p>
+      <Paragraph>Wallet: {user.walletAddress}</Paragraph>
+      <Paragraph>Theme: {user.settings?.theme}</Paragraph>
       <button onClick={() => void updateUserSettings({ theme: 'dark', notifications: true })}>
         Switch to Dark Mode
       </button>
