@@ -9,7 +9,7 @@
     "typescriptreact"
   ],
   "eslint.format.enable": true,
-   "css.validate": false,
+  "css.validate": false,
   "less.validate": false,
   "scss.validate": false,
   "tailwindCSS.includeLanguages": {
