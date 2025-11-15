@@ -46,3 +46,7 @@ export type { LabelProps, LabelSeverity, LabelVariant, LabelSize } from './Label
 // Caption Atom
 export { Caption } from './Caption/Caption';
 export type { CaptionProps, CaptionSize, CaptionAlign, CaptionContrast } from './Caption/Caption';
+
+// Link Atom
+export { Link } from './Link/Link';
+export type { LinkProps, LinkUnderline, LinkContrast, LinkSize } from './Link/Link';

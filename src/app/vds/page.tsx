@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Wallet, ArrowRight, Heart } from 'lucide-react';
 
-import { Button, Header, Card, Heading, Paragraph, Label, Caption } from '@/app/components';
+import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link } from '@/app/components';
 
 /**
  * Visual Design System Page
@@ -23,7 +23,6 @@ export default function VDSPage() {
               consistent, accessible, and theme-aware.
             </Paragraph>
           </section>
-
           {/* Atoms Section */}
           <section className="space-y-6 mb-12">
             <Heading level={2} className="text-xl font-semibold text-primary">Atoms</Heading>
@@ -52,14 +51,33 @@ export default function VDSPage() {
                       Web3 universe.
                     </Paragraph>
                     <Paragraph>
-                      Fonts: Headings use <span className="font-serif text-primary">Merriweather (serif)</span>. Body text uses
-                      <span className="font-sans text-primary">Inter (sans-serif)</span> for clean, readable UI.
+                      Fonts: Headings use <span className="font-serif text-primary">Merriweather (serif)</span>. Body text uses 
+                      <span className="font-sans text-primary"> Inter (sans-serif)</span> for clean, readable UI.
                     </Paragraph>
                     <Paragraph>
                       This pairing balances immersive storytelling with accessible interface patterns—ideal for
                       discovery and long-form reading.
                     </Paragraph>
                   </div>
+                </div>
+              </div>
+
+              {/* Links Panel */}
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold text-primary">Links</Heading>
+                </header>
+                <div className="space-y-4">
+                  <Paragraph size="sm" muted className="text-secondary">Inline links with underline behavior and theme-aware color.</Paragraph>
+                  <Paragraph>
+                    Browse our <Link href="#">catalog</Link> or read <Link href="#" underline="always">the docs</Link>.
+                  </Paragraph>
+                  <Paragraph>
+                    Subtle tone: <Link href="#" muted>muted link</Link>
+                  </Paragraph>
+                  <Paragraph>
+                    External: <Link href="https://example.com">example.com</Link>
+                  </Paragraph>
                 </div>
               </div>
 
@@ -178,6 +196,7 @@ export default function VDSPage() {
                 <Heading level={2} className="text-lg font-serif font-semibold text-primary">Cards</Heading>
               </header>
               <div className="space-y-8">
+                {/* Card description */}
                 <Paragraph size="sm" muted className="text-secondary leading-relaxed max-w-3xl">
                   Cards display NFT or book items with image, collection, pricing and interaction affordances. They support
                   hover elevation, like toggling, and optional previous sale price. Below are common usage patterns.
