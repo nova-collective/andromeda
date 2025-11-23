@@ -66,27 +66,16 @@ export default function VDSPage() {
             </div>
 
             {/* Links */}
-            <div className="grid gap-8 md:grid-cols-2">
+            <div className="grid gap-8 md:grid-cols-1">
               <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
                 <header className="flex items-center justify-between">
-                  <Heading level={2} className="text-lg font-serif font-semibold">Links primary</Heading>
+                  <Heading level={2} className="text-lg font-serif font-semibold">Links</Heading>
                 </header>
                 <div className="space-y-4">
                   <Paragraph size="sm" muted className="text-secondary">Underline behaviors + external handling.</Paragraph>
                   <Paragraph>Browse <Link href="#">catalog</Link> or <Link href="#" underline="always">docs</Link>.</Paragraph>
                   <Paragraph>Muted: <Link href="#" muted>muted link</Link></Paragraph>
                   <Paragraph>External: <Link href="https://example.com">example.com</Link></Paragraph>
-                </div>
-              </div>
-              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
-                <header className="flex items-center justify-between">
-                  <Heading level={2} className="text-lg font-serif font-semibold" variant="secondary">Links secondary</Heading>
-                </header>
-                <div className="space-y-4">
-                  <Paragraph size="sm" muted className="text-secondary">Underline behaviors + external handling.</Paragraph>
-                  <Paragraph variant="secondary">Browse <Link href="#">catalog</Link> or <Link href="#" underline="always">docs</Link>.</Paragraph>
-                  <Paragraph variant="secondary">Muted: <Link href="#" muted>muted link</Link></Paragraph>
-                  <Paragraph variant="secondary">External: <Link href="https://example.com">example.com</Link></Paragraph>
                 </div>
               </div>
             </div>
