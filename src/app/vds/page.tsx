@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Wallet, ArrowRight, Heart, Search } from 'lucide-react';
 
-import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea } from '@/app/components';
+import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox } from '@/app/components';
 
 /**
  * Visual Design System Page
@@ -195,6 +195,16 @@ export default function VDSPage() {
                 <div className="space-y-4">
                   <Paragraph size="sm" muted className="text-secondary">Text inputs.</Paragraph>
                   <div className="space-y-3">
+                  <div className="space-y-4">
+                    <Paragraph size="sm" muted className="text-secondary">Checkboxes.</Paragraph>
+                    <div className="space-y-3">
+                      <Checkbox label="Accept terms" />
+                      <Checkbox defaultChecked label="Subscribed" />
+                      <Checkbox indeterminate label="Partially selected" />
+                      <Checkbox disabled label="Disabled option" />
+                      <Checkbox invalid label="Invalid choice" />
+                    </div>
+                  </div>
                     <TextInput className="text-primary" placeholder="Search books…" leftIcon={<Search className="text-primary" size={16} />} />
                     <TextInput className="text-primary" size="sm" placeholder="Small size" />
                     <TextInput className="text-primary" size="lg" placeholder="Large size" />

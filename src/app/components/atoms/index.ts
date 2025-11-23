@@ -58,3 +58,7 @@ export type { TextInputProps, TextInputSize } from './TextInput/TextInput';
 // TextArea Atom
 export { TextArea } from './TextArea/TextArea';
 export type { TextAreaProps, TextAreaSize } from './TextArea/TextArea';
+
+// Checkbox Atom
+export { Checkbox } from './Checkbox/Checkbox';
+export type { CheckboxProps, CheckboxSize } from './Checkbox/Checkbox';
