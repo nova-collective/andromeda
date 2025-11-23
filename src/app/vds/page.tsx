@@ -69,13 +69,13 @@ export default function VDSPage() {
                 </header>
                 <div className="space-y-4">
                   <Paragraph size="sm" muted className="text-secondary">Inline links with underline behavior and theme-aware color.</Paragraph>
-                  <Paragraph>
+                  <Paragraph className="text-primary"> 
                     Browse our <Link href="#">catalog</Link> or read <Link href="#" underline="always">the docs</Link>.
                   </Paragraph>
-                  <Paragraph>
+                  <Paragraph className="text-primary">
                     Subtle tone: <Link href="#" muted>muted link</Link>
                   </Paragraph>
-                  <Paragraph>
+                  <Paragraph className="text-primary">
                     External: <Link href="https://example.com">example.com</Link>
                   </Paragraph>
                 </div>
@@ -129,7 +129,7 @@ export default function VDSPage() {
                   <div className="space-y-2">
                     <Paragraph size="sm" muted className="text-secondary text-xs">Solid</Paragraph>
                     <div className="flex flex-wrap gap-2">
-                      <Label severity="neutral" variant="solid">Neutral</Label>
+                      <Label className="text-primary" severity="neutral" variant="solid">Neutral</Label>
                       <Label severity="info" variant="solid">Info</Label>
                       <Label severity="success" variant="solid">Success</Label>
                       <Label severity="warning" variant="solid">Warning</Label>
@@ -139,7 +139,7 @@ export default function VDSPage() {
                   <div className="space-y-2">
                     <Paragraph size="sm" muted className="text-secondary text-xs">Soft</Paragraph>
                     <div className="flex flex-wrap gap-2">
-                      <Label severity="neutral" variant="soft">Neutral</Label>
+                      <Label className="text-primary" severity="neutral" variant="soft">Neutral</Label>
                       <Label severity="info" variant="soft">Info</Label>
                       <Label severity="success" variant="soft">Success</Label>
                       <Label severity="warning" variant="soft">Warning</Label>
@@ -149,7 +149,7 @@ export default function VDSPage() {
                   <div className="space-y-2">
                     <Paragraph size="sm" muted className="text-secondary text-xs">Outline</Paragraph>
                     <div className="flex flex-wrap gap-2">
-                      <Label severity="neutral" variant="outline">Neutral</Label>
+                      <Label className="text-primary" severity="neutral" variant="outline">Neutral</Label>
                       <Label severity="info" variant="outline">Info</Label>
                       <Label severity="success" variant="outline">Success</Label>
                       <Label severity="warning" variant="outline">Warning</Label>
@@ -168,41 +168,45 @@ export default function VDSPage() {
                 </div>
               </div>
 
-              {/* Captions Panel */}
-              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
-                <header className="flex items-center justify-between">
-                  <Heading level={2} className="text-lg font-serif font-semibold text-primary">Captions</Heading>
-                </header>
-                <div className="space-y-4">
-                  <Caption className="text-primary" size="xs">Tiny caption size (xs)</Caption>
-                  <Caption className="text-primary" align="center">Centered caption</Caption>
-                  <Caption className="text-primary" align="right" muted={false}>Right-aligned, not muted</Caption>
-                  <figure className="space-y-2">
-                    {/* Example figure/figcaption pairing */}
-                    <div className="w-full h-32 bg-[color:var(--border)] rounded-lg" />
-                    <Caption className="text-primary" as="figcaption" align="center">Figure 1 – Placeholder image with figcaption</Caption>
-                  </figure>
-                </div>
-              </div>
+            </div>{/* end grid of primary atom panels */}
 
-              {/* Form Panel */}
-              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
-                <header className="flex items-center justify-between">
-                  <Heading level={2} className="text-lg font-serif font-semibold text-primary">Form</Heading>
-                </header>
+            {/* Captions Panel (stacked full width) */}
+            <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+              <header className="flex items-center justify-between">
+                <Heading level={2} className="text-lg font-serif font-semibold text-primary">Captions</Heading>
+              </header>
+              <div className="space-y-4">
+                <Caption className="text-primary" size="xs">Tiny caption size (xs)</Caption>
+                <Caption className="text-primary" align="center">Centered caption</Caption>
+                <Caption className="text-primary" align="right" muted={false}>Right-aligned, not muted</Caption>
+                <figure className="space-y-2">
+                  <div className="w-full h-32 bg-[color:var(--border)] rounded-lg" />
+                  <Caption className="text-primary" as="figcaption" align="center">Figure 1 – Placeholder image with figcaption</Caption>
+                </figure>
+              </div>
+            </div>
+
+            {/* Form Panel (stacked full width) */}
+            <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+              <header className="flex items-center justify-between">
+                <Heading level={2} className="text-lg font-serif font-semibold text-primary">Form</Heading>
+              </header>
+              <div className="space-y-6">
                 <div className="space-y-4">
-                  <Paragraph size="sm" muted className="text-secondary">Text input states and sizes.</Paragraph>
+                  <Paragraph size="sm" muted className="text-secondary">Text inputs.</Paragraph>
                   <div className="space-y-3">
-                      <TextInput className="text-primary" placeholder="Search books…" leftIcon={<Search className="text-primary" size={16} />} />
-                      <TextInput className="text-primary" size="sm" placeholder="Small size" />
-                      <TextInput className="text-primary" size="lg" placeholder="Large size" />
-                      <TextInput className="text-primary" invalid placeholder="Invalid input" />
-                      <TextInput className="text-primary" disabled placeholder="Disabled input" />
+                    <TextInput className="text-primary" placeholder="Search books…" leftIcon={<Search className="text-primary" size={16} />} />
+                    <TextInput className="text-primary" size="sm" placeholder="Small size" />
+                    <TextInput className="text-primary" size="lg" placeholder="Large size" />
+                    <TextInput className="text-primary" invalid placeholder="Invalid input" />
+                    <TextInput className="text-primary" disabled placeholder="Disabled input" />
                   </div>
-                    <Paragraph size="sm" muted className="text-secondary">Text area examples.</Paragraph>
-                    <TextArea className="text-primary" placeholder="Describe your collection…" />
-                    <TextArea className="text-primary" size="sm" placeholder="Short notes" />
-                    <TextArea className="text-primary" size="lg" placeholder="Extended description" showCount maxLength={200} value={"This is a sample readonly description."} readOnly />
+                </div>
+                <div className="space-y-4">
+                  <Paragraph size="sm" muted className="text-secondary">Text areas.</Paragraph>
+                  <TextArea className="text-primary" placeholder="Describe your collection…" />
+                  <TextArea className="text-primary" size="sm" placeholder="Short notes" />
+                  <TextArea className="text-primary" size="lg" placeholder="Extended description" showCount maxLength={200} value={"This is a sample readonly description."} readOnly />
                 </div>
               </div>
             </div>
