@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/vitest';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
@@ -47,7 +47,7 @@ describe('TextArea', () => {
 
   it('updates count on change', () => {
     const Wrapper: React.FC = () => {
-      const [val, setVal] = React.useState('');
+      const [val, setVal] = useState('');
       return <TextArea placeholder="t" showCount value={val} onChange={(e) => setVal(e.target.value)} />;
     };
     render(<Wrapper />);
