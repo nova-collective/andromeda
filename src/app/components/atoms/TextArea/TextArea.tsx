@@ -78,7 +78,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(function 
 				{...rest}
 			/>
 			{showCount ? (
-				<div className="absolute bottom-1 right-2 text-[11px] font-medium text-textMuted text-primary">
+				<div className={`absolute bottom-1 right-2 text-[11px] font-medium text-textMuted text-${variant}`}>
 					{length}
 					{maxLength ? ` / ${maxLength}` : ''}
 				</div>
