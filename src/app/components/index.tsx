@@ -1,4 +1,4 @@
-import { Button, Heading, Paragraph, Label, Caption, Link, TextInput } from './atoms';
+import { Button, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea } from './atoms';
 import { Card, Header, UserProfile } from './organisms';
 import { ThemeProvider, useTheme } from './providers';
 import { WithAuth } from './services';
@@ -7,14 +7,15 @@ import { GridLayout } from './templates';
 export {
     Button,
     Caption,
-    TextInput,
-    Link,
-    Heading,
     Card,
     GridLayout,
     Header,
+    Heading,
     Label,
+    Link,
     Paragraph,
+    TextArea,
+    TextInput,
     ThemeProvider,
     UserProfile,
     useTheme,

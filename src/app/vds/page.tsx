@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Wallet, ArrowRight, Heart, Search } from 'lucide-react';
 
-import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput } from '@/app/components';
+import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea } from '@/app/components';
 
 /**
  * Visual Design System Page
@@ -193,12 +193,16 @@ export default function VDSPage() {
                 <div className="space-y-4">
                   <Paragraph size="sm" muted className="text-secondary">Text input states and sizes.</Paragraph>
                   <div className="space-y-3">
-                    <TextInput className="text-primary" placeholder="Search books…" leftIcon={<Search className="text-primary"  size={16} />} />
-                    <TextInput className="text-primary" size="sm" placeholder="Small size" />
-                    <TextInput className="text-primary" size="lg" placeholder="Large size" />
-                    <TextInput className="text-primary" invalid placeholder="Invalid input" />
-                    <TextInput className="text-primary" disabled placeholder="Disabled input" />
+                      <TextInput className="text-primary" placeholder="Search books…" leftIcon={<Search className="text-primary" size={16} />} />
+                      <TextInput className="text-primary" size="sm" placeholder="Small size" />
+                      <TextInput className="text-primary" size="lg" placeholder="Large size" />
+                      <TextInput className="text-primary" invalid placeholder="Invalid input" />
+                      <TextInput className="text-primary" disabled placeholder="Disabled input" />
                   </div>
+                    <Paragraph size="sm" muted className="text-secondary">Text area examples.</Paragraph>
+                    <TextArea className="text-primary" placeholder="Describe your collection…" />
+                    <TextArea className="text-primary" size="sm" placeholder="Short notes" />
+                    <TextArea className="text-primary" size="lg" placeholder="Extended description" showCount maxLength={200} value={"This is a sample readonly description."} readOnly />
                 </div>
               </div>
             </div>

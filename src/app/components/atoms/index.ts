@@ -54,3 +54,7 @@ export type { LinkProps, LinkUnderline, LinkContrast, LinkSize } from './Link/Li
 // TextInput Atom
 export { TextInput } from './TextInput/TextInput';
 export type { TextInputProps, TextInputSize } from './TextInput/TextInput';
+
+// TextArea Atom
+export { TextArea } from './TextArea/TextArea';
+export type { TextAreaProps, TextAreaSize } from './TextArea/TextArea';
