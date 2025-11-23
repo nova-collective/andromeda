@@ -22,6 +22,8 @@ export type LabelSeverity = 'neutral' | 'info' | 'success' | 'warning' | 'danger
 export type LabelVariant = 'solid' | 'soft' | 'outline' | 'ghost';
 /** Visual size presets (controls padding + font-size) */
 export type LabelSize = 'sm' | 'md' | 'lg';
+/** Label component variants */
+export type LabelTextVariant = 'primary' | 'secondary';
 
 export interface LabelProps extends HTMLAttributes<HTMLSpanElement> {
   /** Visual tone (default: neutral) */
@@ -40,6 +42,8 @@ export interface LabelProps extends HTMLAttributes<HTMLSpanElement> {
   as?: React.ElementType;
   /** Label content */
   children?: React.ReactNode;
+  /** Text variant (default: primary) */
+  textVariant?: LabelTextVariant;
 }
 
 /** Maps size to font sizing and paddings */
@@ -66,13 +70,13 @@ const baseByVariant: Record<LabelVariant, string> = {
  */
 const bySeverityAndVariant: Record<LabelSeverity, Record<LabelVariant, string>> = {
   neutral: {
-    solid: 'bg-surfaceAlt text-textBase border-color',
+    solid: `bg-surfaceAlt text-textBase border-color`,
     soft: 'bg-surface text-textBase border-color/50',
-    outline: 'text-textBase border-color',
+    outline: 'text-textBase border-color text-primary',
     ghost: 'text-textMuted hover:text-textBase',
   },
   info: {
-    solid: 'bg-blue-600 text-white dark:bg-blue-500 dark:text-black border-blue-700/60 dark:border-blue-400/60',
+    solid: 'bg-blue-600 text-white dark:bg-blue-500 dark:text-black border-blue-700/60 dark:border-blue-400/60 text-primary',
     soft: 'bg-blue-600/10 text-blue-700 dark:text-blue-300 border-blue-600/20',
     outline: 'text-blue-700 dark:text-blue-300 border-blue-600',
     ghost: 'text-blue-700 dark:text-blue-300',
@@ -117,6 +121,7 @@ export const Label: React.FC<LabelProps> = ({
   rightIcon,
   as: Component = 'span',
   className = '',
+  textVariant = 'primary',
   children,
   ...rest
 }) => {
@@ -126,7 +131,8 @@ export const Label: React.FC<LabelProps> = ({
     .filter(Boolean)
     .join(' ');
 
-  const classes = `inline-flex items-center gap-1 font-medium ${sizeCls} ${shapeCls} ${colorCls} ${className}`.trim();
+  const textVariantCls = !pill && variant !== 'ghost' ? `text-${textVariant}` : '';
+  const classes = `inline-flex items-center gap-1 font-medium ${textVariantCls} ${sizeCls} ${shapeCls} ${colorCls} ${className}`.trim();
 
   return (
     <Component className={classes} {...rest}>

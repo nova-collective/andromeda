@@ -20,14 +20,18 @@ import React, { type HTMLAttributes } from 'react';
 export type ParagraphSize = 'sm' | 'base' | 'lg' | 'xl';
 /** Horizontal text alignment */
 export type ParagraphAlign = 'left' | 'center' | 'right';
+/** Text color variant */
+export type ParagraphVariant = 'primary' | 'secondary';
 
 export interface ParagraphProps extends HTMLAttributes<HTMLParagraphElement> {
   /** Visual size variant (default: base) */
   size?: ParagraphSize;
-  /** Use `text-textMuted` for secondary text (default: false) */
+  /** Deprecated: prefer `variant="secondary"` */
   muted?: boolean;
   /** Horizontal alignment (default: left) */
   align?: ParagraphAlign;
+  /** Text color variant mapped to `text-${variant}` (default: primary) */
+  variant?: ParagraphVariant;
   /** Underlying element to render (default: 'p') */
   as?: React.ElementType;
   /** Content */
@@ -59,14 +63,17 @@ const alignClassMap: Record<ParagraphAlign, string> = {
  */
 export const Paragraph: React.FC<ParagraphProps> = ({
   size = 'base',
-  muted = false,
   align = 'left',
+  muted = false,
+  variant,
   as: Component = 'p',
   className = '',
   children,
   ...rest
 }) => {
-  const colorClass = muted ? 'text-textMuted' : 'text-textBase';
+  const computedVariant: ParagraphVariant =
+    variant ?? (muted ? 'secondary' : 'primary');
+  const colorClass = `text-${computedVariant}`;
   const sizeClass = sizeClassMap[size];
   const alignClass = alignClassMap[align];
   const classes = `font-sans leading-relaxed ${colorClass} ${sizeClass} ${alignClass} ${className}`.trim();

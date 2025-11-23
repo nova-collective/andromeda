@@ -20,6 +20,8 @@ export type CaptionSize = 'xs' | 'sm';
 export type CaptionAlign = 'left' | 'center' | 'right';
 /** Contrast context for themed backgrounds */
 export type CaptionContrast = 'default' | 'onPrimary';
+/** Caption component variants */
+export type CaptionVariant = 'primary' | 'secondary';
 
 export interface CaptionProps extends HTMLAttributes<HTMLParagraphElement> {
 	/** Visual size variant (default: sm) */
@@ -30,6 +32,8 @@ export interface CaptionProps extends HTMLAttributes<HTMLParagraphElement> {
 	align?: CaptionAlign;
 	/** Contrast context for colored backgrounds (default: 'default') */
 	contrast?: CaptionContrast;
+	/** Text color variant mapped to `text-${variant}` (default: primary) */
+	variant?: CaptionVariant;
 	/** Underlying element to render (default: 'p') */
 	as?: React.ElementType;
 	/** Content */
@@ -64,6 +68,7 @@ export const Caption: React.FC<CaptionProps> = ({
 	contrast = 'default',
 	as: Component = 'p',
 	className = '',
+	variant = 'primary',
 	children,
 	...rest
 }) => {
@@ -78,7 +83,7 @@ export const Caption: React.FC<CaptionProps> = ({
 	const classes = `font-sans leading-relaxed ${colorClass} ${sizeClass} ${alignClass} ${className}`.trim();
 
 	return (
-		<Component className={classes} {...rest}>
+		<Component className={`text-${variant} ${classes}`} {...rest}>
 			{children}
 		</Component>
 	);

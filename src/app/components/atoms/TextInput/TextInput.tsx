@@ -2,6 +2,8 @@ import React, {forwardRef } from 'react';
 
 /** Visual size presets for padding and font sizing */
 export type TextInputSize = 'sm' | 'md' | 'lg';
+/** Input component variants */
+export type InputVariant = 'primary' | 'secondary';
 
 export interface TextInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
 	/** Size preset (default: md) */
@@ -12,6 +14,8 @@ export interface TextInputProps extends Omit<React.InputHTMLAttributes<HTMLInput
 	leftIcon?: React.ReactNode;
 	/** Optional trailing icon node */
 	rightIcon?: React.ReactNode;
+	/** Input variant (default: primary) */
+	variant?: InputVariant;
 }
 
 const sizeBase: Record<TextInputSize, string> = {
@@ -38,7 +42,7 @@ const sizePadding: Record<TextInputSize, { base: string; withLeft: string; withR
  * - Focus: focus:shadow-focus
  */
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(function TextInput(
-	{ size = 'md', invalid = false, disabled = false, leftIcon, rightIcon, className = '', ...rest },
+	{ size = 'md', invalid = false, disabled = false, leftIcon, rightIcon, variant = 'primary', className = '', ...rest },
 	ref,
 ) {
 	const sizeCls = sizeBase[size];
@@ -62,7 +66,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(function T
 	const classes = [baseCls, sizeCls, paddingCls, stateCls, className].filter(Boolean).join(' ');
 
 	return (
-		<div className="relative">
+		<div className={`relative text-${variant}`}>
 			{leftIcon ? (
 				<span aria-hidden className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-textMuted">
 					{leftIcon}

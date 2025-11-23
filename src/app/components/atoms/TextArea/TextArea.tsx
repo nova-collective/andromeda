@@ -3,6 +3,11 @@ import React, {forwardRef} from 'react';
 /** Visual size presets for padding, font size, and min height */
 export type TextAreaSize = 'sm' | 'md' | 'lg';
 
+/**
+ * TextArea component variants
+ */
+export type TextAreaVariant = 'primary' | 'secondary';
+
 export interface TextAreaProps extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'size'> {
 	/** Size preset (default: md) */
 	size?: TextAreaSize;
@@ -12,6 +17,8 @@ export interface TextAreaProps extends Omit<React.TextareaHTMLAttributes<HTMLTex
 	showCount?: boolean;
 	/** Optional max length to display alongside count */
 	maxLength?: number;
+    /** Visual style variant of the textArea */
+    variant?: TextAreaVariant;
 }
 
 const sizeBase: Record<TextAreaSize, string> = {
@@ -39,7 +46,7 @@ const sizePadding: Record<TextAreaSize, string> = {
  * - Focus: focus:shadow-focus
  */
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(function TextArea(
-	{ size = 'md', invalid = false, disabled = false, showCount = false, maxLength, className = '', value, onChange, ...rest },
+	{ size = 'md', invalid = false, disabled = false, showCount = false, maxLength, variant = 'primary', className = '', value, onChange, ...rest },
 	ref,
 ) {
 	const sizeCls = sizeBase[size];
@@ -62,7 +69,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(function 
 		<div className="relative">
 			<textarea
 				ref={ref}
-				className={classes}
+				className={`text-${variant} ${classes}`}
 				disabled={disabled}
 				aria-invalid={invalid || undefined}
 				value={value}

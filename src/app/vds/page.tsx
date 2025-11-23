@@ -17,7 +17,7 @@ export default function VDSPage() {
         <div className="mx-auto max-w-6xl px-6 pb-24">
           {/* Intro */}
           <section className="text-center mb-16 space-y-3">
-            <Heading level={1} align="center" className="text-4xl md:text-5xl font-bold text-primary tracking-tight">Visual Design System</Heading>
+            <Heading level={1} align="center" className="text-4xl md:text-5xl font-bold tracking-tight">Visual Design System</Heading>
             <Paragraph size="lg" align="center" className="text-secondary max-w-3xl mx-auto leading-relaxed">
               A living reference for Andromeda’s visual language: components, states, and typography. Keep interfaces
               consistent, accessible, and theme-aware.
@@ -25,13 +25,13 @@ export default function VDSPage() {
           </section>
           {/* Atoms Section */}
           <section className="space-y-6 mb-12">
-            <Heading level={2} className="text-xl font-semibold text-primary">Atoms</Heading>
+            <Heading level={2} className="text-xl font-semibold">Atoms</Heading>
             <Paragraph muted className="text-secondary max-w-3xl">Smallest building blocks such as: typography, buttons, labels, icons.</Paragraph>
             <div className="grid gap-10 lg:grid-cols-2">
               {/* Typography Panel */}
               <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-8 shadow-card">
                 <header className="flex items-center justify-between">
-                  <Heading level={2} className="text-lg font-serif font-semibold text-primary">Typography</Heading>
+                  <Heading level={2} className="text-lg font-serif font-semibold">Typography</Heading>
                 </header>
                 <div className="grid gap-8">
                   {/* Headings */}
@@ -45,14 +45,14 @@ export default function VDSPage() {
                   </div>
                   {/* Paragraph Samples */}
                   <div className="space-y-4 font-sans text-secondary leading-relaxed">
-                    <Paragraph>
+                    <Paragraph variant="primary">
                       Andromeda is a decentralized bookstore where every title is a tokenized asset. Explore limited
                       editions, unlock exclusive author content, and build a collection that travels with you across the
                       Web3 universe.
                     </Paragraph>
-                    <Paragraph>
-                      Fonts: Headings use <span className="font-serif text-primary">Merriweather (serif)</span>. Body text uses 
-                      <span className="font-sans text-primary"> Inter (sans-serif)</span> for clean, readable UI.
+                    <Paragraph variant="primary">
+                      Fonts: Headings use <span className="font-serif">Merriweather (serif)</span>. Body text uses 
+                      <span className="font-sans"> Inter (sans-serif)</span> for clean, readable UI.
                     </Paragraph>
                     <Paragraph>
                       This pairing balances immersive storytelling with accessible interface patterns—ideal for
@@ -65,17 +65,17 @@ export default function VDSPage() {
               {/* Links Panel */}
               <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
                 <header className="flex items-center justify-between">
-                  <Heading level={2} className="text-lg font-serif font-semibold text-primary">Links</Heading>
+                  <Heading level={2} className="text-lg font-serif font-semibold">Links</Heading>
                 </header>
                 <div className="space-y-4">
                   <Paragraph size="sm" muted className="text-secondary">Inline links with underline behavior and theme-aware color.</Paragraph>
-                  <Paragraph className="text-primary"> 
+                  <Paragraph> 
                     Browse our <Link href="#">catalog</Link> or read <Link href="#" underline="always">the docs</Link>.
                   </Paragraph>
-                  <Paragraph className="text-primary">
+                  <Paragraph>
                     Subtle tone: <Link href="#" muted>muted link</Link>
                   </Paragraph>
-                  <Paragraph className="text-primary">
+                  <Paragraph>
                     External: <Link href="https://example.com">example.com</Link>
                   </Paragraph>
                 </div>
@@ -84,7 +84,7 @@ export default function VDSPage() {
               {/* Buttons Panel */}
               <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-8 shadow-card">
                 <header className="flex items-center justify-between">
-                  <Heading level={2} className="text-lg font-serif font-semibold text-primary">Buttons</Heading>
+                  <Heading level={2} className="text-lg font-serif font-semibold">Buttons</Heading>
                 </header>
 
                 {/* Core variants grouped */}
@@ -123,13 +123,13 @@ export default function VDSPage() {
               {/* Labels Panel */}
               <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card lg:col-span-2">
                 <header className="flex items-center justify-between">
-                  <Heading level={2} className="text-lg font-serif font-semibold text-primary">Labels</Heading>
+                  <Heading level={2} className="text-lg font-serif font-semibold">Labels</Heading>
                 </header>
                 <div className="space-y-4">
                   <div className="space-y-2">
                     <Paragraph size="sm" muted className="text-secondary text-xs">Solid</Paragraph>
                     <div className="flex flex-wrap gap-2">
-                      <Label className="text-primary" severity="neutral" variant="solid">Neutral</Label>
+                      <Label  severity="neutral" variant="solid">Neutral</Label>
                       <Label severity="info" variant="solid">Info</Label>
                       <Label severity="success" variant="solid">Success</Label>
                       <Label severity="warning" variant="solid">Warning</Label>
@@ -139,7 +139,7 @@ export default function VDSPage() {
                   <div className="space-y-2">
                     <Paragraph size="sm" muted className="text-secondary text-xs">Soft</Paragraph>
                     <div className="flex flex-wrap gap-2">
-                      <Label className="text-primary" severity="neutral" variant="soft">Neutral</Label>
+                      <Label severity="neutral" variant="soft">Neutral</Label>
                       <Label severity="info" variant="soft">Info</Label>
                       <Label severity="success" variant="soft">Success</Label>
                       <Label severity="warning" variant="soft">Warning</Label>
@@ -149,7 +149,7 @@ export default function VDSPage() {
                   <div className="space-y-2">
                     <Paragraph size="sm" muted className="text-secondary text-xs">Outline</Paragraph>
                     <div className="flex flex-wrap gap-2">
-                      <Label className="text-primary" severity="neutral" variant="outline">Neutral</Label>
+                      <Label severity="neutral" variant="outline">Neutral</Label>
                       <Label severity="info" variant="outline">Info</Label>
                       <Label severity="success" variant="outline">Success</Label>
                       <Label severity="warning" variant="outline">Warning</Label>
@@ -173,15 +173,15 @@ export default function VDSPage() {
             {/* Captions Panel (stacked full width) */}
             <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
               <header className="flex items-center justify-between">
-                <Heading level={2} className="text-lg font-serif font-semibold text-primary">Captions</Heading>
+                <Heading level={2} className="text-lg font-serif font-semibold">Captions</Heading>
               </header>
               <div className="space-y-4">
-                <Caption className="text-primary" size="xs">Tiny caption size (xs)</Caption>
-                <Caption className="text-primary" align="center">Centered caption</Caption>
-                <Caption className="text-primary" align="right" muted={false}>Right-aligned, not muted</Caption>
+                <Caption size="xs">Tiny caption size (xs)</Caption>
+                <Caption align="center">Centered caption</Caption>
+                <Caption align="right" muted={false}>Right-aligned, not muted</Caption>
                 <figure className="space-y-2">
                   <div className="w-full h-32 bg-[color:var(--border)] rounded-lg" />
-                  <Caption className="text-primary" as="figcaption" align="center">Figure 1 – Placeholder image with figcaption</Caption>
+                  <Caption as="figcaption" align="center">Figure 1 – Placeholder image with figcaption</Caption>
                 </figure>
               </div>
             </div>
@@ -189,7 +189,7 @@ export default function VDSPage() {
             {/* Form Panel (stacked full width) */}
             <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
               <header className="flex items-center justify-between">
-                <Heading level={2} className="text-lg font-serif font-semibold text-primary">Form</Heading>
+                <Heading level={2} className="text-lg font-serif font-semibold">Form</Heading>
               </header>
               <div className="space-y-6">
                 <div className="space-y-4">
@@ -205,18 +205,18 @@ export default function VDSPage() {
                       <Checkbox invalid label="Invalid choice" />
                     </div>
                   </div>
-                    <TextInput className="text-primary" placeholder="Search books…" leftIcon={<Search className="text-primary" size={16} />} />
-                    <TextInput className="text-primary" size="sm" placeholder="Small size" />
-                    <TextInput className="text-primary" size="lg" placeholder="Large size" />
-                    <TextInput className="text-primary" invalid placeholder="Invalid input" />
-                    <TextInput className="text-primary" disabled placeholder="Disabled input" />
+                    <TextInput placeholder="Search books…" leftIcon={<Search className="text-primary" size={16} />} />
+                    <TextInput size="sm" placeholder="Small size" />
+                    <TextInput size="lg" placeholder="Large size" />
+                    <TextInput invalid placeholder="Invalid input" />
+                    <TextInput disabled placeholder="Disabled input" />
                   </div>
                 </div>
                 <div className="space-y-4">
                   <Paragraph size="sm" muted className="text-secondary">Text areas.</Paragraph>
-                  <TextArea className="text-primary" placeholder="Describe your collection…" />
-                  <TextArea className="text-primary" size="sm" placeholder="Short notes" />
-                  <TextArea className="text-primary" size="lg" placeholder="Extended description" showCount maxLength={200} value={"This is a sample readonly description."} readOnly />
+                  <TextArea placeholder="Describe your collection…" />
+                  <TextArea size="sm" placeholder="Short notes" />
+                  <TextArea size="lg" placeholder="Extended description" showCount maxLength={200} value={"This is a sample readonly description."} readOnly />
                 </div>
               </div>
             </div>
@@ -224,11 +224,11 @@ export default function VDSPage() {
 
           {/* Molecules Section */}
           <section className="space-y-6">
-            <Heading level={2} className="text-xl font-semibold text-primary">Molecules</Heading>
+            <Heading level={2} className="text-xl font-semibold">Molecules</Heading>
             <Paragraph muted className="text-secondary max-w-3xl">Compound building blocks composed of multiple atoms.</Paragraph>
             <div className="rounded-2xl bg-primary border border-color p-6 shadow-card">
               <header className="flex items-center justify-between mb-6">
-                <Heading level={2} className="text-lg font-serif font-semibold text-primary">Cards</Heading>
+                <Heading level={2} className="text-lg font-serif font-semibold">Cards</Heading>
               </header>
               <div className="space-y-8">
                 {/* Card description */}
