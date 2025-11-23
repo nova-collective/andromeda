@@ -40,12 +40,12 @@ describe('Visual Design System page', () => {
   it('shows buttons panel and typography panel headings', () => {
     render(<VDSPage />);
     expect(screen.getByRole('heading', { level: 2, name: /buttons/i })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 2, name: /typography/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2, name: /typography primary/i })).toBeInTheDocument();
   });
 
   it('renders cards panel with sample cards', () => {
     render(<VDSPage />);
-    expect(screen.getByRole('heading', { level: 2, name: /cards/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2, name: /cards primary/i })).toBeInTheDocument();
     const cards = screen.getAllByTestId('mock-card');
     expect(cards.length).toBeGreaterThanOrEqual(3);
     expect(cards[0]).toHaveTextContent('Cosmic Explorer');

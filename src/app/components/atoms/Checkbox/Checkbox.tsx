@@ -3,6 +3,8 @@ import React, { useEffect, useRef, forwardRef } from 'react';
 
 /** Size presets controlling checkbox square and label text */
 export type CheckboxSize = 'sm' | 'md' | 'lg';
+/** Visual variants for the checkbox and label */
+export type CheckboxVariant = 'primary' | 'secondary';
 
 export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
 	/** Size preset (default: md) */
@@ -13,6 +15,8 @@ export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputE
 	invalid?: boolean;
 	/** Indeterminate / mixed state */
 	indeterminate?: boolean;
+	/** Visual variant */
+	variant?: CheckboxVariant;
 }
 
 const boxSize: Record<CheckboxSize, string> = {
@@ -33,7 +37,7 @@ const labelSize: Record<CheckboxSize, string> = {
  * Uses semantic tokens (bg-surface, border-color, text-textBase) and accent brand color for checked indicator.
  */
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
-	{ size = 'md', label, className = '', invalid = false, disabled = false, indeterminate = false, ...rest },
+	{ size = 'md', label, className = '', invalid = false, disabled = false, indeterminate = false, variant="primary", ...rest },
 	ref,
 ) {
 	const innerRef = useRef<HTMLInputElement | null>(null);
@@ -67,7 +71,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
 		.join(' ');
 
 	return (
-		<label className={`text-primary mr-2 inline-flex items-start gap-2 ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`.trim()}>
+		<label className={`text-${variant} mr-2 inline-flex items-start gap-2 ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`.trim()}>
 			<span className="relative flex items-center">
 				<input
 					ref={innerRef}
