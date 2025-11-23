@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Wallet, ArrowRight, Heart } from 'lucide-react';
+import { Wallet, ArrowRight, Heart, Search } from 'lucide-react';
 
-import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link } from '@/app/components';
+import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput } from '@/app/components';
 
 /**
  * Visual Design System Page
@@ -182,6 +182,23 @@ export default function VDSPage() {
                     <div className="w-full h-32 bg-[color:var(--border)] rounded-lg" />
                     <Caption className="text-primary" as="figcaption" align="center">Figure 1 – Placeholder image with figcaption</Caption>
                   </figure>
+                </div>
+              </div>
+
+              {/* Form Panel */}
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold text-primary">Form</Heading>
+                </header>
+                <div className="space-y-4">
+                  <Paragraph size="sm" muted className="text-secondary">Text input states and sizes.</Paragraph>
+                  <div className="space-y-3">
+                    <TextInput className="text-primary" placeholder="Search books…" leftIcon={<Search className="text-primary"  size={16} />} />
+                    <TextInput className="text-primary" size="sm" placeholder="Small size" />
+                    <TextInput className="text-primary" size="lg" placeholder="Large size" />
+                    <TextInput className="text-primary" invalid placeholder="Invalid input" />
+                    <TextInput className="text-primary" disabled placeholder="Disabled input" />
+                  </div>
                 </div>
               </div>
             </div>

@@ -50,3 +50,7 @@ export type { CaptionProps, CaptionSize, CaptionAlign, CaptionContrast } from '.
 // Link Atom
 export { Link } from './Link/Link';
 export type { LinkProps, LinkUnderline, LinkContrast, LinkSize } from './Link/Link';
+
+// TextInput Atom
+export { TextInput } from './TextInput/TextInput';
+export type { TextInputProps, TextInputSize } from './TextInput/TextInput';
