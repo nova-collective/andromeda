@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Wallet, ArrowRight, Heart, Search } from 'lucide-react';
 
-import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox } from '@/app/components';
+import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton } from '@/app/components';
 
 export default function VDSPage() {
   return (
@@ -269,6 +269,27 @@ export default function VDSPage() {
                         <Checkbox invalid label="Invalid choice" />
                       </div>
                     </div>
+                    <div className="space-y-4">
+                      <Paragraph size="sm" muted className="text-secondary">Radio buttons.</Paragraph>
+                      <div className="space-y-3">
+                        <div>
+                          <Paragraph size="sm" muted className="text-secondary">Plan</Paragraph>
+                          <div className="space-y-2">
+                            <RadioButton name="plan-primary" value="basic" label="Basic" />
+                            <RadioButton name="plan-primary" value="pro" label="Pro" />
+                            <RadioButton name="plan-primary" value="enterprise" label="Enterprise" />
+                          </div>
+                        </div>
+                        <div>
+                          <Paragraph size="sm" muted className="text-secondary">Preferences</Paragraph>
+                          <div className="space-y-2">
+                            <RadioButton name="pref-primary" value="light" label="Light" />
+                            <RadioButton name="pref-primary" value="dark" label="Dark" />
+                            <RadioButton name="pref-primary" value="system" label="System" disabled />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div className="space-y-4">
                     <Paragraph size="sm" muted className="text-secondary">Text areas.</Paragraph>
@@ -300,6 +321,27 @@ export default function VDSPage() {
                         <Checkbox variant="secondary" indeterminate label="Partially selected" />
                         <Checkbox variant="secondary" disabled label="Disabled option" />
                         <Checkbox variant="secondary" invalid label="Invalid choice" />
+                      </div>
+                    </div>
+                    <div className="space-y-4">
+                      <Paragraph size="sm" muted className="text-secondary">Radio buttons.</Paragraph>
+                      <div className="space-y-3">
+                        <div>
+                          <Paragraph size="sm" muted className="text-secondary">Plan</Paragraph>
+                          <div className="space-y-2">
+                            <RadioButton variant="secondary" name="plan-secondary" value="basic" label="Basic" />
+                            <RadioButton variant="secondary" name="plan-secondary" value="pro" label="Pro" />
+                            <RadioButton variant="secondary" name="plan-secondary" value="enterprise" label="Enterprise" />
+                          </div>
+                        </div>
+                        <div>
+                          <Paragraph size="sm" muted className="text-secondary">Preferences</Paragraph>
+                          <div className="space-y-2">
+                            <RadioButton variant="secondary" name="pref-secondary" value="light" label="Light" />
+                            <RadioButton variant="secondary" name="pref-secondary" value="dark" label="Dark" />
+                            <RadioButton variant="secondary" name="pref-secondary" value="system" label="System" disabled />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
