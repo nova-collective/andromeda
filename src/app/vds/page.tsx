@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Wallet, ArrowRight, Heart, Search } from 'lucide-react';
 
-import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton } from '@/app/components';
+import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown } from '@/app/components';
 
 export default function VDSPage() {
   return (
@@ -270,6 +270,16 @@ export default function VDSPage() {
                       </div>
                     </div>
                     <div className="space-y-4">
+                      <Paragraph size="sm" muted className="text-secondary">Dropdowns.</Paragraph>
+                      <div className="space-y-3">
+                        <Dropdown placeholder="Select plan" options={[{value:'basic',label:'Basic'},{value:'pro',label:'Pro'},{value:'enterprise',label:'Enterprise'}]} />
+                        <Dropdown size="sm" options={[{value:'a',label:'Alpha'},{value:'b',label:'Beta'}]} />
+                        <Dropdown size="lg" options={[{value:'x',label:'Extended'},{value:'y',label:'Yield'}]} />
+                        <Dropdown invalid options={[{value:'error',label:'Error state only'}]} />
+                        <Dropdown disabled options={[{value:'disabled',label:'Disabled state'}]} />
+                      </div>
+                    </div>
+                    <div className="space-y-4">
                       <Paragraph size="sm" muted className="text-secondary">Radio buttons.</Paragraph>
                       <div className="space-y-3">
                         <div>
@@ -321,6 +331,16 @@ export default function VDSPage() {
                         <Checkbox variant="secondary" indeterminate label="Partially selected" />
                         <Checkbox variant="secondary" disabled label="Disabled option" />
                         <Checkbox variant="secondary" invalid label="Invalid choice" />
+                      </div>
+                    </div>
+                    <div className="space-y-4">
+                      <Paragraph size="sm" muted className="text-secondary">Dropdowns.</Paragraph>
+                      <div className="space-y-3">
+                        <Dropdown variant="secondary" placeholder="Select plan" options={[{value:'basic',label:'Basic'},{value:'pro',label:'Pro'},{value:'enterprise',label:'Enterprise'}]} />
+                        <Dropdown variant="secondary" size="sm" options={[{value:'a',label:'Alpha'},{value:'b',label:'Beta'}]} />
+                        <Dropdown variant="secondary" size="lg" options={[{value:'x',label:'Extended'},{value:'y',label:'Yield'}]} />
+                        <Dropdown variant="secondary" invalid options={[{value:'error',label:'Error state only'}]} />
+                        <Dropdown variant="secondary" disabled options={[{value:'disabled',label:'Disabled state'}]} />
                       </div>
                     </div>
                     <div className="space-y-4">

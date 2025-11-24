@@ -66,3 +66,7 @@ export type { CheckboxProps, CheckboxSize } from './Checkbox/Checkbox';
 // RadioButton Atom
 export { RadioButton } from './RadioButton/RadioButton';
 export type { RadioButtonProps, RadioButtonSize } from './RadioButton/RadioButton';
+
+// Dropdown Atom
+export { Dropdown } from './Dropdown/Dropdown';
+export type { DropdownProps, DropdownSize, DropdownVariant, DropdownOption } from './Dropdown/Dropdown';
