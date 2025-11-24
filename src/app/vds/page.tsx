@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Wallet, ArrowRight, Heart, Search } from 'lucide-react';
 
-import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown } from '@/app/components';
+import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle } from '@/app/components';
 
 export default function VDSPage() {
   return (
@@ -280,6 +280,17 @@ export default function VDSPage() {
                       </div>
                     </div>
                     <div className="space-y-4">
+                      <Paragraph size="sm" muted className="text-secondary">Toggles.</Paragraph>
+                      <div className="space-y-3">
+                        <Toggle label="Dark mode" />
+                        <Toggle defaultChecked label="Notifications" />
+                        <Toggle size="sm" label="Compact UI" />
+                        <Toggle size="lg" label="Large display" />
+                        <Toggle disabled label="Beta feature" />
+                        <Toggle invalid label="Require acceptance" />
+                      </div>
+                    </div>
+                    <div className="space-y-4">
                       <Paragraph size="sm" muted className="text-secondary">Radio buttons.</Paragraph>
                       <div className="space-y-3">
                         <div>
@@ -341,6 +352,17 @@ export default function VDSPage() {
                         <Dropdown variant="secondary" size="lg" options={[{value:'x',label:'Extended'},{value:'y',label:'Yield'}]} />
                         <Dropdown variant="secondary" invalid options={[{value:'error',label:'Error state only'}]} />
                         <Dropdown variant="secondary" disabled options={[{value:'disabled',label:'Disabled state'}]} />
+                      </div>
+                    </div>
+                    <div className="space-y-4">
+                      <Paragraph size="sm" muted className="text-secondary">Toggles.</Paragraph>
+                      <div className="space-y-3">
+                        <Toggle variant="secondary" label="Dark mode" />
+                        <Toggle variant="secondary" defaultChecked label="Notifications" />
+                        <Toggle variant="secondary" size="sm" label="Compact UI" />
+                        <Toggle variant="secondary" size="lg" label="Large display" />
+                        <Toggle variant="secondary" disabled label="Beta feature" />
+                        <Toggle variant="secondary" invalid label="Require acceptance" />
                       </div>
                     </div>
                     <div className="space-y-4">

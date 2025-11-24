@@ -70,3 +70,7 @@ export type { RadioButtonProps, RadioButtonSize } from './RadioButton/RadioButto
 // Dropdown Atom
 export { Dropdown } from './Dropdown/Dropdown';
 export type { DropdownProps, DropdownSize, DropdownVariant, DropdownOption } from './Dropdown/Dropdown';
+
+// Toggle Atom
+export { Toggle } from './Toggle/Toggle';
+export type { ToggleProps, ToggleSize, ToggleVariant } from './Toggle/Toggle';

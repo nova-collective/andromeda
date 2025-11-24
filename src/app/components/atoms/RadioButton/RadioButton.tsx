@@ -66,12 +66,12 @@ export const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(functi
 					className={radioClasses}
 					{...rest}
 				/>
-				{/* Inner dot visual when checked */}
+				{/* Inner dot visual when checked (wrapper must be sibling of input for peer-checked to work) */}
 				<span
 					aria-hidden
-					className="pointer-events-none absolute inset-0 m-auto grid place-items-center"
+					className="pointer-events-none absolute inset-0 m-auto grid place-items-center scale-0 peer-checked:scale-100 transition-transform duration-150"
 				>
-					<span className="block rounded-full bg-[color:var(--link-color)] scale-0 peer-checked:scale-100 transition-transform duration-150" style={{ width: '50%', height: '50%' }} />
+					<span className="block rounded-full bg-[color:var(--link-color)]" style={{ width: '50%', height: '50%' }} />
 				</span>
 			</span>
 			{label ? (
