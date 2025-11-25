@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import { Wallet, ArrowRight, Heart, Search } from 'lucide-react';
 
-import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar, ProgressBar, Spinner, Skeleton } from '@/app/components';
+import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar, ProgressBar, Spinner, Skeleton, PriceTag } from '@/app/components';
 
 export default function VDSPage() {
   return (
@@ -415,6 +415,35 @@ function Tabs() {
                     <div className="flex items-center gap-4">
                       <Skeleton showLabel label="Loading profile" />
                       <Skeleton variant="secondary" showLabel label="Loading metadata" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Price Tags */}
+            <div className="grid gap-8 md:grid-cols-1">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Price tags</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Current price display with optional previous value & trend indicator.</Paragraph>
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary">Primary variant</Paragraph>
+                    <div className="flex flex-col gap-2">
+                      <PriceTag value={2.5} currency="ETH" />
+                      <PriceTag value={3} previousValue={2.5} currency="ETH" />
+                      <PriceTag value={1.5} previousValue={2} currency="ETH" />
+                      <PriceTag value={250} currency="USD" size="lg" showLabel />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary">Secondary variant</Paragraph>
+                    <div className="flex flex-col gap-2">
+                      <PriceTag variant="secondary" value={0.85} currency="ETH" />
+                      <PriceTag variant="secondary" value={1.2} previousValue={1.0} currency="ETH" />
+                      <PriceTag variant="secondary" value={0.9} previousValue={1.1} currency="ETH" />
                     </div>
                   </div>
                 </div>

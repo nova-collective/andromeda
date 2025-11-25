@@ -94,3 +94,7 @@ export type { SpinnerProps, SpinnerSize, SpinnerVariant } from './Spinner';
 // Skeleton Atom
 export { Skeleton } from './Skeleton';
 export type { SkeletonProps, SkeletonShape, SkeletonSize, SkeletonVariant } from './Skeleton';
+
+// PriceTag Atom
+export { PriceTag } from './PriceTag';
+export type { PriceTagProps, PriceTagSize, PriceTagVariant } from './PriceTag';
