@@ -101,4 +101,4 @@ export type { PriceTagProps, PriceTagSize, PriceTagVariant } from './PriceTag';
 
 // Rating Atom
 export { Rating } from './Rating';
-export type { RatingProps } from './Rating/Rating';
+export type { RatingProps, RatingSize, RatingVariant } from './Rating';
