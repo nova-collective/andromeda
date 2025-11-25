@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import { Wallet, ArrowRight, Heart, Search } from 'lucide-react';
 
-import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput } from '@/app/components';
+import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar } from '@/app/components';
 
 export default function VDSPage() {
   return (
@@ -293,6 +293,28 @@ function Tabs() {
                     <div className="w-full h-32 bg-[color:var(--border)] rounded-lg" />
                     <Caption variant="secondary" as="figcaption" align="center">Figure placeholder with figcaption</Caption>
                   </figure>
+                </div>
+              </div>
+            </div>
+
+            {/* Avatars */}
+            <div className="grid gap-8 md:grid-cols-1">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Avatars</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">User representation via image or initials fallback.</Paragraph>
+                <div className="flex flex-wrap gap-3 items-center">
+                  <Avatar alt="Alice Doe" />
+                  <Avatar alt="Bob Stone" size="sm" />
+                  <Avatar alt="Carla Green" size="lg" />
+                  <Avatar alt="Dana Fox" initials="DF" />
+                  <Avatar src="/placeholder-1.jpg" alt="Sample User" />
+                  <Avatar variant="secondary" alt="Evan Lund" />
+                  <Avatar variant="secondary" alt="Fiona Hale" size="sm" />
+                  <Avatar variant="secondary" alt="Gina Park" size="lg" />
+                  <Avatar variant="secondary" alt="Henry Ives" initials="HI" />
+                  <Avatar variant="secondary" src="/placeholder-1.jpg" alt="Sample Secondary" />
                 </div>
               </div>
             </div>

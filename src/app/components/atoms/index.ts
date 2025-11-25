@@ -78,3 +78,7 @@ export type { ToggleProps, ToggleSize, ToggleVariant } from './Toggle/Toggle';
 // SearchInput Atom
 export { SearchInput } from './SearchInput';
 export type { SearchInputProps, SearchInputSize, SearchInputVariant } from './SearchInput';
+
+// Avatar Atom
+export { Avatar } from './Avatar';
+export type { AvatarProps, AvatarSize, AvatarVariant } from './Avatar';
