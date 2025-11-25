@@ -27,6 +27,11 @@ const sizeBase: Record<TextAreaSize, string> = {
 	lg: 'text-base py-3 min-h-[10rem]',
 };
 
+const variantClasses: Record<TextAreaVariant, string> = {
+	primary: 'text-primary',
+	secondary: 'text-secondary',
+};
+
 const sizePadding: Record<TextAreaSize, string> = {
 	sm: 'px-3',
 	md: 'px-3.5',
@@ -69,7 +74,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(function 
 		<div className="relative">
 			<textarea
 				ref={ref}
-				className={`text-${variant} ${classes}`}
+				className={`${variantClasses[variant]} ${classes}`}
 				disabled={disabled}
 				aria-invalid={invalid || undefined}
 				value={value}
@@ -78,7 +83,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(function 
 				{...rest}
 			/>
 			{showCount ? (
-				<div className={`absolute bottom-1 right-2 text-[11px] font-medium text-textMuted text-${variant}`}>
+				<div className={`absolute bottom-1 right-2 text-[11px] font-medium text-textMuted ${variantClasses[variant]}`}>
 					{length}
 					{maxLength ? ` / ${maxLength}` : ''}
 				</div>
