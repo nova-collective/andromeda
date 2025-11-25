@@ -56,7 +56,7 @@ export const Dropdown = forwardRef<HTMLSelectElement, DropdownProps>(function Dr
 	const classes = [baseCls, sizeCls, stateCls, className].filter(Boolean).join(' ');
 
 	return (
-		<div className={`relative text-${variant}`}>
+		<div className={`relative ${variant === 'primary' ? 'text-primary' : 'text-secondary'}`}>
 			<select
 				ref={ref}
 				disabled={disabled}
