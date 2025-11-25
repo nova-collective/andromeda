@@ -31,11 +31,11 @@ import { PriceTag } from '@/app/components/atoms/PriceTag';
 ## Props
 | Name            | Type                              | Default      | Description                                |
 | --------------- | --------------------------------- | ------------ | ------------------------------------------ |
-| `value`         | `number                           | string`      | —                                          | Current price value                          |
+| `value`         | `number \| string`                | —            | Current price value                        |
 | `currency`      | `string`                          | `"ETH"`      | Currency or token symbol                   |
-| `previousValue` | `number                           | string`      | —                                          | Previous price; shows trend + strike-through |
-| `size`          | `"sm"                             | "md"         | "lg"`                                      | `"md"`                                       | Font size & spacing scale |
-| `variant`       | `"primary"                        | "secondary"` | `"primary"`                                | Color context                                |
+| `previousValue` | `number \| string`                | —            | Previous price; shows trend + strike-through |
+| `size`          | `"sm" \| "md" \| "lg"`            | `"md"`       | Font size & spacing scale                  |
+| `variant`       | `"primary" \| "secondary"`        | `"primary"`  | Color context                              |
 | `label`         | `string`                          | `"Price"`    | Accessible label (visible if `showLabel`)  |
 | `showLabel`     | `boolean`                         | `false`      | Display label before price visibly         |
 | `format`        | `(v) => string`                   | —            | Custom formatting of value & previousValue |
