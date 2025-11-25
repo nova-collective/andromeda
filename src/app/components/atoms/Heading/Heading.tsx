@@ -19,6 +19,8 @@ import React, { type HTMLAttributes } from 'react';
 export type HeadingAlign = 'left' | 'center' | 'right';
 /** Semantic heading level (controls tag h1..h6 and default sizing) */
 export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
+/** Heading component variants */
+export type variant = 'primary' | 'secondary';
 
 export interface HeadingProps extends HTMLAttributes<HTMLHeadingElement> {
   /** Semantic heading level (1..6). Default: 2 */
@@ -29,6 +31,8 @@ export interface HeadingProps extends HTMLAttributes<HTMLHeadingElement> {
   align?: HeadingAlign;
   /** Heading content */
   children?: React.ReactNode;
+  /** Heading variant */
+  variant?: variant;
 }
 
 /** Maps heading level to responsive size utilities */
@@ -60,6 +64,7 @@ export const Heading: React.FC<HeadingProps> = ({
   level = 2,
   muted = false,
   align = 'left',
+  variant = 'primary',
   className = '',
   children,
   ...rest
@@ -72,7 +77,7 @@ export const Heading: React.FC<HeadingProps> = ({
   const classes = `font-serif ${colorClass} ${sizeClass} ${alignClass} ${className}`.trim();
 
   return (
-    <Tag className={classes} {...rest}>
+    <Tag className={`text-${variant} ${classes}`} {...rest}>
       {children}
     </Tag>
   );

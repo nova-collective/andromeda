@@ -44,4 +44,22 @@ describe('Label', () => {
     const el = screen.getByText('Block');
     expect(el.tagName).toBe('DIV');
   });
+
+  it('applies text variant when not pill and not ghost', () => {
+    render(<Label variant="soft" textVariant="secondary">Tv</Label>);
+    const el = screen.getByText('Tv');
+    expect(el).toHaveClass('text-secondary');
+  });
+
+  it('omits text variant when pill', () => {
+    render(<Label pill variant="soft" textVariant="secondary">NoTvPill</Label>);
+    const el = screen.getByText('NoTvPill');
+    expect(el).not.toHaveClass('text-secondary');
+  });
+
+  it('omits text variant when variant is ghost', () => {
+    render(<Label variant="ghost" textVariant="secondary">NoTvGhost</Label>);
+    const el = screen.getByText('NoTvGhost');
+    expect(el).not.toHaveClass('text-secondary');
+  });
 });
