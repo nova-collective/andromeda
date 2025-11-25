@@ -65,8 +65,10 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(function T
 	const baseCls = 'w-full bg-surface text-textBase placeholder:text-textMuted/70 border border-color rounded-md outline-none transition duration-200';
 	const classes = [baseCls, sizeCls, paddingCls, stateCls, className].filter(Boolean).join(' ');
 
+	const variantCls = variant === 'primary' ? 'text-primary' : 'text-secondary';
+
 	return (
-		<div className={`relative text-${variant}`}>
+		<div className={`relative ${variantCls}`}>
 			{leftIcon ? (
 				<span aria-hidden className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-textMuted">
 					{leftIcon}
