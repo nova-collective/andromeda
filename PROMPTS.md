@@ -1,6 +1,6 @@
 # Prompts
 
-This file collects the propmts passed to copilot for tasks execution
+This file collects the prompts passed to copilot for tasks execution
 
 ## VDS component implementation
 
