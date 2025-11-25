@@ -19,10 +19,16 @@ describe('Paragraph', () => {
     expect(el).toHaveClass('text-xl');
   });
 
-  it('applies muted color token', () => {
-    render(<Paragraph muted>Muted Text</Paragraph>);
-    const el = screen.getByText('Muted Text');
-    expect(el).toHaveClass('text-textMuted');
+  it('applies secondary color via variant', () => {
+    render(<Paragraph variant="secondary">Secondary Text</Paragraph>);
+    const el = screen.getByText('Secondary Text');
+    expect(el).toHaveClass('text-secondary');
+  });
+
+  it('defaults to primary color', () => {
+    render(<Paragraph>Default Color</Paragraph>);
+    const el = screen.getByText('Default Color');
+    expect(el).toHaveClass('text-primary');
   });
 
   it('applies alignment class', () => {
