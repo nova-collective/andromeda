@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import { Wallet, ArrowRight, Heart, Search } from 'lucide-react';
 
-import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar, ProgressBar, Spinner, Skeleton, PriceTag } from '@/app/components';
+import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar, ProgressBar, Spinner, Skeleton, PriceTag, Rating } from '@/app/components';
 
 export default function VDSPage() {
   return (
@@ -444,6 +444,34 @@ function Tabs() {
                       <PriceTag variant="secondary" value={0.85} currency="ETH" />
                       <PriceTag variant="secondary" value={1.2} previousValue={1.0} currency="ETH" />
                       <PriceTag variant="secondary" value={0.9} previousValue={1.1} currency="ETH" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Ratings */}
+            <div className="grid gap-8 md:grid-cols-1">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Ratings</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Star-based rating display with sizes and variants.</Paragraph>
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary">Primary variant</Paragraph>
+                    <div className="flex items-center gap-4">
+                      <Rating value={3} size="sm" />
+                      <Rating value={4} />
+                      <Rating value={5} size="lg" showLabel label="User Rating" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary">Secondary variant</Paragraph>
+                    <div className="flex items-center gap-4">
+                      <Rating variant="secondary" value={2} size="sm" />
+                      <Rating variant="secondary" value={3} />
+                      <Rating variant="secondary" value={4} size="lg" showLabel label="Score" />
                     </div>
                   </div>
                 </div>
