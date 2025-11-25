@@ -35,8 +35,8 @@ import { Spinner } from '@/app/components/atoms/Spinner';
 ## Props
 | Name        | Type                             | Default      | Description                                  |
 | ----------- | -------------------------------- | ------------ | -------------------------------------------- |
-| `size`      | `"sm"                            | "md"         | "lg"`                                        | `"md"`                            | Visual diameter and border thickness |
-| `variant`   | `"primary"                       | "secondary"` | `"primary"`                                  | Color scheme alignment with theme |
+| `size`      | `"sm" \| "md" \| "lg"`           | `"md"`       | Visual diameter and border thickness         |
+| `variant`   | `"primary" \| "secondary"`       | `"primary"`  | Color scheme alignment with theme            |
 | `label`     | `string`                         | `"Loading"`  | Accessible label (hidden unless `showLabel`) |
 | `showLabel` | `boolean`                        | `false`      | Displays visible text label next to spinner  |
 | `className` | `string`                         | —            | Additional class names appended              |
