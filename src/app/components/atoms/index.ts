@@ -90,3 +90,7 @@ export type { ProgressBarProps, ProgressBarSize, ProgressBarVariant } from './Pr
 // Spinner Atom
 export { Spinner } from './Spinner';
 export type { SpinnerProps, SpinnerSize, SpinnerVariant } from './Spinner';
+
+// Skeleton Atom
+export { Skeleton } from './Skeleton';
+export type { SkeletonProps, SkeletonShape, SkeletonSize, SkeletonVariant } from './Skeleton';

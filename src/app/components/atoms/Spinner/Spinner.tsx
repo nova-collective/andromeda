@@ -7,8 +7,10 @@ export type SpinnerVariant = 'primary' | 'secondary';
 export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
   size?: SpinnerSize;
   variant?: SpinnerVariant;
-  /** Optional accessible label (sr-only). Defaults to "Loading" */
+  /** Accessible label. Defaults to "Loading" */
   label?: string;
+  /** Show visible text label next to spinner instead of sr-only */
+  showLabel?: boolean;
 }
 
 const sizeClasses: Record<SpinnerSize, string> = {
@@ -26,14 +28,29 @@ export const Spinner: React.FC<SpinnerProps> = ({
   size = 'md',
   variant = 'primary',
   label = 'Loading',
+  showLabel = false,
   className,
   ...rest
 }) => {
-  const classes = [
-    'inline-block rounded-full animate-spin',
+  const circleClasses = [
+    'rounded-full animate-spin',
     sizeClasses[size],
     variantClasses[variant],
-    'ease-linear',
+    'ease-linear'
+  ].join(' ');
+
+  if (showLabel) {
+    return (
+      <div role="status" aria-live="polite" className={['inline-flex items-center gap-2', className].filter(Boolean).join(' ')} {...rest}>
+        <div className={circleClasses} />
+        <span className="text-secondary text-xs">{label}</span>
+      </div>
+    );
+  }
+
+  const classes = [
+    'inline-block',
+    circleClasses,
     className
   ].filter(Boolean).join(' ');
 

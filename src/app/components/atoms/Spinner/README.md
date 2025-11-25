@@ -23,6 +23,8 @@ import { Spinner } from '@/app/components/atoms/Spinner';
 <Spinner size="lg" />
 <Spinner variant="secondary" />
 <Spinner label="Loading profile" />
+<Spinner showLabel />
+<Spinner variant="secondary" showLabel label="Fetching data" />
 ```
 
 ### Inline with content
@@ -31,13 +33,14 @@ import { Spinner } from '@/app/components/atoms/Spinner';
 ```
 
 ## Props
-| Name        | Type                             | Default      | Description                                    |
-| ----------- | -------------------------------- | ------------ | ---------------------------------------------- |
-| `size`      | `"sm"                            | "md"         | "lg"`                                          | `"md"`                            | Visual diameter and border thickness |
-| `variant`   | `"primary"                       | "secondary"` | `"primary"`                                    | Color scheme alignment with theme |
-| `label`     | `string`                         | `"Loading"`  | Accessible label rendered in an `sr-only` span |
-| `className` | `string`                         | —            | Additional class names appended                |
-| `...rest`   | `HTMLAttributes<HTMLDivElement>` | —            | Standard div attributes                        |
+| Name        | Type                             | Default      | Description                                  |
+| ----------- | -------------------------------- | ------------ | -------------------------------------------- |
+| `size`      | `"sm"                            | "md"         | "lg"`                                        | `"md"`                            | Visual diameter and border thickness |
+| `variant`   | `"primary"                       | "secondary"` | `"primary"`                                  | Color scheme alignment with theme |
+| `label`     | `string`                         | `"Loading"`  | Accessible label (hidden unless `showLabel`) |
+| `showLabel` | `boolean`                        | `false`      | Displays visible text label next to spinner  |
+| `className` | `string`                         | —            | Additional class names appended              |
+| `...rest`   | `HTMLAttributes<HTMLDivElement>` | —            | Standard div attributes                      |
 
 ## Accessibility
 - Uses `role="status"` and `aria-live="polite"` to announce updates in assistive tech subtly.
@@ -56,7 +59,7 @@ Tests should cover:
 1. Render and `role="status"` presence
 2. Size class application (`h-4 w-4`, `h-6 w-6`, `h-8 w-8`)
 3. Variant border color class (top border color difference)
-4. Accessible label in `sr-only` span
+4. Accessible label in `sr-only` span or visible with `showLabel`
 5. `className` merging
 
 ## Example Card Snippet (Showcase)

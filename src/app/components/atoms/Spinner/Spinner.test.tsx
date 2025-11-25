@@ -28,6 +28,15 @@ describe('Spinner', () => {
 		expect(screen.getByTestId('variant')).toHaveClass('border-t-[color:var(--text-secondary)]');
 	});
 
+	it('renders visible label when showLabel is true', () => {
+		render(<Spinner showLabel label="Loading books" />);
+		const container = screen.getByRole('status');
+		expect(container).toHaveTextContent('Loading books');
+		// Should not have sr-only inside when visible
+		const srOnly = container.querySelector('.sr-only');
+		expect(srOnly).toBeNull();
+	});
+
 	it('renders accessible label (sr-only)', () => {
 		render(<Spinner label="Fetching data" />);
 		const srOnly = screen.getByText('Fetching data');
