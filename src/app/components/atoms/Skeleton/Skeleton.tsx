@@ -11,7 +11,7 @@ export interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
 	variant?: SkeletonVariant;
 	/** Optional accessible label (sr-only). Leave undefined for default "Loading". Set empty string to suppress. */
 	label?: string;
-	/** Disable pulse animation */
+	/** Enable/disable pulse animation. Defaults to true. */
 	animated?: boolean;
 	/** Show visible text label next to skeleton instead of sr-only */
 	showLabel?: boolean;
