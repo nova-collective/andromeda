@@ -1,7 +1,7 @@
 import React from 'react'
 
-type RatingSize = 'sm' | 'md' | 'lg'
-type RatingVariant = 'primary' | 'secondary'
+export type RatingSize = 'sm' | 'md' | 'lg'
+export type RatingVariant = 'primary' | 'secondary'
 
 export interface RatingProps {
   value: number
