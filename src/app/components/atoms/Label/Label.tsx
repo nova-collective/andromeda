@@ -131,9 +131,7 @@ export const Label: React.FC<LabelProps> = ({
     .filter(Boolean)
     .join(' ');
 
-  const textVariantCls = !pill && variant !== 'ghost'
-    ? (textVariant === 'primary' ? 'text-primary' : 'text-secondary')
-    : '';
+  const textVariantCls = !pill && variant !== 'ghost' ? (textVariant === 'primary' ? 'text-primary' : 'text-secondary') : '';
   const classes = `inline-flex items-center gap-1 font-medium ${textVariantCls} ${sizeCls} ${shapeCls} ${colorCls} ${className}`.trim();
 
   return (
