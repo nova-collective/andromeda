@@ -36,7 +36,7 @@ const sizeMap: Record<SkeletonShape, Record<SkeletonSize, string>> = {
 };
 
 const variantClasses: Record<SkeletonVariant, string> = {
-	primary: 'bg-[color:var(--border-color)]',
+	primary: 'bg-[color:var(--border)]',
 	secondary: 'bg-[color:var(--text-secondary)]/20'
 };
 
