@@ -56,7 +56,7 @@ export const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(functi
 	const radioClasses = [base, sizeCls, stateBorder, disabledCls, checkedStyles, className].filter(Boolean).join(' ');
 
 	return (
-		<label className={`text-${variant} mr-2 inline-flex items-start gap-2 ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`.trim()}>
+		<label className={`${variant === 'primary' ? 'text-primary' : 'text-secondary'} mr-2 inline-flex items-start gap-2 ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`.trim()}>
 			<span className="relative flex items-center">
 				<input
 					ref={innerRef}
