@@ -74,3 +74,7 @@ export type { DropdownProps, DropdownSize, DropdownVariant, DropdownOption } fro
 // Toggle Atom
 export { Toggle } from './Toggle/Toggle';
 export type { ToggleProps, ToggleSize, ToggleVariant } from './Toggle/Toggle';
+
+// SearchInput Atom
+export { SearchInput } from './SearchInput';
+export type { SearchInputProps, SearchInputSize, SearchInputVariant } from './SearchInput';

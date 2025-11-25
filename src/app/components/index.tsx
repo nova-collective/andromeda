@@ -1,4 +1,4 @@
-import { Button, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle } from './atoms';
+import { Button, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput } from './atoms';
 import { Card, Header, UserProfile } from './organisms';
 import { ThemeProvider, useTheme } from './providers';
 import { WithAuth } from './services';
@@ -12,6 +12,7 @@ export {
     RadioButton,
     Dropdown,
     Toggle,
+    SearchInput,
     GridLayout,
     Header,
     Heading,

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Wallet, ArrowRight, Heart, Search } from 'lucide-react';
 
-import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle } from '@/app/components';
+import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput } from '@/app/components';
 
 export default function VDSPage() {
   return (
@@ -251,8 +251,9 @@ export default function VDSPage() {
                 </header>
                 <div className="space-y-6">
                   <div className="space-y-4">
-                    <Paragraph size="sm" muted className="text-secondary">Text inputs.</Paragraph>
+                    <Paragraph size="sm" muted className="text-secondary">Text inputs & search.</Paragraph>
                     <div className="space-y-3">
+                      <SearchInput placeholder="Search catalog" clearable />
                       <TextInput placeholder="Search books…" leftIcon={<Search className="text-primary" size={16} />} />
                       <TextInput size="sm" placeholder="Small size" />
                       <TextInput size="lg" placeholder="Large size" />
@@ -326,8 +327,9 @@ export default function VDSPage() {
                 </header>
                 <div className="space-y-6">
                   <div className="space-y-4">
-                    <Paragraph size="sm" muted className="text-secondary">Text inputs.</Paragraph>
+                    <Paragraph size="sm" muted className="text-secondary">Text inputs & search.</Paragraph>
                     <div className="space-y-3">
+                      <SearchInput variant="secondary" placeholder="Search catalog" clearable />
                       <TextInput variant="secondary" placeholder="Search books…" leftIcon={<Search className="text-secondary" size={16} />} />
                       <TextInput variant="secondary" size="sm" placeholder="Small size" />
                       <TextInput variant="secondary" size="lg" placeholder="Large size" />

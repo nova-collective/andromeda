@@ -36,7 +36,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>(function Toggle(
 	const disabledCls = disabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer';
 
 	return (
-		<label className={`inline-flex items-center gap-2 ${disabledCls} text-${variant}`.trim()}>
+		<label className={`mr-2 inline-flex items-center gap-2 ${disabledCls} text-${variant}`.trim()}>
 			<span className={`relative ${disabled ? 'pointer-events-none' : ''}`}>
 				<input
 					ref={ref}
