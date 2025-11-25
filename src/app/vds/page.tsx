@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import { Wallet, ArrowRight, Heart, Search } from 'lucide-react';
 
-import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar } from '@/app/components';
+import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar, ProgressBar } from '@/app/components';
 
 export default function VDSPage() {
   return (
@@ -315,6 +315,34 @@ function Tabs() {
                   <Avatar variant="secondary" alt="Gina Park" size="lg" />
                   <Avatar variant="secondary" alt="Henry Ives" initials="HI" />
                   <Avatar variant="secondary" src="/placeholder-1.jpg" alt="Sample Secondary" />
+                </div>
+              </div>
+            </div>
+
+            {/* Progress Bars */}
+            <div className="grid gap-8 md:grid-cols-1">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Progress bars</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Determinate and indeterminate progress feedback across variants.</Paragraph>
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary">Primary variant</Paragraph>
+                    <div className="space-y-2">
+                      <ProgressBar value={30} max={60} showLabel />
+                      <ProgressBar value={75} showLabel size="sm" />
+                      <ProgressBar indeterminate size="lg" showLabel />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary">Secondary variant</Paragraph>
+                    <div className="space-y-2">
+                      <ProgressBar variant="secondary" value={30} max={60} showLabel />
+                      <ProgressBar variant="secondary" value={75} showLabel size="sm" />
+                      <ProgressBar variant="secondary" indeterminate size="lg" showLabel />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

@@ -82,3 +82,7 @@ export type { SearchInputProps, SearchInputSize, SearchInputVariant } from './Se
 // Avatar Atom
 export { Avatar } from './Avatar';
 export type { AvatarProps, AvatarSize, AvatarVariant } from './Avatar';
+
+// ProgressBar Atom
+export { ProgressBar } from './ProgressBar';
+export type { ProgressBarProps, ProgressBarSize, ProgressBarVariant } from './ProgressBar';
