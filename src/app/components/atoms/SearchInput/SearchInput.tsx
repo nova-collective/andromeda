@@ -62,7 +62,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(functi
 	const classes = [baseCls, sizeCls, paddingCls, stateCls, className].filter(Boolean).join(' ');
 
 	return (
-		<div className={`relative text-${variant}`}>
+		<div className={`relative ${variant === 'primary' ? 'text-primary' : 'text-secondary'}`}>
 			<span aria-hidden className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-textMuted">
 				<SearchIcon size={16} />
 			</span>
