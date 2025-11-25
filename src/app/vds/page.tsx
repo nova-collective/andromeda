@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import { Wallet, ArrowRight, Heart, Search } from 'lucide-react';
 
-import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar, ProgressBar } from '@/app/components';
+import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar, ProgressBar, Spinner } from '@/app/components';
 
 export default function VDSPage() {
   return (
@@ -341,6 +341,41 @@ function Tabs() {
                       <ProgressBar variant="secondary" value={30} max={60} showLabel />
                       <ProgressBar variant="secondary" value={75} showLabel size="sm" />
                       <ProgressBar variant="secondary" indeterminate size="lg" showLabel />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Spinners */}
+            <div className="grid gap-8 md:grid-cols-1">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Spinners</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Animated loading indicators for transient background tasks.</Paragraph>
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary">Primary variant</Paragraph>
+                    <div className="flex items-center gap-4">
+                      <Spinner size="sm" />
+                      <Spinner />
+                      <Spinner size="lg" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary">Secondary variant</Paragraph>
+                    <div className="flex items-center gap-4">
+                      <Spinner variant="secondary" size="sm" />
+                      <Spinner variant="secondary" />
+                      <Spinner variant="secondary" size="lg" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary">With accessible label</Paragraph>
+                    <div className="flex items-center gap-4">
+                      <Spinner label="Loading data" />
+                      <Spinner variant="secondary" label="Fetching books" />
                     </div>
                   </div>
                 </div>

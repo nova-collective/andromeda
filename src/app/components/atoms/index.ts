@@ -86,3 +86,7 @@ export type { AvatarProps, AvatarSize, AvatarVariant } from './Avatar';
 // ProgressBar Atom
 export { ProgressBar } from './ProgressBar';
 export type { ProgressBarProps, ProgressBarSize, ProgressBarVariant } from './ProgressBar';
+
+// Spinner Atom
+export { Spinner } from './Spinner';
+export type { SpinnerProps, SpinnerSize, SpinnerVariant } from './Spinner';
