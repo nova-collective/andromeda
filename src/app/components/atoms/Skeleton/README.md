@@ -33,9 +33,9 @@ import { Skeleton } from '@/app/components/atoms/Skeleton';
 ## Props
 | Name        | Type                             | Default      | Description                                                        |
 | ----------- | -------------------------------- | ------------ | ------------------------------------------------------------------ |
-| `shape`     | `"text"                          | "circle"     | "rect"`                                                            | `"text"`               | Placeholder geometry          |
-| `size`      | `"sm"                            | "md"         | "lg"`                                                              | `"md"`                 | Relative dimensions per shape |
-| `variant`   | `"primary"                       | "secondary"` | `"primary"`                                                        | Color scheme alignment |
+| `shape`     | `"text" \| "circle" \| "rect"`   | `"text"`     | Placeholder geometry                                               |
+| `size`      | `"sm" \| "md" \| "lg"`           | `"md"`       | Relative dimensions per shape                                      |
+| `variant`   | `"primary" \| "secondary"`       | `"primary"`  | Color scheme alignment                                             |
 | `label`     | `string`                         | `"Loading"`  | Accessible label (hidden unless `showLabel`; set `""` to suppress) |
 | `showLabel` | `boolean`                        | `false`      | Displays visible text label next to skeleton                       |
 | `animated`  | `boolean`                        | `true`       | Enables pulse animation                                            |
