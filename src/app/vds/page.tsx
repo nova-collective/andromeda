@@ -1,4 +1,5 @@
-import React from 'react';
+'use client'
+import React, { useState } from 'react';
 
 import { Wallet, ArrowRight, Heart, Search } from 'lucide-react';
 
@@ -16,12 +17,65 @@ export default function VDSPage() {
             <Paragraph size="lg" align="center" className="text-secondary max-w-3xl mx-auto leading-relaxed">A living reference for Andromeda’s visual language.</Paragraph>
           </section>
 
-          {/* Atoms (each duplicated side-by-side) */}
-          <section className="space-y-12">
-            <Heading level={2} className="text-xl font-semibold">Atoms</Heading>
-            <Paragraph muted className="text-secondary max-w-3xl">Smallest building blocks: typography, links, buttons, labels, captions, form inputs.</Paragraph>
+          {/* Tabs Navigation for Atoms & Molecules */}
+          <section className="space-y-8">
+            <div className="space-y-3">
+              <Heading level={2} className="text-xl font-semibold">Components</Heading>
+              <Paragraph muted className="text-secondary max-w-3xl">Browse core atoms and composite molecules via tabs.</Paragraph>
+            </div>
+            <Tabs />
+          </section>
 
-            {/* Typography */}
+        </div>
+      </main>
+    </>
+  );
+}
+
+function Tabs() {
+  const [active, setActive] = useState<'atoms' | 'molecules'>('atoms');
+  const tabBtnBase = 'px-4 py-2 text-sm font-medium border-b-2 -mb-px transition focus:outline-none cursor-pointer';
+  return (
+    <div className="space-y-10">
+      <div role="tablist" aria-label="Component categories" className="flex gap-2 border-b border-color">
+        <button
+          role="tab"
+          aria-selected={active === 'atoms'}
+          aria-controls="panel-atoms"
+          id="tab-atoms"
+          onClick={() => setActive('atoms')}
+          className={[
+            tabBtnBase,
+            active === 'atoms'
+              ? 'text-primary border-[color:var(--link-color)]'
+              : 'text-secondary border-transparent hover:text-textBase'
+          ].join(' ')}
+          type="button"
+        >
+          Atoms
+        </button>
+        <button
+          role="tab"
+          aria-selected={active === 'molecules'}
+          aria-controls="panel-molecules"
+          id="tab-molecules"
+          onClick={() => setActive('molecules')}
+          className={[
+            tabBtnBase,
+            active === 'molecules'
+              ? 'text-primary border-[color:var(--link-color)]'
+              : 'text-secondary border-transparent hover:text-textBase'
+          ].join(' ')}
+          type="button"
+        >
+          Molecules
+        </button>
+      </div>
+      <div>
+        {active === 'atoms' && (
+          <div role="tabpanel" id="panel-atoms" aria-labelledby="tab-atoms" className="space-y-12 animate-fade-in">
+            <Heading level={2} className="text-lg font-serif font-semibold">Atoms</Heading>
+            <Paragraph muted className="text-secondary max-w-3xl">Smallest building blocks: typography, links, buttons, labels, captions, form inputs.</Paragraph>
             <div className="grid gap-8 md:grid-cols-2">
               <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-8 shadow-card">
                   <header className="flex items-center justify-between">
@@ -398,11 +452,11 @@ export default function VDSPage() {
                 </div>
               </div>
             </div>
-          </section>
-
-          {/* Molecules */}
-          <section className="space-y-12">
-            <Heading level={2} className="text-xl font-semibold">Molecules</Heading>
+          </div>
+        )}
+        {active === 'molecules' && (
+          <div role="tabpanel" id="panel-molecules" aria-labelledby="tab-molecules" className="space-y-12 animate-fade-in">
+            <Heading level={2} className="text-lg font-serif font-semibold">Molecules</Heading>
             <Paragraph muted className="text-secondary max-w-3xl">Compound building blocks composed of multiple atoms.</Paragraph>
             <div className="grid gap-8 md:grid-cols-2">
               <div className="rounded-2xl bg-primary border border-color p-6 shadow-card space-y-8">
@@ -436,9 +490,9 @@ export default function VDSPage() {
                 </ul>
               </div>
             </div>
-          </section>
-        </div>
-      </main>
-    </>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

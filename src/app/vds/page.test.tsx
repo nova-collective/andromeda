@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/vitest';
 import React, { createElement } from 'react';
 
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
 // Mocks
@@ -37,21 +37,26 @@ describe('Visual Design System page', () => {
     expect(screen.getByRole('heading', { level: 1, name: /visual design system/i })).toBeInTheDocument();
   });
 
-  it('shows buttons panel and typography panel headings', () => {
+  it('defaults to Atoms tab with typography & buttons headings', () => {
     render(<VDSPage />);
-    expect(screen.getByRole('heading', { level: 2, name: /buttons/i })).toBeInTheDocument();
+    // Atoms tab active by default
+    expect(screen.getByRole('tab', { name: /atoms/i })).toHaveAttribute('aria-selected', 'true');
     expect(screen.getByRole('heading', { level: 2, name: /typography primary/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2, name: /buttons/i })).toBeInTheDocument();
   });
 
-  it('renders cards panel with sample cards', () => {
+  it('renders cards after switching to Molecules tab', () => {
     render(<VDSPage />);
+    const moleculesTab = screen.getByRole('tab', { name: /molecules/i });
+    fireEvent.click(moleculesTab);
+    expect(moleculesTab).toHaveAttribute('aria-selected', 'true');
     expect(screen.getByRole('heading', { level: 2, name: /cards primary/i })).toBeInTheDocument();
     const cards = screen.getAllByTestId('mock-card');
-    expect(cards.length).toBeGreaterThanOrEqual(3);
+    expect(cards.length).toBeGreaterThanOrEqual(2);
     expect(cards[0]).toHaveTextContent('Cosmic Explorer');
   });
 
-  it('includes sample buttons', () => {
+  it('includes sample buttons in Atoms tab', () => {
     render(<VDSPage />);
     expect(screen.getByText('Primary')).toBeInTheDocument();
     expect(screen.getByText('Secondary')).toBeInTheDocument();
