@@ -67,7 +67,7 @@ export const Dropdown = forwardRef<HTMLSelectElement, DropdownProps>(function Dr
 				{...rest}
 			>
 				{placeholder && (
-					<option value="" disabled selected={!rest.defaultValue && !rest.value}>
+					<option value="" disabled>
 						{placeholder}
 					</option>
 				)}
