@@ -24,7 +24,7 @@ const variantMap: Record<LogoVariant, string> = {
 
 /**
  * Logo atom
- * Renders the Andromeda logo image from `/assets/logo.png`.
+ * Renders the Andromeda logo image from `/assets/logo_t.png`.
  */
 export const Logo: React.FC<LogoProps> = ({
   size = 'md',
