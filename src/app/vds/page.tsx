@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import { Wallet, ArrowRight, Heart, Search } from 'lucide-react';
 
-import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar, ProgressBar, Spinner, Skeleton, PriceTag, Rating } from '@/app/components';
+import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar, ProgressBar, Spinner, Skeleton, PriceTag, Rating, Image, Logo } from '@/app/components';
 
 export default function VDSPage() {
   return (
@@ -315,6 +315,39 @@ function Tabs() {
                   <Avatar variant="secondary" alt="Gina Park" size="lg" />
                   <Avatar variant="secondary" alt="Henry Ives" initials="HI" />
                   <Avatar variant="secondary" src="/placeholder-1.jpg" alt="Sample Secondary" />
+                </div>
+              </div>
+            </div>
+
+            {/* Logo */}
+            <div className="grid gap-8 md:grid-cols-1">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Logo</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Brand mark variations across size and color contexts.</Paragraph>
+                <div className="flex flex-wrap gap-6 items-center">
+                  <Logo size="sm" />
+                  <Logo />
+                  <Logo size="lg" showLabel label="Andromeda" />
+                  <Logo variant="secondary" />
+                  <Logo variant="secondary" size="lg" showLabel label="Brand" />
+                </div>
+              </div>
+            </div>
+
+            {/* Images */}
+            <div className="grid gap-8 md:grid-cols-1">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Images</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Framed images with sizes, rounded corners, and optional labels.</Paragraph>
+                <div className="flex flex-wrap gap-4 items-start">
+                  <Image src="/assets/book.jpg" alt="Sample cover small" size="sm" />
+                  <Image src="/assets/book.jpg" alt="Sample cover" />
+                  <Image src="/assets/book.jpg" alt="Sample cover large" size="lg" showLabel label="Cover image" />
+                  <Image src="/assets/book.jpg" alt="Secondary variant" rounded={false} />
                 </div>
               </div>
             </div>
