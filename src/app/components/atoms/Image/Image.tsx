@@ -42,7 +42,7 @@ export const Image: React.FC<ImageProps> = ({
   ].join(' ')
 
   return (
-    <div className={[wrapper, variantScope, className].filter(Boolean).join(' ')}>
+    <div className={[wrapper, className].filter(Boolean).join(' ')}>
       <NextImage
         src={src}
         alt={alt}
