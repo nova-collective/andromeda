@@ -37,7 +37,9 @@ describe('Header component', () => {
 	it('renders logo, menu items, and action buttons', () => {
 		renderWithTheme(<Header />);
 
-		expect(screen.getByText('Andromeda')).toBeInTheDocument();
+		expect(
+			screen.getByRole('heading', { name: 'Andromeda' })
+		).toBeInTheDocument();
 		expect(screen.getByText('Explore')).toBeInTheDocument();
 		expect(screen.getByText('Stats')).toBeInTheDocument();
 		expect(screen.getByText('Create')).toBeInTheDocument();
