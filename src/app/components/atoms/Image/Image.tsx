@@ -44,7 +44,7 @@ export const Image: React.FC<ImageProps> = ({
   return (
     <div className={[wrapper, variantScope, className].filter(Boolean).join(' ')}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={src} alt={alt} className={frame} aria-label={ariaLabel} data-testid="image" />
+      <img src={src} alt={alt} className={frame} data-testid="image" />
       {label !== '' && (showLabel ? (
         <span className="text-secondary text-xs">{label}</span>
       ) : (
