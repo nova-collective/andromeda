@@ -54,7 +54,6 @@ export default function Header() {
     { name: 'Explore', href: '/explore', icon: TrendingUp },
     { name: 'Stats', href: '/stats', icon: Sparkles },
     { name: 'Create', href: '/create', icon: ShoppingBag },
-    // Visual Design System page link
     { name: 'VDS', href: '/vds', icon: LayoutGrid },
   ];
 
