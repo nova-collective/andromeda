@@ -1,8 +1,14 @@
 import '@testing-library/jest-dom/vitest';
-import React from 'react';
+import React, { createElement } from 'react';
 
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
+
+// Mock Next.js Image component
+vi.mock('next/image', () => ({
+  __esModule: true,
+  default: (props: React.ComponentProps<'img'>) => createElement('img', props),
+}));
 
 import { Image } from './Image'
 

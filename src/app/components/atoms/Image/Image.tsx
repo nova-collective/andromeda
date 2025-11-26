@@ -1,5 +1,7 @@
 import React from 'react'
 
+import NextImage from 'next/image'
+
 export type ImageSize = 'sm' | 'md' | 'lg'
 
 export interface ImageProps {
@@ -13,10 +15,10 @@ export interface ImageProps {
   className?: string
 }
 
-const sizeMap: Record<ImageSize, string> = {
-  sm: 'h-24 w-24',
-  md: 'h-40 w-40',
-  lg: 'h-64 w-64',
+const sizeMap: Record<ImageSize, { className: string; width: number; height: number; sizes: string }> = {
+  sm: { className: 'h-24 w-24', width: 96, height: 96, sizes: '96px' },
+  md: { className: 'h-40 w-40', width: 160, height: 160, sizes: '160px' },
+  lg: { className: 'h-64 w-64', width: 256, height: 256, sizes: '256px' },
 }
 
 export const Image: React.FC<ImageProps> = ({
@@ -31,17 +33,25 @@ export const Image: React.FC<ImageProps> = ({
 }) => {
   const wrapper = 'inline-flex flex-col items-start gap-2'
   const fitClass = fit === 'contain' ? 'object-contain' : 'object-cover'
+  const sizeConfig = sizeMap[size]
   const frame = [
     'bg-surface border border-color overflow-hidden',
     rounded ? 'rounded-lg' : 'rounded-none',
-    sizeMap[size],
+    sizeConfig.className,
     fitClass,
   ].join(' ')
 
   return (
-    <div className={[wrapper, className].filter(Boolean).join(' ')}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={src} alt={alt} className={frame} data-testid="image" />
+    <div className={[wrapper, variantScope, className].filter(Boolean).join(' ')}>
+      <NextImage
+        src={src}
+        alt={alt}
+        width={sizeConfig.width}
+        height={sizeConfig.height}
+        sizes={sizeConfig.sizes}
+        className={frame}
+        data-testid="image"
+      />
       {label !== '' && (showLabel ? (
         <span className="text-secondary text-xs">{label}</span>
       ) : (
