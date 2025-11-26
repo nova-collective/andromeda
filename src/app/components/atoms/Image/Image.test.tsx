@@ -28,6 +28,18 @@ describe('Image', () => {
     expect(img.className).toMatch(/w-64/)
   })
 
+  it('applies object-cover by default', () => {
+    render(<Image src="/placeholder-1.jpg" alt="Sample" />)
+    const img = screen.getByTestId('image')
+    expect(img.className).toMatch(/object-cover/)
+  })
+
+  it('applies object-contain when fit="contain"', () => {
+    render(<Image src="/placeholder-1.jpg" alt="Sample" fit="contain" />)
+    const img = screen.getByTestId('image')
+    expect(img.className).toMatch(/object-contain/)
+  })
+
   it('supports variant scope and label visibility', () => {
     render(<Image src="/placeholder-1.jpg" alt="Sample" variant="secondary" showLabel label="Cover" />)
     expect(screen.getByText('Cover')).toBeInTheDocument()
