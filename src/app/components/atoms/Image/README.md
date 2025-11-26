@@ -7,7 +7,6 @@ Displays an image with consistent VDS framing (border, surface, rounded corners)
 - **src**: string — image source URL.
 - **alt**: string — accessible description of the image.
 - **size**: `sm | md | lg` (default `md`) — frame size.
-- **variant**: `primary | secondary` (default `primary`) — contextual text scope for surrounding content.
 - **rounded**: boolean (default `true`) — enable rounded corners on the frame.
 - **fit**: `cover | contain` (default `cover`) — object fit strategy.
 - **label**: string (default `"Image"`) — accessible label text.
@@ -29,7 +28,7 @@ export function Example() {
     <div className="flex gap-4 items-start">
       <Image src="/placeholder-1.jpg" alt="Cover art sample" size="sm" />
       <Image src="/placeholder-1.jpg" alt="Cover art sample" size="md" rounded={false} />
-      <Image src="/placeholder-1.jpg" alt="Cover art sample" size="lg" variant="secondary" showLabel label="Sample image" />
+      <Image src="/placeholder-1.jpg" alt="Cover art sample" size="lg" showLabel label="Sample image" />
     </div>
   );
 }

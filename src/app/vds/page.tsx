@@ -347,7 +347,7 @@ function Tabs() {
                   <Image src="/assets/book.jpg" alt="Sample cover small" size="sm" />
                   <Image src="/assets/book.jpg" alt="Sample cover" />
                   <Image src="/assets/book.jpg" alt="Sample cover large" size="lg" showLabel label="Cover image" />
-                  <Image src="/assets/book.jpg" alt="Secondary variant" variant="secondary" rounded={false} />
+                  <Image src="/assets/book.jpg" alt="Secondary variant" rounded={false} />
                 </div>
               </div>
             </div>

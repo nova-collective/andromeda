@@ -1,13 +1,11 @@
 import React from 'react'
 
 export type ImageSize = 'sm' | 'md' | 'lg'
-export type ImageVariant = 'primary' | 'secondary'
 
 export interface ImageProps {
   src: string
   alt: string
   size?: ImageSize
-  variant?: ImageVariant
   rounded?: boolean
   fit?: 'cover' | 'contain'
   label?: string
@@ -25,7 +23,6 @@ export const Image: React.FC<ImageProps> = ({
   src,
   alt,
   size = 'md',
-  variant = 'primary',
   rounded = true,
   fit = 'cover',
   label = 'Image',
@@ -33,7 +30,6 @@ export const Image: React.FC<ImageProps> = ({
   className = '',
 }) => {
   const wrapper = 'inline-flex flex-col items-start gap-2'
-  const variantScope = `text-${variant}`
   const fitClass = fit === 'contain' ? 'object-contain' : 'object-cover'
   const frame = [
     'bg-surface border border-color overflow-hidden',
@@ -43,7 +39,7 @@ export const Image: React.FC<ImageProps> = ({
   ].join(' ')
 
   return (
-    <div className={[wrapper, variantScope, className].filter(Boolean).join(' ')}>
+    <div className={[wrapper, className].filter(Boolean).join(' ')}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={src} alt={alt} className={frame} data-testid="image" />
       {label !== '' && (showLabel ? (

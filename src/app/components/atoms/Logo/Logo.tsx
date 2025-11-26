@@ -1,5 +1,7 @@
 import React from 'react'
 
+import Image from 'next/image'
+
 export type LogoSize = 'sm' | 'md' | 'lg'
 export type LogoVariant = 'primary' | 'secondary'
 
@@ -11,10 +13,10 @@ export interface LogoProps {
   className?: string
 }
 
-const sizeMap: Record<LogoSize, string> = {
-  sm: 'h-6',
-  md: 'h-8',
-  lg: 'h-12'
+const sizeMap: Record<LogoSize, { height: number; className: string }> = {
+  sm: { height: 24, className: 'h-6' },
+  md: { height: 32, className: 'h-8' },
+  lg: { height: 48, className: 'h-12' }
 }
 
 const variantMap: Record<LogoVariant, string> = {
@@ -33,17 +35,21 @@ export const Logo: React.FC<LogoProps> = ({
   showLabel = false,
   className = ''
 }) => {
-  const imgClasses = [sizeMap[size], variantMap[variant], 'w-auto'].join(' ')
+  const { height, className: sizeClassName } = sizeMap[size]
+  const imgClasses = [sizeClassName, variantMap[variant], 'w-auto'].join(' ')
   const wrapper = ['inline-flex items-center gap-2', className].filter(Boolean).join(' ')
   const ariaLabel = label
 
   return (
     <span className={wrapper} data-size={size} data-variant={variant}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src="/assets/logo_t.png"
         alt={ariaLabel}
+        width={0}
+        height={height}
         className={imgClasses}
+        style={{ width: 'auto' }}
+        priority
       />
       {label !== '' && (showLabel ? <span className="text-secondary text-xs">{label}</span> : <span className="sr-only">{label}</span>)}
     </span>
