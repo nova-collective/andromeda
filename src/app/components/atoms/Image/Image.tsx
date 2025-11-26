@@ -17,10 +17,10 @@ export interface ImageProps {
   className?: string
 }
 
-const sizeMap: Record<ImageSize, { className: string; width: number; height: number }> = {
-  sm: { className: 'h-24 w-24', width: 96, height: 96 },
-  md: { className: 'h-40 w-40', width: 160, height: 160 },
-  lg: { className: 'h-64 w-64', width: 256, height: 256 },
+const sizeMap: Record<ImageSize, { className: string; width: number; height: number; sizes: string }> = {
+  sm: { className: 'h-24 w-24', width: 96, height: 96, sizes: '96px' },
+  md: { className: 'h-40 w-40', width: 160, height: 160, sizes: '160px' },
+  lg: { className: 'h-64 w-64', width: 256, height: 256, sizes: '256px' },
 }
 
 export const Image: React.FC<ImageProps> = ({
@@ -52,6 +52,7 @@ export const Image: React.FC<ImageProps> = ({
         alt={alt}
         width={sizeConfig.width}
         height={sizeConfig.height}
+        sizes={sizeConfig.sizes}
         className={frame}
         data-testid="image"
       />
