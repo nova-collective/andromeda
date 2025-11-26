@@ -13,10 +13,10 @@ export interface LogoProps {
   className?: string
 }
 
-const sizeMap: Record<LogoSize, { height: number; className: string }> = {
-  sm: { height: 24, className: 'h-6' },
-  md: { height: 32, className: 'h-8' },
-  lg: { height: 48, className: 'h-12' }
+const sizeMap: Record<LogoSize, { width: number; height: number; className: string }> = {
+  sm: { width: 72, height: 24, className: 'h-6' },
+  md: { width: 96, height: 32, className: 'h-8' },
+  lg: { width: 144, height: 48, className: 'h-12' }
 }
 
 const variantMap: Record<LogoVariant, string> = {
@@ -35,7 +35,7 @@ export const Logo: React.FC<LogoProps> = ({
   showLabel = false,
   className = ''
 }) => {
-  const { height, className: sizeClassName } = sizeMap[size]
+  const { width, height, className: sizeClassName } = sizeMap[size]
   const imgClasses = [sizeClassName, variantMap[variant], 'w-auto'].join(' ')
   const wrapper = ['inline-flex items-center gap-2', className].filter(Boolean).join(' ')
   const ariaLabel = label
@@ -45,10 +45,9 @@ export const Logo: React.FC<LogoProps> = ({
       <Image
         src="/assets/logo_t.png"
         alt={ariaLabel}
-        width={0}
+        width={width}
         height={height}
         className={imgClasses}
-        style={{ width: 'auto' }}
         priority
       />
       {label !== '' && (showLabel ? <span className="text-secondary text-xs">{label}</span> : <span className="sr-only">{label}</span>)}
