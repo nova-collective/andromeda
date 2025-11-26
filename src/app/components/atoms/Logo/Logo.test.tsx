@@ -22,7 +22,9 @@ describe('Logo', () => {
     const svg = screen.getByRole('img', { name: 'Andromeda' })
     const cls = svg.getAttribute('class') || ''
     expect(cls).toMatch(/h-12/)
-    expect(cls).toMatch(/text-\[color:var\(--text-secondary\)\]/)
+    // variant is applied via data attribute on wrapper
+    const wrapper = svg.parentElement as HTMLElement
+    expect(wrapper).toHaveAttribute('data-variant', 'secondary')
   })
 
   it('shows visible label when showLabel is true', () => {
@@ -32,10 +34,12 @@ describe('Logo', () => {
   })
 
   it('suppresses label when empty string provided', () => {
-    render(<Logo label="" />)
-    const svg = screen.getByRole('img')
-    // no sr-only span
-    const wrapper = svg.parentElement as HTMLElement
+    const { container } = render(<Logo label="" />)
+    const img = container.querySelector('img')
+    expect(img).toBeInTheDocument()
+    expect(img).toHaveAttribute('alt', '')
+    // no sr-only span since label is empty
+    const wrapper = img?.parentElement as HTMLElement
     expect(wrapper.querySelector('.sr-only')).toBeNull()
   })
 })
