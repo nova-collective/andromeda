@@ -27,19 +27,20 @@ export const Image: React.FC<ImageProps> = ({
   size = 'md',
   variant = 'primary',
   rounded = true,
+  fit = 'cover',
   label = 'Image',
   showLabel = false,
   className = '',
 }) => {
   const wrapper = 'inline-flex flex-col items-start gap-2'
   const variantScope = `text-${variant}`
+  const fitClass = fit === 'contain' ? 'object-contain' : 'object-cover'
   const frame = [
     'bg-surface border border-color overflow-hidden',
     rounded ? 'rounded-lg' : 'rounded-none',
     sizeMap[size],
+    fitClass,
   ].join(' ')
-
-  const ariaLabel = `${label}`
 
   return (
     <div className={[wrapper, variantScope, className].filter(Boolean).join(' ')}>
