@@ -3,13 +3,11 @@ import React from 'react'
 import NextImage from 'next/image'
 
 export type ImageSize = 'sm' | 'md' | 'lg'
-export type ImageVariant = 'primary' | 'secondary'
 
 export interface ImageProps {
   src: string
   alt: string
   size?: ImageSize
-  variant?: ImageVariant
   rounded?: boolean
   fit?: 'cover' | 'contain'
   label?: string
@@ -27,7 +25,6 @@ export const Image: React.FC<ImageProps> = ({
   src,
   alt,
   size = 'md',
-  variant = 'primary',
   rounded = true,
   fit = 'cover',
   label = 'Image',
@@ -35,7 +32,6 @@ export const Image: React.FC<ImageProps> = ({
   className = '',
 }) => {
   const wrapper = 'inline-flex flex-col items-start gap-2'
-  const variantScope = `text-${variant}`
   const fitClass = fit === 'contain' ? 'object-contain' : 'object-cover'
   const sizeConfig = sizeMap[size]
   const frame = [

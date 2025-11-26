@@ -104,7 +104,7 @@ export { Rating, type RatingProps, type RatingSize, type RatingVariant } from '.
 
 // Image Atom
 export { Image } from './Image';
-export type { ImageProps, ImageSize, ImageVariant } from './Image';
+export type { ImageProps, ImageSize } from './Image';
 
 // Logo Atom
 export { Logo } from './Logo';
