@@ -19,6 +19,7 @@ import {
   LayoutGrid
 } from 'lucide-react';
 
+import { Heading, Logo } from '@/app/components';
 import { useTheme } from '@/app/components/providers/ThemeProvider/ThemeProvider';
 
 /**
@@ -54,7 +55,6 @@ export default function Header() {
     { name: 'Explore', href: '/explore', icon: TrendingUp },
     { name: 'Stats', href: '/stats', icon: Sparkles },
     { name: 'Create', href: '/create', icon: ShoppingBag },
-    // Visual Design System page link
     { name: 'VDS', href: '/vds', icon: LayoutGrid },
   ];
 
@@ -63,13 +63,9 @@ export default function Header() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group cursor-pointer">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center group-hover:scale-105 transition-transform">
-              <span className="text-[var(--bg-primary)] font-bold text-xl">A</span>
-            </div>
-            <span className="text-xl font-bold text-primary hidden sm:block">
-              Andromeda
-            </span>
+          <Link href="/" className="flex items-center gap-2 group cursor-pointer" aria-label="Andromeda home">
+            <Logo size="lg" />
+            <Heading level={3}>Andromeda</Heading>
           </Link>
 
           {/* Desktop Navigation */}
