@@ -46,9 +46,10 @@ export const Logo: React.FC<LogoProps> = ({
       <Image
         src="/assets/logo_t.png"
         alt={ariaLabel}
-        width={height}
+        width={0}
         height={height}
         className={imgClasses}
+        style={{ width: 'auto' }}
         priority
       />
       {label !== '' && (showLabel ? <span className="text-secondary text-xs">{label}</span> : <span className="sr-only">{label}</span>)}
