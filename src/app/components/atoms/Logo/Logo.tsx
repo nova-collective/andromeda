@@ -17,6 +17,11 @@ const sizeMap: Record<LogoSize, string> = {
   lg: 'h-12'
 }
 
+const variantMap: Record<LogoVariant, string> = {
+  primary: 'text-[color:var(--text-primary)]',
+  secondary: 'text-[color:var(--text-secondary)]'
+}
+
 /**
  * Logo atom
  * Renders the Andromeda logo image from `/assets/logo.png`.
@@ -28,7 +33,7 @@ export const Logo: React.FC<LogoProps> = ({
   showLabel = false,
   className = ''
 }) => {
-  const imgClasses = [sizeMap[size], 'w-auto'].join(' ')
+  const imgClasses = [sizeMap[size], variantMap[variant], 'w-auto'].join(' ')
   const wrapper = ['inline-flex items-center gap-2', className].filter(Boolean).join(' ')
   const ariaLabel = label
 
