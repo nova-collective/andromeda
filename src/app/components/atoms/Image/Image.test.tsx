@@ -40,8 +40,8 @@ describe('Image', () => {
     expect(img.className).toMatch(/object-contain/)
   })
 
-  it('supports variant scope and label visibility', () => {
-    render(<Image src="/placeholder-1.jpg" alt="Sample" variant="secondary" showLabel label="Cover" />)
+  it('supports label visibility', () => {
+    render(<Image src="/placeholder-1.jpg" alt="Sample" showLabel label="Cover" />)
     expect(screen.getByText('Cover')).toBeInTheDocument()
   })
 
