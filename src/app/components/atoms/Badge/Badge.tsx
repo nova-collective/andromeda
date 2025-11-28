@@ -12,7 +12,6 @@ export interface BadgeProps {
   pill?: boolean
   className?: string
   textVariant?: 'primary' | 'secondary'
-  textVariant?: 'primary' | 'secondary'
 }
 
 const sizeMap: Record<BadgeSize, string> = {
