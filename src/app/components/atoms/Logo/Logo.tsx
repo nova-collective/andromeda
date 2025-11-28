@@ -43,7 +43,7 @@ export const Logo: React.FC<LogoProps> = ({
   return (
     <span className={wrapper} data-size={size} data-variant={variant}>
       <Image
-        src="/assets/logo_t.png"
+        src="/assets/logo/logo_t.png"
         alt={ariaLabel}
         width={width}
         height={height}
