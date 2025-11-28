@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import { Wallet, ArrowRight, Heart, Search } from 'lucide-react';
 
-import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar, ProgressBar, Spinner, Skeleton, PriceTag, Rating, Image, Logo, Divider, Spacer, Badge } from '@/app/components';
+import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar, ProgressBar, Spinner, Skeleton, PriceTag, Rating, Image, Logo, Divider, Spacer, Badge, Chip } from '@/app/components';
 
 export default function VDSPage() {
   return (
@@ -266,10 +266,10 @@ function Tabs() {
             </div>
 
             {/* Badges */}
-            <div className="grid gap-8 md:grid-cols-1">
+            <div className="grid gap-8 md:grid-cols-2">
               <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
                 <header className="flex items-center justify-between">
-                  <Heading level={2} className="text-lg font-serif font-semibold">Badges</Heading>
+                  <Heading level={2} className="text-lg font-serif font-semibold">Badges primary</Heading>
                 </header>
                 <Paragraph size="sm" muted className="text-secondary">Compact inline labels for status, type, or counts.</Paragraph>
                 <div className="space-y-4">
@@ -306,6 +306,115 @@ function Tabs() {
                       <Badge variant="outline" tone="danger" pill>
                         Error
                       </Badge>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold" variant="secondary">Badges secondary</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Secondary text contrast for darker contexts.</Paragraph>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Soft</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Badge textVariant="secondary">Default</Badge>
+                      <Badge tone="info" textVariant="secondary">Info</Badge>
+                      <Badge tone="success" textVariant="secondary">Success</Badge>
+                      <Badge tone="warning" textVariant="secondary">Warning</Badge>
+                      <Badge tone="danger" textVariant="secondary">Danger</Badge>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Solid</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Badge variant="solid" textVariant="secondary">Default</Badge>
+                      <Badge variant="solid" tone="info" textVariant="secondary">Info</Badge>
+                      <Badge variant="solid" tone="success" textVariant="secondary">Success</Badge>
+                      <Badge variant="solid" tone="warning" textVariant="secondary">Warning</Badge>
+                      <Badge variant="solid" tone="danger" textVariant="secondary">Danger</Badge>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Outline & pill</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Badge variant="outline" textVariant="secondary">Default</Badge>
+                      <Badge variant="outline" tone="info" pill textVariant="secondary">
+                        New
+                      </Badge>
+                      <Badge variant="outline" tone="success" pill textVariant="secondary">
+                        Live
+                      </Badge>
+                      <Badge variant="outline" tone="danger" pill textVariant="secondary">
+                        Error
+                      </Badge>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Chips */}
+            <div className="grid gap-8 md:grid-cols-2">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Chips primary</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Interactive pills for filters, tokens, and selections.</Paragraph>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Default</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Chip label="Sci-Fi" />
+                      <Chip label="Fantasy" />
+                      <Chip label="Poetry" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Tones</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Chip label="On Sale" tone="success" />
+                      <Chip label="Limited" tone="warning" />
+                      <Chip label="New" tone="info" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Removable</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Chip label="Filter: Price" onRemove={() => {}} />
+                      <Chip label="Filter: Genre" tone="info" onRemove={() => {}} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold" variant="secondary">Chips secondary</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Secondary text contrast for chips.</Paragraph>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Default</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Chip textVariant="secondary" label="Sci-Fi" />
+                      <Chip textVariant="secondary" label="Fantasy" />
+                      <Chip textVariant="secondary" label="Poetry" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Tones</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Chip textVariant="secondary" label="On Sale" tone="success" />
+                      <Chip textVariant="secondary" label="Limited" tone="warning" />
+                      <Chip textVariant="secondary" label="New" tone="info" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Removable</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Chip textVariant="secondary" label="Filter: Price" onRemove={() => {}} />
+                      <Chip textVariant="secondary" label="Filter: Genre" tone="info" onRemove={() => {}} />
                     </div>
                   </div>
                 </div>

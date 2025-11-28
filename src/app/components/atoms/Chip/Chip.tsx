@@ -1,29 +1,31 @@
 import React from 'react'
 
-export type BadgeVariant = 'solid' | 'soft' | 'outline'
-export type BadgeTone = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
-export type BadgeSize = 'sm' | 'md'
+export type ChipVariant = 'solid' | 'soft' | 'outline'
+export type ChipTone = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
+export type ChipSize = 'sm' | 'md'
 
-export interface BadgeProps {
-  children: React.ReactNode
-  variant?: BadgeVariant
-  tone?: BadgeTone
-  size?: BadgeSize
+export interface ChipProps {
+  label: string
+  variant?: ChipVariant
+  tone?: ChipTone
+  size?: ChipSize
   pill?: boolean
+  leadingIcon?: React.ReactNode
+  onRemove?: () => void
   className?: string
   textVariant?: 'primary' | 'secondary'
 }
 
-const sizeMap: Record<BadgeSize, string> = {
-  sm: 'text-[0.65rem] px-2 py-0.5',
-  md: 'text-xs px-2.5 py-0.5',
+const sizeMap: Record<ChipSize, string> = {
+  sm: 'text-xs px-2 py-0.5',
+  md: 'text-sm px-3 py-1',
 }
 
 const base = 'inline-flex items-center gap-1 font-medium rounded border border-transparent align-middle'
 
-const toneMap: Record<BadgeTone, { solid: string; soft: string; outline: string }> = {
+const toneMap: Record<ChipTone, { solid: string; soft: string; outline: string }> = {
   neutral: {
-    solid: 'bg-surfaceAlt text-textBase border-color ',
+    solid: 'bg-surfaceAlt text-textBase border-color',
     soft: 'bg-surface text-textBase border-color/50',
     outline: 'text-textBase border-color',
   },
@@ -49,12 +51,14 @@ const toneMap: Record<BadgeTone, { solid: string; soft: string; outline: string 
   },
 }
 
-export const Badge: React.FC<BadgeProps> = ({
-  children,
+export const Chip: React.FC<ChipProps> = ({
+  label,
   variant = 'soft',
   tone = 'neutral',
   size = 'md',
-  pill = false,
+  pill = true,
+  leadingIcon,
+  onRemove,
   className = '',
   textVariant = 'primary',
 }) => {
@@ -63,7 +67,8 @@ export const Badge: React.FC<BadgeProps> = ({
     base,
     sizeMap[size],
     toneClasses,
-    pill ? 'rounded-full' : '',
+    pill ? 'rounded-full' : 'rounded-md',
+    onRemove ? 'pr-2' : '',
     className,
   ]
     .filter(Boolean)
@@ -71,9 +76,20 @@ export const Badge: React.FC<BadgeProps> = ({
 
   return (
     <span className={`${classes} ${textVariant === 'primary' ? 'text-primary' : 'text-secondary'}`} data-variant={variant} data-tone={tone} data-size={size}>
-      {children}
+      {leadingIcon ? <span aria-hidden className="inline-flex items-center">{leadingIcon}</span> : null}
+      <span>{label}</span>
+      {onRemove ? (
+        <button
+          type="button"
+          aria-label={`Remove ${label}`}
+          onClick={onRemove}
+          className="ml-1 inline-flex h-4 w-4 items-center justify-center rounded-full bg-black/10 text-[0.65rem] hover:bg-black/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--link-color)]"
+        >
+          ×
+        </button>
+      ) : null}
     </span>
   )
 }
 
-export default Badge
+export default Chip

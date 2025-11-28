@@ -127,3 +127,7 @@ export type { SpacerProps, SpacerAxis, SpacerSize } from './Spacer';
 // Badge Atom
 export { Badge } from './Badge';
 export type { BadgeProps, BadgeVariant, BadgeTone, BadgeSize } from './Badge';
+
+// Chip Atom
+export { Chip } from './Chip';
+export type { ChipProps, ChipVariant, ChipTone, ChipSize } from './Chip';
