@@ -31,7 +31,8 @@ import {
   Spacer,
   Badge,
   Chip,
-  Breadcrumb
+  Breadcrumb,
+  MenuItem
 } from '@/app/components';
 
 export default function VDSPage() {
@@ -446,6 +447,38 @@ function Tabs() {
                       <Chip textVariant="secondary" label="Filter: Genre" tone="info" onRemove={() => {}} />
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Menu items */}
+            <div className="grid gap-8 md:grid-cols-2">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Menu items primary</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Interactive menu entries for dropdowns and command palettes.</Paragraph>
+                <div className="space-y-1 max-w-sm">
+                  <MenuItem label="Open" shortcut="Enter" />
+                  <MenuItem label="Rename" description="Change the display name" />
+                  <MenuItem label="Duplicate" description="Make a copy" />
+                  <MenuItem label="Share" tone="info" />
+                  <MenuItem label="Archive" tone="warning" />
+                  <MenuItem label="Delete" variant="danger" tone="danger" />
+                </div>
+              </div>
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold" variant="secondary">Menu items secondary</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Neutral menu items with secondary text color.</Paragraph>
+                <div className="space-y-1 max-w-sm">
+                  <MenuItem label="Open" shortcut="Enter" textVariant="secondary" />
+                  <MenuItem label="Rename" description="Change the display name" textVariant="secondary" />
+                  <MenuItem label="Duplicate" description="Make a copy" textVariant="secondary" />
+                  <MenuItem label="Share" textVariant="secondary" />
+                  <MenuItem label="Archive" textVariant="secondary" />
+                  <MenuItem label="Delete" variant="danger" tone="danger" />
                 </div>
               </div>
             </div>

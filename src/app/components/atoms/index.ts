@@ -135,3 +135,7 @@ export type { ChipProps, ChipVariant, ChipTone, ChipSize } from './Chip';
 // Breadcrumb Atom
 export { Breadcrumb } from './Breadcrumb';
 export type { BreadcrumbProps, BreadcrumbItem } from './Breadcrumb';
+
+// MenuItem Atom
+export { MenuItem } from './MenuItem';
+export type { MenuItemProps, MenuItemVariant, MenuItemTone, MenuItemSize } from './MenuItem';
