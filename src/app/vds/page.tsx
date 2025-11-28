@@ -32,7 +32,8 @@ import {
   Badge,
   Chip,
   Breadcrumb,
-  MenuItem
+  MenuItem,
+  Toast
 } from '@/app/components';
 
 export default function VDSPage() {
@@ -479,6 +480,34 @@ function Tabs() {
                   <MenuItem label="Share" textVariant="secondary" />
                   <MenuItem label="Archive" textVariant="secondary" />
                   <MenuItem label="Delete" variant="danger" tone="danger" />
+                </div>
+              </div>
+            </div>
+
+            {/* Toasts */}
+            <div className="grid gap-8 md:grid-cols-2">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Toasts primary</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Inline feedback messages for transient status updates.</Paragraph>
+                <div className="space-y-3 max-w-md">
+                  <Toast title="Saved" description="Your changes have been saved." tone="success" />
+                  <Toast title="Warning" description="This book is almost out of stock." tone="warning" />
+                  <Toast title="Error" description="Failed to save changes." tone="danger" />
+                  <Toast title="Info" description="We just added 10 new sci-fi titles." tone="info" />
+                </div>
+              </div>
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold" variant="secondary">Toasts soft</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Soft variant toasts with dismiss actions.</Paragraph>
+                <div className="space-y-3 max-w-md">
+                  <Toast title="Draft saved" description="We’ll keep your edits for later." tone="neutral" variant="soft" />
+                  <Toast title="Connected" description="Wallet successfully connected." tone="success" variant="soft" />
+                  <Toast title="Heads up" description="New beta features are available." tone="info" variant="soft" />
+                  <Toast title="Error" description="There was a problem fetching data." tone="danger" variant="soft" onDismiss={() => {}} />
                 </div>
               </div>
             </div>

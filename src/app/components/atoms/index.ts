@@ -139,3 +139,7 @@ export type { BreadcrumbProps, BreadcrumbItem } from './Breadcrumb';
 // MenuItem Atom
 export { MenuItem } from './MenuItem';
 export type { MenuItemProps, MenuItemVariant, MenuItemTone, MenuItemSize } from './MenuItem';
+
+// Toast Atom
+export { Toast } from './Toast';
+export type { ToastProps, ToastTone, ToastVariant, ToastSize } from './Toast';
