@@ -6,6 +6,7 @@ import {
   Header,
   Heading,
   Paragraph,
+  Breadcrumb,
 } from '@/app/components';
 
 
@@ -17,6 +18,13 @@ export default function Home() {
     <>
       <Header />
       <div className="min-h-screen bg-secondary flex flex-col items-center justify-center p-8 pt-24">
+        <div className="w-full max-w-4xl mb-6">
+          <Breadcrumb
+            items={[
+              { label: 'Home' },
+            ]}
+          />
+        </div>
         <div className="text-center mb-12">
           <div className="inline-block bg-yellow-500 text-yellow-900 dark:bg-yellow-600 dark:text-yellow-50 px-6 py-3 rounded-full font-semibold text-lg mb-8 animate-pulse">
             🚧 coming soon... 🚧

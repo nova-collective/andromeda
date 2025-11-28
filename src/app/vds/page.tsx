@@ -3,7 +3,41 @@ import React, { useState } from 'react';
 
 import { Wallet, ArrowRight, Heart, Search } from 'lucide-react';
 
-import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar, ProgressBar, Spinner, Skeleton, PriceTag, Rating, Image, Logo } from '@/app/components';
+import { 
+  Button,
+  Header,
+  Card,
+  Heading,
+  Paragraph,
+  Label,
+  Caption,
+  Link,
+  TextInput,
+  TextArea,
+  Checkbox,
+  RadioButton,
+  Dropdown,
+  Toggle,
+  SearchInput,
+  Avatar,
+  ProgressBar,
+  Spinner,
+  Skeleton,
+  PriceTag,
+  Rating,
+  Image,
+  Logo,
+  Divider,
+  Spacer,
+  Badge,
+  Chip,
+  Breadcrumb,
+  MenuItem,
+  Toast,
+  Tooltip,
+  Container,
+  Box
+} from '@/app/components';
 
 export default function VDSPage() {
   return (
@@ -130,6 +164,72 @@ function Tabs() {
                   <Paragraph>Browse <Link href="#">catalog</Link> or <Link href="#" underline="always">docs</Link>.</Paragraph>
                   <Paragraph>Muted: <Link href="#" muted>muted link</Link></Paragraph>
                   <Paragraph>External: <Link href="https://example.com">example.com</Link></Paragraph>
+                </div>
+              </div>
+            </div>
+
+            {/* Containers */}
+            <div className="grid gap-8 md:grid-cols-2">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Containers primary</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Layout wrapper that constrains width and applies gutters.</Paragraph>
+                <div className="space-y-4 w-full">
+                  <Container width="sm" padding="sm" className="border border-dashed border-color rounded-lg py-4">
+                    <Heading level={4}>Small container</Heading>
+                    <Paragraph size="sm" className="text-secondary">max-w-xl with small padding.</Paragraph>
+                  </Container>
+                  <Container width="md" padding="md" className="border border-dashed border-color rounded-lg py-4">
+                    <Heading level={4}>Medium container</Heading>
+                    <Paragraph size="sm" className="text-secondary">max-w-3xl with medium padding.</Paragraph>
+                  </Container>
+                </div>
+              </div>
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold" variant="secondary">Containers bordered</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Card-like containers with integrated border and background.</Paragraph>
+                <div className="space-y-4 w-full">
+                  <Container width="lg" padding="md" bordered>
+                    <Heading level={4}>Bordered container</Heading>
+                    <Paragraph size="sm" className="text-secondary">Useful for sections that should stand out.</Paragraph>
+                  </Container>
+                </div>
+              </div>
+            </div>
+
+            {/* Boxes */}
+            <div className="grid gap-8 md:grid-cols-2">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Boxes subtle</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Low-level layout primitive with background, border, and radius.</Paragraph>
+                <div className="space-y-4 w-full">
+                  <Box padding="sm" radius="sm">
+                    <Heading level={4}>Plain content</Heading>
+                    <Paragraph size="sm" className="text-secondary">Default subtle box with border-color and bg-primary.</Paragraph>
+                  </Box>
+                  <Box padding="md" radius="lg">
+                    <Paragraph size="sm" className="text-secondary">Use Box to group related elements consistently.</Paragraph>
+                  </Box>
+                </div>
+              </div>
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold" variant="secondary">Boxes elevated</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Elevated boxes for emphasis or interactive regions.</Paragraph>
+                <div className="space-y-4 w-full">
+                  <Box variant="elevated" padding="md" radius="md">
+                    <Heading level={4}>Elevated box</Heading>
+                    <Paragraph size="sm" className="text-secondary">Shadow and rounded corners provide hierarchy.</Paragraph>
+                  </Box>
+                  <Box variant="plain" bordered={false} padding="sm">
+                    <Paragraph size="sm" className="text-secondary">Plain box without border or background.</Paragraph>
+                  </Box>
                 </div>
               </div>
             </div>
@@ -265,6 +365,257 @@ function Tabs() {
               </div>
             </div>
 
+            {/* Badges */}
+            <div className="grid gap-8 md:grid-cols-2">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Badges primary</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Compact inline labels for status, type, or counts.</Paragraph>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Soft</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Badge>Default</Badge>
+                      <Badge tone="info">Info</Badge>
+                      <Badge tone="success">Success</Badge>
+                      <Badge tone="warning">Warning</Badge>
+                      <Badge tone="danger">Danger</Badge>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Solid</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Badge variant="solid">Default</Badge>
+                      <Badge variant="solid" tone="info">Info</Badge>
+                      <Badge variant="solid" tone="success">Success</Badge>
+                      <Badge variant="solid" tone="warning">Warning</Badge>
+                      <Badge variant="solid" tone="danger">Danger</Badge>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Outline & pill</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Badge variant="outline">Default</Badge>
+                      <Badge variant="outline" tone="info" pill>
+                        New
+                      </Badge>
+                      <Badge variant="outline" tone="success" pill>
+                        Live
+                      </Badge>
+                      <Badge variant="outline" tone="danger" pill>
+                        Error
+                      </Badge>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold" variant="secondary">Badges secondary</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Secondary text contrast for darker contexts.</Paragraph>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Soft</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Badge textVariant="secondary">Default</Badge>
+                      <Badge tone="info" textVariant="secondary">Info</Badge>
+                      <Badge tone="success" textVariant="secondary">Success</Badge>
+                      <Badge tone="warning" textVariant="secondary">Warning</Badge>
+                      <Badge tone="danger" textVariant="secondary">Danger</Badge>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Solid</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Badge variant="solid" textVariant="secondary">Default</Badge>
+                      <Badge variant="solid" tone="info" textVariant="secondary">Info</Badge>
+                      <Badge variant="solid" tone="success" textVariant="secondary">Success</Badge>
+                      <Badge variant="solid" tone="warning" textVariant="secondary">Warning</Badge>
+                      <Badge variant="solid" tone="danger" textVariant="secondary">Danger</Badge>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Outline & pill</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Badge variant="outline" textVariant="secondary">Default</Badge>
+                      <Badge variant="outline" tone="info" pill textVariant="secondary">
+                        New
+                      </Badge>
+                      <Badge variant="outline" tone="success" pill textVariant="secondary">
+                        Live
+                      </Badge>
+                      <Badge variant="outline" tone="danger" pill textVariant="secondary">
+                        Error
+                      </Badge>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Chips */}
+            <div className="grid gap-8 md:grid-cols-2">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Chips primary</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Interactive pills for filters, tokens, and selections.</Paragraph>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Default</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Chip label="Sci-Fi" />
+                      <Chip label="Fantasy" />
+                      <Chip label="Poetry" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Tones</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Chip label="On Sale" tone="success" />
+                      <Chip label="Limited" tone="warning" />
+                      <Chip label="New" tone="info" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Removable</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Chip label="Filter: Price" onRemove={() => {}} />
+                      <Chip label="Filter: Genre" tone="info" onRemove={() => {}} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold" variant="secondary">Chips secondary</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Secondary text contrast for chips.</Paragraph>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Default</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Chip textVariant="secondary" label="Sci-Fi" />
+                      <Chip textVariant="secondary" label="Fantasy" />
+                      <Chip textVariant="secondary" label="Poetry" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Tones</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Chip textVariant="secondary" label="On Sale" tone="success" />
+                      <Chip textVariant="secondary" label="Limited" tone="warning" />
+                      <Chip textVariant="secondary" label="New" tone="info" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Removable</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Chip textVariant="secondary" label="Filter: Price" onRemove={() => {}} />
+                      <Chip textVariant="secondary" label="Filter: Genre" tone="info" onRemove={() => {}} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Menu items */}
+            <div className="grid gap-8 md:grid-cols-2">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Menu items primary</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Interactive menu entries for dropdowns and command palettes.</Paragraph>
+                <div className="space-y-1 max-w-sm">
+                  <MenuItem label="Open" shortcut="Enter" />
+                  <MenuItem label="Rename" description="Change the display name" />
+                  <MenuItem label="Duplicate" description="Make a copy" />
+                  <MenuItem label="Share" tone="info" />
+                  <MenuItem label="Archive" tone="warning" />
+                  <MenuItem label="Delete" variant="danger" tone="danger" />
+                </div>
+              </div>
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold" variant="secondary">Menu items secondary</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Neutral menu items with secondary text color.</Paragraph>
+                <div className="space-y-1 max-w-sm">
+                  <MenuItem label="Open" shortcut="Enter" textVariant="secondary" />
+                  <MenuItem label="Rename" description="Change the display name" textVariant="secondary" />
+                  <MenuItem label="Duplicate" description="Make a copy" textVariant="secondary" />
+                  <MenuItem label="Share" textVariant="secondary" />
+                  <MenuItem label="Archive" textVariant="secondary" />
+                  <MenuItem label="Delete" variant="danger" tone="danger" />
+                </div>
+              </div>
+            </div>
+
+            {/* Tooltips */}
+            <div className="grid gap-8 md:grid-cols-2">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Tooltips primary</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Hover or focus to reveal contextual labels.</Paragraph>
+                <div className="flex flex-wrap gap-4 items-center">
+                  <Tooltip label="Connect your wallet">
+                    <Button variant="primary" size="sm">Connect</Button>
+                  </Tooltip>
+                  <Tooltip label="View details">
+                    <Button variant="secondary" size="sm">Details</Button>
+                  </Tooltip>
+                  <Tooltip label="Mark as favorite">
+                    <Button variant="ghost" size="sm">Favorite</Button>
+                  </Tooltip>
+                </div>
+              </div>
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold" variant="secondary">Tooltips secondary</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Secondary tooltip styling and bottom placement.</Paragraph>
+                <div className="flex flex-wrap gap-4 items-center">
+                  <Tooltip label="Search catalog" placement="bottom" variant="secondary">
+                    <Button variant="outline" size="sm">Search</Button>
+                  </Tooltip>
+                  <Tooltip label="Open settings" placement="bottom" variant="secondary">
+                    <Button variant="ghost" size="sm">Settings</Button>
+                  </Tooltip>
+                </div>
+              </div>
+            </div>
+
+            {/* Toasts */}
+            <div className="grid gap-8 md:grid-cols-2">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Toasts primary</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Inline feedback messages for transient status updates.</Paragraph>
+                <div className="space-y-3 max-w-md">
+                  <Toast title="Saved" description="Your changes have been saved." tone="success" />
+                  <Toast title="Warning" description="This book is almost out of stock." tone="warning" />
+                  <Toast title="Error" description="Failed to save changes." tone="danger" />
+                  <Toast title="Info" description="We just added 10 new sci-fi titles." tone="info" />
+                </div>
+              </div>
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold" variant="secondary">Toasts soft</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Soft variant toasts with dismiss actions.</Paragraph>
+                <div className="space-y-3 max-w-md">
+                  <Toast title="Draft saved" description="We’ll keep your edits for later." tone="neutral" variant="soft" />
+                  <Toast title="Connected" description="Wallet successfully connected." tone="success" variant="soft" />
+                  <Toast title="Heads up" description="New beta features are available." tone="info" variant="soft" />
+                  <Toast title="Error" description="There was a problem fetching data." tone="danger" variant="soft" onDismiss={() => {}} />
+                </div>
+              </div>
+            </div>
+
             {/* Captions */}
             <div className="grid gap-8 md:grid-cols-2">
               <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
@@ -315,6 +666,94 @@ function Tabs() {
                   <Avatar variant="secondary" alt="Gina Park" size="lg" />
                   <Avatar variant="secondary" alt="Henry Ives" initials="HI" />
                   <Avatar variant="secondary" src="/placeholder-1.jpg" alt="Sample Secondary" />
+                </div>
+              </div>
+            </div>
+
+            {/* Dividers */}
+            <div className="grid gap-8 md:grid-cols-1">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Dividers</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Subtle separators for grouping content and sections.</Paragraph>
+                <div className="space-y-6">
+                  <div className="space-y-3">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Basic</Paragraph>
+                    <div className="space-y-4">
+                      <Paragraph>Above</Paragraph>
+                      <Divider />
+                      <Paragraph>Below</Paragraph>
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">With label</Paragraph>
+                    <div className="space-y-4">
+                      <Divider label="Or" />
+                      <Divider label="Books" align="start" />
+                      <Divider label="Collections" align="end" variant="secondary" weight="bold" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Breadcrumbs */}
+            <div className="grid gap-8 md:grid-cols-1">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Breadcrumbs</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Hierarchical navigation trail with current page emphasis.</Paragraph>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Basic</Paragraph>
+                    <Breadcrumb
+                      items={[
+                        { label: 'Home', href: '/' },
+                        { label: 'Library', href: '/library' },
+                        { label: 'Collections', href: '/library/collections' },
+                        { label: 'Sci-Fi' },
+                      ]}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Short</Paragraph>
+                    <Breadcrumb
+                      items={[
+                        { label: 'Home', href: '/' },
+                        { label: 'Profile' },
+                      ]}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Spacers */}
+            <div className="grid gap-8 md:grid-cols-1">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Spacers</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Invisible spacing helpers built on the spacing scale.</Paragraph>
+                <div className="space-y-6">
+                  <div className="space-y-3">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Vertical spacing</Paragraph>
+                    <div className="border border-dashed border-color rounded-lg p-4">
+                      <Paragraph>Above</Paragraph>
+                      <Spacer size="lg" />
+                      <Paragraph>Below</Paragraph>
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Horizontal spacing</Paragraph>
+                    <div className="border border-dashed border-color rounded-lg p-4 flex items-center">
+                      <Paragraph>Left</Paragraph>
+                      <Spacer axis="horizontal" size="lg" />
+                      <Paragraph>Right</Paragraph>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
