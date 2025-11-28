@@ -34,7 +34,8 @@ import {
   Breadcrumb,
   MenuItem,
   Toast,
-  Tooltip
+  Tooltip,
+  Container
 } from '@/app/components';
 
 export default function VDSPage() {
@@ -162,6 +163,38 @@ function Tabs() {
                   <Paragraph>Browse <Link href="#">catalog</Link> or <Link href="#" underline="always">docs</Link>.</Paragraph>
                   <Paragraph>Muted: <Link href="#" muted>muted link</Link></Paragraph>
                   <Paragraph>External: <Link href="https://example.com">example.com</Link></Paragraph>
+                </div>
+              </div>
+            </div>
+
+            {/* Containers */}
+            <div className="grid gap-8 md:grid-cols-2">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Containers primary</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Layout wrapper that constrains width and applies gutters.</Paragraph>
+                <div className="space-y-4 w-full">
+                  <Container width="sm" padding="sm" className="border border-dashed border-color rounded-lg py-4">
+                    <Heading level={4}>Small container</Heading>
+                    <Paragraph size="sm" className="text-secondary">max-w-xl with small padding.</Paragraph>
+                  </Container>
+                  <Container width="md" padding="md" className="border border-dashed border-color rounded-lg py-4">
+                    <Heading level={4}>Medium container</Heading>
+                    <Paragraph size="sm" className="text-secondary">max-w-3xl with medium padding.</Paragraph>
+                  </Container>
+                </div>
+              </div>
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold" variant="secondary">Containers bordered</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Card-like containers with integrated border and background.</Paragraph>
+                <div className="space-y-4 w-full">
+                  <Container width="lg" padding="md" bordered>
+                    <Heading level={4}>Bordered container</Heading>
+                    <Paragraph size="sm" className="text-secondary">Useful for sections that should stand out.</Paragraph>
+                  </Container>
                 </div>
               </div>
             </div>

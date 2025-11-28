@@ -1,4 +1,4 @@
-import { Button, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar, ProgressBar, Spinner, Skeleton, PriceTag, Rating, Image, Logo, Divider, Spacer, Badge, Chip, Breadcrumb, MenuItem, Toast, Tooltip } from './atoms';
+import { Button, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar, ProgressBar, Spinner, Skeleton, PriceTag, Rating, Image, Logo, Divider, Spacer, Badge, Chip, Breadcrumb, MenuItem, Toast, Tooltip, Container } from './atoms';
 import { Card, Header, UserProfile } from './organisms';
 import { ThemeProvider, useTheme } from './providers';
 import { WithAuth } from './services';
@@ -22,6 +22,7 @@ export {
     MenuItem,
     Toast,
     Tooltip,
+    Container,
     ProgressBar,
     Spinner,
     Skeleton,

@@ -147,3 +147,7 @@ export type { ToastProps, ToastTone, ToastVariant, ToastSize } from './Toast';
 // Tooltip Atom
 export { Tooltip } from './Tooltip';
 export type { TooltipProps, TooltipPlacement, TooltipVariant } from './Tooltip';
+
+// Container Atom
+export { Container } from './Container';
+export type { ContainerProps, ContainerWidth, ContainerPadding } from './Container';
