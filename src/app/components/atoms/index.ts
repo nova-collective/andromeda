@@ -143,3 +143,7 @@ export type { MenuItemProps, MenuItemVariant, MenuItemTone, MenuItemSize } from 
 // Toast Atom
 export { Toast } from './Toast';
 export type { ToastProps, ToastTone, ToastVariant, ToastSize } from './Toast';
+
+// Tooltip Atom
+export { Tooltip } from './Tooltip';
+export type { TooltipProps, TooltipPlacement, TooltipVariant } from './Tooltip';

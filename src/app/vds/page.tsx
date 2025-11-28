@@ -33,7 +33,8 @@ import {
   Chip,
   Breadcrumb,
   MenuItem,
-  Toast
+  Toast,
+  Tooltip
 } from '@/app/components';
 
 export default function VDSPage() {
@@ -480,6 +481,41 @@ function Tabs() {
                   <MenuItem label="Share" textVariant="secondary" />
                   <MenuItem label="Archive" textVariant="secondary" />
                   <MenuItem label="Delete" variant="danger" tone="danger" />
+                </div>
+              </div>
+            </div>
+
+            {/* Tooltips */}
+            <div className="grid gap-8 md:grid-cols-2">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Tooltips primary</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Hover or focus to reveal contextual labels.</Paragraph>
+                <div className="flex flex-wrap gap-4 items-center">
+                  <Tooltip label="Connect your wallet">
+                    <Button variant="primary" size="sm">Connect</Button>
+                  </Tooltip>
+                  <Tooltip label="View details">
+                    <Button variant="secondary" size="sm">Details</Button>
+                  </Tooltip>
+                  <Tooltip label="Mark as favorite">
+                    <Button variant="ghost" size="sm">Favorite</Button>
+                  </Tooltip>
+                </div>
+              </div>
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold" variant="secondary">Tooltips secondary</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Secondary tooltip styling and bottom placement.</Paragraph>
+                <div className="flex flex-wrap gap-4 items-center">
+                  <Tooltip label="Search catalog" placement="bottom" variant="secondary">
+                    <Button variant="outline" size="sm">Search</Button>
+                  </Tooltip>
+                  <Tooltip label="Open settings" placement="bottom" variant="secondary">
+                    <Button variant="ghost" size="sm">Settings</Button>
+                  </Tooltip>
                 </div>
               </div>
             </div>
