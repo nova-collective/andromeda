@@ -151,3 +151,7 @@ export type { TooltipProps, TooltipPlacement, TooltipVariant } from './Tooltip';
 // Container Atom
 export { Container } from './Container';
 export type { ContainerProps, ContainerWidth, ContainerPadding } from './Container';
+
+// Box Atom
+export { Box } from './Box';
+export type { BoxProps, BoxVariant, BoxPadding, BoxRadius } from './Box';

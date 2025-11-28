@@ -35,7 +35,8 @@ import {
   MenuItem,
   Toast,
   Tooltip,
-  Container
+  Container,
+  Box
 } from '@/app/components';
 
 export default function VDSPage() {
@@ -195,6 +196,40 @@ function Tabs() {
                     <Heading level={4}>Bordered container</Heading>
                     <Paragraph size="sm" className="text-secondary">Useful for sections that should stand out.</Paragraph>
                   </Container>
+                </div>
+              </div>
+            </div>
+
+            {/* Boxes */}
+            <div className="grid gap-8 md:grid-cols-2">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Boxes subtle</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Low-level layout primitive with background, border, and radius.</Paragraph>
+                <div className="space-y-4 w-full">
+                  <Box padding="sm" radius="sm">
+                    <Heading level={4}>Plain content</Heading>
+                    <Paragraph size="sm" className="text-secondary">Default subtle box with border-color and bg-primary.</Paragraph>
+                  </Box>
+                  <Box padding="md" radius="lg">
+                    <Paragraph size="sm" className="text-secondary">Use Box to group related elements consistently.</Paragraph>
+                  </Box>
+                </div>
+              </div>
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold" variant="secondary">Boxes elevated</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Elevated boxes for emphasis or interactive regions.</Paragraph>
+                <div className="space-y-4 w-full">
+                  <Box variant="elevated" padding="md" radius="md">
+                    <Heading level={4}>Elevated box</Heading>
+                    <Paragraph size="sm" className="text-secondary">Shadow and rounded corners provide hierarchy.</Paragraph>
+                  </Box>
+                  <Box variant="plain" bordered={false} padding="sm">
+                    <Paragraph size="sm" className="text-secondary">Plain box without border or background.</Paragraph>
+                  </Box>
                 </div>
               </div>
             </div>
