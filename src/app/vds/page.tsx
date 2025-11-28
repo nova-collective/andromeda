@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import { Wallet, ArrowRight, Heart, Search } from 'lucide-react';
 
-import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar, ProgressBar, Spinner, Skeleton, PriceTag, Rating, Image, Logo, Divider, Spacer } from '@/app/components';
+import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar, ProgressBar, Spinner, Skeleton, PriceTag, Rating, Image, Logo, Divider, Spacer, Badge } from '@/app/components';
 
 export default function VDSPage() {
   return (
@@ -259,6 +259,53 @@ function Tabs() {
                       <Label severity="success" variant="ghost">Success</Label>
                       <Label severity="warning" variant="ghost" pill>Warning</Label>
                       <Label severity="danger" variant="ghost" pill>Danger</Label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Badges */}
+            <div className="grid gap-8 md:grid-cols-1">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Badges</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Compact inline labels for status, type, or counts.</Paragraph>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Soft</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Badge>Default</Badge>
+                      <Badge tone="info">Info</Badge>
+                      <Badge tone="success">Success</Badge>
+                      <Badge tone="warning">Warning</Badge>
+                      <Badge tone="danger">Danger</Badge>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Solid</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Badge variant="solid">Default</Badge>
+                      <Badge variant="solid" tone="info">Info</Badge>
+                      <Badge variant="solid" tone="success">Success</Badge>
+                      <Badge variant="solid" tone="warning">Warning</Badge>
+                      <Badge variant="solid" tone="danger">Danger</Badge>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Outline & pill</Paragraph>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Badge variant="outline">Default</Badge>
+                      <Badge variant="outline" tone="info" pill>
+                        New
+                      </Badge>
+                      <Badge variant="outline" tone="success" pill>
+                        Live
+                      </Badge>
+                      <Badge variant="outline" tone="danger" pill>
+                        Error
+                      </Badge>
                     </div>
                   </div>
                 </div>

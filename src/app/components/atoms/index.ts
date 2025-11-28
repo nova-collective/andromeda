@@ -123,3 +123,7 @@ export type {
 // Spacer Atom
 export { Spacer } from './Spacer';
 export type { SpacerProps, SpacerAxis, SpacerSize } from './Spacer';
+
+// Badge Atom
+export { Badge } from './Badge';
+export type { BadgeProps, BadgeVariant, BadgeTone, BadgeSize } from './Badge';
