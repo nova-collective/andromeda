@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import { Wallet, ArrowRight, Heart, Search } from 'lucide-react';
 
-import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar, ProgressBar, Spinner, Skeleton, PriceTag, Rating, Image, Logo } from '@/app/components';
+import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar, ProgressBar, Spinner, Skeleton, PriceTag, Rating, Image, Logo, Divider } from '@/app/components';
 
 export default function VDSPage() {
   return (
@@ -315,6 +315,34 @@ function Tabs() {
                   <Avatar variant="secondary" alt="Gina Park" size="lg" />
                   <Avatar variant="secondary" alt="Henry Ives" initials="HI" />
                   <Avatar variant="secondary" src="/placeholder-1.jpg" alt="Sample Secondary" />
+                </div>
+              </div>
+            </div>
+
+            {/* Dividers */}
+            <div className="grid gap-8 md:grid-cols-1">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Dividers</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Subtle separators for grouping content and sections.</Paragraph>
+                <div className="space-y-6">
+                  <div className="space-y-3">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Basic</Paragraph>
+                    <div className="space-y-4">
+                      <Paragraph>Above</Paragraph>
+                      <Divider />
+                      <Paragraph>Below</Paragraph>
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">With label</Paragraph>
+                    <div className="space-y-4">
+                      <Divider label="Or" />
+                      <Divider label="Books" align="start" />
+                      <Divider label="Collections" align="end" variant="secondary" weight="bold" />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

@@ -109,3 +109,13 @@ export type { ImageProps, ImageSize } from './Image';
 // Logo Atom
 export { Logo } from './Logo';
 export type { LogoProps, LogoSize, LogoVariant } from './Logo';
+
+// Divider Atom
+export { Divider } from './Divider';
+export type {
+	DividerProps,
+	DividerOrientation,
+	DividerVariant,
+	DividerWeight,
+	DividerLabelAlign,
+} from './Divider';
