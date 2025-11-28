@@ -131,3 +131,7 @@ export type { BadgeProps, BadgeVariant, BadgeTone, BadgeSize } from './Badge';
 // Chip Atom
 export { Chip } from './Chip';
 export type { ChipProps, ChipVariant, ChipTone, ChipSize } from './Chip';
+
+// Breadcrumb Atom
+export { Breadcrumb } from './Breadcrumb';
+export type { BreadcrumbProps, BreadcrumbItem } from './Breadcrumb';

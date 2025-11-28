@@ -3,7 +3,36 @@ import React, { useState } from 'react';
 
 import { Wallet, ArrowRight, Heart, Search } from 'lucide-react';
 
-import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar, ProgressBar, Spinner, Skeleton, PriceTag, Rating, Image, Logo, Divider, Spacer, Badge, Chip } from '@/app/components';
+import { 
+  Button,
+  Header,
+  Card,
+  Heading,
+  Paragraph,
+  Label,
+  Caption,
+  Link,
+  TextInput,
+  TextArea,
+  Checkbox,
+  RadioButton,
+  Dropdown,
+  Toggle,
+  SearchInput,
+  Avatar,
+  ProgressBar,
+  Spinner,
+  Skeleton,
+  PriceTag,
+  Rating,
+  Image,
+  Logo,
+  Divider,
+  Spacer,
+  Badge,
+  Chip,
+  Breadcrumb
+} from '@/app/components';
 
 export default function VDSPage() {
   return (
@@ -498,6 +527,38 @@ function Tabs() {
                       <Divider label="Books" align="start" />
                       <Divider label="Collections" align="end" variant="secondary" weight="bold" />
                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Breadcrumbs */}
+            <div className="grid gap-8 md:grid-cols-1">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Breadcrumbs</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Hierarchical navigation trail with current page emphasis.</Paragraph>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Basic</Paragraph>
+                    <Breadcrumb
+                      items={[
+                        { label: 'Home', href: '/' },
+                        { label: 'Library', href: '/library' },
+                        { label: 'Collections', href: '/library/collections' },
+                        { label: 'Sci-Fi' },
+                      ]}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Short</Paragraph>
+                    <Breadcrumb
+                      items={[
+                        { label: 'Home', href: '/' },
+                        { label: 'Profile' },
+                      ]}
+                    />
                   </div>
                 </div>
               </div>
