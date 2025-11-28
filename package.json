@@ -1,7 +1,7 @@
 {
   "name": "andromeda",
   "description": "A web3 platform to mint, sell and buy books as NFT",
-  "version": "1.16.0",
+  "version": "1.17.0",
   "private": false,
   "type": "module",
   "license": "GNU General Public License v3.0",
