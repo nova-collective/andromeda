@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import { Wallet, ArrowRight, Heart, Search } from 'lucide-react';
 
-import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar, ProgressBar, Spinner, Skeleton, PriceTag, Rating, Image, Logo, Divider } from '@/app/components';
+import { Button, Header, Card, Heading, Paragraph, Label, Caption, Link, TextInput, TextArea, Checkbox, RadioButton, Dropdown, Toggle, SearchInput, Avatar, ProgressBar, Spinner, Skeleton, PriceTag, Rating, Image, Logo, Divider, Spacer } from '@/app/components';
 
 export default function VDSPage() {
   return (
@@ -341,6 +341,34 @@ function Tabs() {
                       <Divider label="Or" />
                       <Divider label="Books" align="start" />
                       <Divider label="Collections" align="end" variant="secondary" weight="bold" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Spacers */}
+            <div className="grid gap-8 md:grid-cols-1">
+              <div className="rounded-2xl bg-primary border border-color p-6 flex flex-col gap-6 shadow-card">
+                <header className="flex items-center justify-between">
+                  <Heading level={2} className="text-lg font-serif font-semibold">Spacers</Heading>
+                </header>
+                <Paragraph size="sm" muted className="text-secondary">Invisible spacing helpers built on the spacing scale.</Paragraph>
+                <div className="space-y-6">
+                  <div className="space-y-3">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Vertical spacing</Paragraph>
+                    <div className="border border-dashed border-color rounded-lg p-4">
+                      <Paragraph>Above</Paragraph>
+                      <Spacer size="lg" />
+                      <Paragraph>Below</Paragraph>
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    <Paragraph size="sm" muted className="text-secondary text-xs">Horizontal spacing</Paragraph>
+                    <div className="border border-dashed border-color rounded-lg p-4 flex items-center">
+                      <Paragraph>Left</Paragraph>
+                      <Spacer axis="horizontal" size="lg" />
+                      <Paragraph>Right</Paragraph>
                     </div>
                   </div>
                 </div>

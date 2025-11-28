@@ -119,3 +119,7 @@ export type {
 	DividerWeight,
 	DividerLabelAlign,
 } from './Divider';
+
+// Spacer Atom
+export { Spacer } from './Spacer';
+export type { SpacerProps, SpacerAxis, SpacerSize } from './Spacer';
